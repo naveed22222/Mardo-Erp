@@ -1,0 +1,147 @@
+{% extends "master.html" %}
+{% load static %}
+
+{% block title %}HRM{% endblock %}
+{% block PageTitle %}Attendance{% endblock %}
+{% block PageHierechy %}
+    <li class="breadcrumb-item tx-15"><a href="{% url 'Dashboard' %}">Employee</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Attendance</li>
+{% endblock %}
+
+{% block content %}
+
+    <div class="Container-fluid">
+        <form action="#">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="form-group form-floating mg-md-b-0-f">
+                        <select class="form-control" name="cmd_emp_id" id="cmd_emp_id">
+                            <option value="NA" >-- Select Employee --</option>
+                            {% for emp in Emp_list %}
+                                <option value="{{ emp.employee_code }}">
+                                    {{ emp.employee_code }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <select name="country" class="form-control form-select" data-bs-placeholder="Select Country"
+                            style="padding: 20px;">
+                        <option value="NA" selected>-- Select Month --</option>
+                        <option value="jan">Jan</option>
+                        <option value="feb">Feb</option>
+                        <option value="mar">Mar</option>
+                        <option value="apr">Apr</option>
+                        <option value="may">May</option>
+                        <option value="jun">Jun</option>
+                        <option value="jul">Jul</option>
+                        <option value="aug">Aug</option>
+                        <option value="sep">Sep</option>
+                        <option value="oct">Oct</option>
+                        <option value="nov">Nov</option>
+                        <option value="dec">Dec</option>
+                    </select>
+                </div>
+                <div class="col-lg-3">
+                    <select name="country" class="form-control form-select" data-bs-placeholder="Select Country"
+                            style="padding: 20px;">
+                        <option value="NA" selected>-- Select Year --</option>
+                        <option value="2023">2023</option>
+                    </select>
+                </div>
+                <div class="col-lg-3">
+                    <button class="btn btn-primary" style="padding: 20px; width: 90%;">Search</button>
+                </div>
+
+            </div>
+
+
+        </form>
+    </div>
+    <div class="row table-responsive">
+        <table class="table table-bordered ">
+            <thead>
+            <tr>
+                <th scope="col">Employee</th>
+                {% for day in day_hierarchy_header %}
+                    <th scope="col"
+                        class="sm-text text-capitalize align-middle text-center border-1 border">
+                        {{ day }}
+                    </th>
+                {% endfor %}
+            </tr>
+            </thead>
+            <tbody>
+            {% for emp in emp_att_list %}
+                <tr>
+                    <th scope="row">{{ emp.employee_code }}</th>
+                    {% for day in day_hierarchy_header %}
+                        <td class="m-1 p-1">
+                            {% if emp.check_in == "NA" or "" %}
+                                <button class="btn m-0 p-0"
+                                        onclick="HRMModelJS.ShowBox_Attendance('NEW::{{ emp.employee_code }}::{{ emp.check_in }}::{{ emp.check_out }}');">
+                                    <i class="fe fe-clock" data-bs-toggle="tooltip" title=""
+                                       data-bs-original-title="fe fe-clock"
+                                       aria-label="fe fe-clock" aria-describedby="tooltip359309"></i>
+                                </button>
+                            {% else %}
+                                <button class="btn m-0 p-0"
+                                        onclick="HRMModelJS.ShowBox_Attendance('UPDATE::{{ emp.employee_code }}::{{ emp.check_in }}::{{ emp.check_out }}');">
+                                    <i class="fa fa-check"></i>
+                                </button>
+                            {% endif %}
+                            {% if emp.check_out == "NA" or "" %}
+                                <button class="btn m-0 p-0"
+                                        onclick="HRMModelJS.ShowBox_Attendance('NEW::{{ emp.employee_code }}::{{ emp.check_in }}::{{ emp.check_out }}');">
+                                    <i class="fe fe-clock" data-bs-toggle="tooltip" title=""
+                                       data-bs-original-title="fe fe-clock"
+                                       aria-label="fe fe-clock" aria-describedby="tooltip359309"></i>
+                                </button>
+                            {% else %}
+                                <button class="btn m-0 p-0"
+                                        onclick="HRMModelJS.ShowBox_Attendance('UPDATE::{{ emp.employee_code }}::{{ emp.check_in }}::{{ emp.check_out }}');">
+                                    <i class="fa fa-check"></i>
+                                </button>
+                            {% endif %}
+                        </td>
+                    {% endfor %}
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+{% endblock %}
+{% block js %}
+    <script src="{% static "AppHRM.js" %}" type="text/javascript"></script>
+
+    <script>
+        var HRMModelJS = null;
+        var add_emp_attendance = '{% url "AddAttendance" %}';
+
+        var message_view = '{{ message }}';
+        $(document).ready(function () {
+            HRMModelJS = new AppHRMModel();
+            HRMModelJS.appConstructor();
+
+            if (message_view !== "") {
+                message_p = message_view.split(":");
+                if (message_p[0] === "Success") {
+                    $("#search").val(message_p[1]);
+                }
+            }
+        });
+
+        if (message === "Success") {
+            not7("Unit of Type Successfully Created!!!");
+        }
+        if (message === "Updated") {
+            not7("Unit of Type Successfully Updated!!!");
+        }
+    </script>
+
+
+{% endblock %}
+
+

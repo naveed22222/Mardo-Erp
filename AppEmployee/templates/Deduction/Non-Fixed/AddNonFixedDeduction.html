@@ -1,0 +1,164 @@
+{% extends "master.html" %}
+{% load static %}
+
+{% block title %}HRM{% endblock %}
+{% block PageTitle %}Non Deduction Fixed{% endblock %}
+{% block PageHierechy %}
+    <li class="breadcrumb-item tx-15"><a href="{% url 'Dashboard' %}">Deduction</a></li>
+    <li class="breadcrumb-item" aria-current="page"><a href="{% url 'FixedDeductionDetails' %}">Non-Fixed</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Add</li>
+{% endblock %}
+{% block content %}
+
+    <div class="row">
+        <div class="col-xl-12 col-lg-12 px-1">
+            <form class="form form-horizontal" action="" method="post" accept-charset='utf-8'
+                  enctype="multipart/form-data" id="DeductionForm">
+                {% csrf_token %}
+
+                <input type="hidden" id="row_length" name="row_length" value="0"/>
+                <input type="hidden" id="str_employee_code" name="str_employee_code" value="NA"/>
+                <input type="hidden" id="str_payment_method" name="str_payment_method" value="NA"/>
+                <input type="hidden" id="str_ded_type" name="str_ded_type" value="NA"/>
+                <input type="hidden" id="str_ded_amount" name="str_ded_amount" value="0"/>
+                <input type="hidden" id="str_ded_date" name="str_ded_date" value="NA"/>
+
+                <div id="info_message"></div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="mb-3 col-md-4">
+                            <label for="name" class="col-form-label text-primary">
+                                Mardo Employees List
+                            </label>
+                            <select id="cmd_employee" name="cmd_employee"
+                                    class="form-control ">
+                                <option value="NA">Select Employee</option>
+                                {% for data in employee_list %}
+                                    <option value="{{ data.employee_code_id }}^^{{ data.title }} ">
+                                        {{ data.title }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover mb-0 text-md-nowrap">
+                                <thead>
+                                <tr>
+                                    <th scope="col"
+                                        class="sm-text text-capitalize align-middle text-center border-1 border">#
+                                    </th>
+                                    <th scope="col"
+                                        class="sm-text text-capitalize align-middle text-center border-1 border">
+                                        Employee Name
+                                    </th>
+                                    <th scope="col"
+                                        class="sm-text text-capitalize align-middle text-center border-1 border">
+                                        Deduction Type
+                                    </th>
+                                    <th scope="col"
+                                        class="sm-text text-capitalize align-middle text-center border-1 border">
+                                        Payment Method
+                                    </th>
+                                    <th scope="col"
+                                        class="sm-text text-capitalize align-middle text-center border-1 border">
+                                        Deduction Amount
+                                    </th>
+                                    <th scope="col"
+                                        class="sm-text text-capitalize align-middle text-center border-1 border">
+                                        Deduction Date
+                                    </th>
+                                    <th scope="col"
+                                        class="text-danger align-middle text-center border-1 border"
+                                        style="width: 25px;">
+                                        <i class="fa fa-trash"></i>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody class="align-middle" id="add_row_for_nonfixed_deduction"></tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="btn-list text-end product-btn">
+                            <button class="btn btn-primary w-100" type="button" id="submitBtn">Proceed Deductions
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+{% block js %}
+    <script src="{% static "AppHRM.js" %}" type="text/javascript"></script>
+    <script>
+        var HRMModelJS = null;
+        let cmd_employee_payment_method_list = '{% url "FillCmdEmployeePaymentMethod" %}';
+        let cmd_non_deduction_type_name = '{% url "FillCmdNonDeductionTypeName" %}';
+
+        $(document).ready(function () {
+            HRMModelJS = new AppHRMModel();
+            HRMModelJS.appConstructor();
+
+            $("#cmd_employee").change(function (e) {
+                let selections = $(e.target).val();
+                if (selections !== 'NA') {
+                    HRMModelJS.AddMultiplteEmployeeNonFixedDeduction(selections);
+                }
+
+            });
+
+
+            //// FORM VALIDATION (START)
+            $("#submitBtn").click(function () {
+                let Status = 0;
+
+                var ItemList = HRMModelJS.Employee_OBJ;
+                var RowLength = ItemList.length;
+                if (RowLength > 0) {
+                    var count = 1;
+                    for (var pp = 0; pp < ItemList.length; pp++) {
+                        if (ItemList[pp].ded_type === "NA") {
+                            Status = 1;
+                            error('toast-top-center', 'Please Select Deduction Type');
+                            return true;
+                        }
+                        if (ItemList[pp].payment_method === "NA") {
+                            Status = 1;
+                            error('toast-top-center', 'Please Select Payment Method');
+                            return true;
+                        }
+                        if (ItemList[pp].ded_amount === '' ) {
+                            Status = 1;
+                            error('toast-top-center', 'Please Add Deduction Amount');
+                            return true;
+                        }
+                        if (ItemList[pp].ded_date === '') {
+                            Status = 1;
+                            error('toast-top-center', 'Please Select Deduction Date');
+                            return true;
+                        }
+                        count++;
+                    }
+                } else {
+                    error('toast-top-center', 'Please Select One Employee');
+                    return true;
+                }
+
+                if (Status === 0) {
+                    $("#DeductionForm").submit(); // Submit the form
+                }
+            });
+        });
+
+        // ALERT SUCCESS MESSAGE
+        var message_view = '{{ message }}';
+        if (message_view === "Success") {
+            successAvatarBox("info_message", "Employee Deduction Added!!!");
+        }
+        $('#cmd_employee').select2();
+
+    </script>
+{% endblock %}

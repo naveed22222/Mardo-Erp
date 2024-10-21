@@ -1,0 +1,85 @@
+{% extends "master.html" %}
+{% load static %}
+
+{% block title %}Setting{% endblock %}
+{% block PageTitle %}Store Location{% endblock %}
+{% block PageHierechy %}
+    <li class="breadcrumb-item tx-15"><a href="{% url 'Dashboard' %}">Admin</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Store Location</li>
+{% endblock %}
+
+{% block content %}
+
+
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card">
+                <div class="card-header flex-between">
+                    <div class="col-xl-6">
+                        <div class="card-title">Store Location List</div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover mb-0 text-md-nowrap">
+                            <thead>
+                            <tr>
+                                <th scope="col"
+                                    class="sm-text text-capitalize align-middle text-center border-1 border">S/L
+                                </th>
+                                <th scope="col" class="sm-text text-capitalize align-middle text-left border-1 border">
+                                    Wharehouse
+                                </th>
+                                <th scope="col" class="sm-text text-capitalize align-middle text-left border-1 border">
+                                    Name
+                                </th>
+                                <th scope="col" class="sm-text text-capitalize align-middle text-left border-1 border">
+                                    Address
+                                </th>
+                                <th scope="col" class="sm-text text-capitalize align-middle text-left border-1 border">
+                                    City
+                                </th>
+                                <th scope="col"
+                                    class="sm-text text-capitalize align-middle text-center border-1 border">Action
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            {% for data in data_list %}
+
+                                <tr class="align-middle">
+                                    <th scope="row" class="xsm-text text-capitalize align-middle text-center">
+                                        {{ forloop.counter }}
+                                    </th>
+                                    <td class="xsm-text text-capitalize align-middle text-left">
+                                        {{ data.wharehouse_code.wharehouse_name }}
+                                    </td>
+                                    <td class="xsm-text text-capitalize align-middle text-left">
+                                        {{ data.location_name }}
+                                    </td>
+                                    <td class="xsm-text text-capitalize align-middle text-left">
+                                        {{ data.address }}
+                                    </td>
+                                    <td class="xsm-text text-capitalize align-middle text-left">
+                                        {{ data.city }}
+                                    </td>
+                                    <td class="xsm-text text-capitalize align-middle text-center">
+                                        <div class="btn-list">
+                                            <a href="javascript:void(0)" class="btn btn-sm btn-def tx-muted">
+                                                <i class="fe fe-edit"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

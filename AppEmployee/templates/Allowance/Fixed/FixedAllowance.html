@@ -1,0 +1,115 @@
+{% extends "master.html" %}
+{% load static %}
+
+{% block title %}HRM{% endblock %}
+{% block PageTitle %}Allowance Fixed{% endblock %}
+{% block PageHierechy %}
+    <li class="breadcrumb-item tx-15"><a href="{% url 'Dashboard' %}">Allowance</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Fixed</li>
+{% endblock %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card">
+                <div class="card-header flex-between">
+                    <div class="col-xl-6">
+                        <div class="card-title">Allowance Fixed Details</div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="row">
+                            <div class="col-xl-8">
+                                <input type="search" id="search" name="search" class="form-control radius-4"
+                                       placeholder="Search here...">
+                            </div>
+                            <div class="col-xl-4">
+                                <a href="{% url 'AddFixedAllowance' %}" type="button"
+                                   class="btn btn-w-lg btn-primary-light text-capitalize" target="_blank">
+                                    Add Fixed Allowance
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover mb-0 text-md-nowrap">
+                            <thead>
+                            <tr>
+                                <th scope="col"
+                                    class="sm-text text-capitalize align-middle text-center border-1 border">S/L
+                                </th>
+                                <th scope="col" class="sm-text text-capitalize align-middle text-center border-1 border">
+                                    Employee Name
+                                </th>
+                                <th scope="col" class="sm-text text-capitalize align-middle text-center border-1 border">
+                                    Allowance Type
+                                </th>
+                                <th scope="col" class="sm-text text-capitalize align-middle text-center border-1 border">
+                                    Allowance Amount
+                                </th>
+                                <th scope="col" class="sm-text text-capitalize align-middle text-center border-1 border">
+                                    Reason
+                                </th>
+                                <th scope="col"
+                                    class="sm-text text-capitalize align-middle text-center border-1 border">Action
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for allowances in allowance_list %}
+                                <tr class="align-middle">
+                                    <th scope="row" class="xsm-text text-capitalize align-middle text-center">
+                                        {{ forloop.counter }}
+                                    </th>
+                                    <th scope="row" class="xsm-text text-capitalize align-middle text-center">
+                                        {{ allowances.title }}
+                                    </th>
+                                    <th scope="row" class="xsm-text text-capitalize align-middle text-center">
+                                        {{ allowances.all_type_name }}
+                                    </th>
+                                    <th scope="row" class="xsm-text text-capitalize align-middle text-center">
+                                        {{ allowances.allowance_amount }}
+                                    </th>
+                                    <th scope="row" class="xsm-text text-capitalize align-middle text-center">
+                                        {{ allowances.description }}
+                                    </th>
+                                    <td class="xsm-text text-capitalize align-middle text-center">
+                                        <div class="btn-list">
+                                            <a href=""
+                                               class="btn btn-sm btn-def tx-muted" target="_blank">
+                                                <i class="fe fe-edit"></i>
+                                            </a>
+                                            <button class="btn btn-sm btn-def tx-muted"
+                                                    onclick="HRMModelJS.DeleteAllowanceFixed();">
+                                                <i class="fe fe-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block js %}
+    <script src="{% static "AppHRM.js" %}" type="text/javascript"></script>
+    <script>
+        var HRMModelJS = null;
+        var delete_allowance_fixed = '{% url "DeleteFixedAllowance" %}';
+
+        $(document).ready(function () {
+            HRMModelJS = new AppHRMModel();
+            HRMModelJS.appConstructor();
+
+        });
+
+    </script>
+{% endblock %}

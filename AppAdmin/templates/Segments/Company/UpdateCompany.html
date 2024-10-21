@@ -1,0 +1,162 @@
+{% extends "master.html" %}
+{% load static %}
+
+{% block title %}COMPANY{% endblock %}
+{% block PageTitle %}UPDATE COMPANY{% endblock %}
+{% block PageHierechy %}
+    <li class="breadcrumb-item tx-15"><a href="{% url 'CompanyDetail' %}">Segment</a></li>
+    <li class="breadcrumb-item tx-15"><a href="{% url 'CompanyDetail' %}">Company</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Edit</li>
+{% endblock %}
+
+
+{% block content %}
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-md-12">
+            <div class="card ">
+                <form class="form form-horizontal" action="" method="post" accept-charset='utf-8'
+                      enctype="multipart/form-data" id="brandForm">
+
+                    {% csrf_token %}
+                    <div id="info_message"></div>
+
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-xl-4">
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        <span class="text-primary float-md-left">Company Code</span>
+                                        <span class="text-secondary float-md-left">*</span>
+                                        <span class="text-danger d-none float-md-left ps-lg-1"
+                                              id="msg_company_name">Please Fill it.</span>
+                                    </label>
+                                    {{ form.company_code }}
+                                </div>
+                            </div>
+                            <div class="col-xl-4">
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        <span class="text-primary float-md-left">Company Name</span>
+                                        <span class="text-secondary float-md-left">*</span>
+                                        <span class="text-danger d-none float-md-left ps-lg-1"
+                                              id="msg_company_name">Please Fill it.</span>
+                                    </label>
+                                    {{ form.company_name }}
+                                </div>
+                            </div>
+                            <div class="col-xl-4">
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        <span class="text-primary float-md-left">UAN Number</span>
+                                        <span class="text-secondary float-md-left">*</span>
+                                        <span class="text-danger d-none float-md-left ps-lg-1"
+                                              id="msg_uan_no">Please Fill it.</span>
+                                    </label>
+                                    {{ form.uan_no }}
+                                </div>
+                            </div>
+
+                            <div class="col-xl-4">
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        <span class="text-primary float-md-left">Ntn Number</span>
+                                    </label>
+                                    {{ form.ntn_no }}
+                                </div>
+                            </div>
+                            <div class="col-xl-4">
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        <span class="text-primary float-md-left">STRN Number</span>
+                                    </label>
+                                    {{ form.strn_no }}
+                                </div>
+                            </div>
+                            <div class="col-xl-4">
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        <span class="text-primary float-md-left">Mobile</span>
+                                    </label>
+                                    {{ form.mobile }}
+                                </div>
+                            </div>
+                            <div class="col-xl-4">
+                                <div class="form-group">
+                                    <label class="form-label mb-0 mt-0">
+                                        <span class="text-primary float-md-left">Image</span>
+                                        <span class="text-secondary ps-lg-2 float-md-left">(300 x 300 Preferable)</span>
+                                        <small class="text-secondary">
+                                            <div class="avatar-sm">
+                                                <img id="image_path" src="" class="br-5 shadow" alt="">
+                                            </div>
+                                        </small>
+                                    </label>
+                                    {{ form.image }}
+                                </div>
+                            </div>
+                            <div class="col-xl-4">
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        <span class="text-primary float-md-left">State</span>
+                                    </label>
+                                    {{ form.state }}
+                                </div>
+                            </div>
+                            <div class="col-xl-4">
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        <span class="text-primary float-md-left">City</span>
+                                    </label>
+                                    {{ form.city }}
+                                </div>
+                            </div>
+                            <div class="col-xl-12">
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        <span class="text-primary float-md-left">Address</span>
+                                    </label>
+                                    {{ form.address }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer ">
+                        <button class="btn btn-primary px-5" type="submit" id="submitBtn">
+                            Update Company
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block js %}
+    <script>
+        $('#id_company_code').val('{{ company_list.company_code }}');
+        $('#id_company_name').val('{{ company_list.company_name }}');
+        $('#id_uan_no').val('{{ company_list.uan_no }}');
+        $('#id_ntn_no').val('{{ company_list.ntn_no }}');
+        $('#id_strn_no').val('{{ company_list.strn_no }}');
+        $('#id_state').val('{{ company_list.state }}');
+        $('#id_area').val('{{ company_list.area }}');
+        $('#id_city').val('{{ company_list.city }}');
+        $('#id_mobile').val('{{ company_list.mobile }}');
+        $('#id_address').val('{{ company_list.address }}');
+
+        let str_image_path = '{{ company_list.image }}';
+        let image_path = "/static/das/assets/img/no-image.png";
+        if (str_image_path !== "") {
+            image_path = "/media/" + str_image_path;
+        }
+        $('#image_path').attr('src', image_path);
+
+
+        var message = '{{ message }}';
+        $(document).ready(function () {
+            if (message === "Success") {
+                successAvatarBox("info_message", "Company Updated!!!");
+            }
+        });
+    </script>
+{% endblock %}

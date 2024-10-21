@@ -1,0 +1,113 @@
+{% extends "master.html" %}
+{% load static %}
+{% block title %}HRM{% endblock %}
+{% block PageTitle %}Deduction Transaction{% endblock %}
+{% block PageHierechy %}
+    <li class="breadcrumb-item tx-15"><a href="{% url 'Dashboard' %}">Deduction</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Deduction Transaction</li>
+{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card">
+                <div class="card-header flex-between">
+                    <div class="col-xl-6">
+                        <div class="card-title">Deduction Transaction Details</div>
+                    </div>
+                    <div class="col-xl-4">
+                        <div class="row">
+                            <div class="col-xl-8">
+                                <form method='post' action='' accept-charset='utf-8'
+                                      enctype="multipart/form-data" id="searchForm">
+                                    {% csrf_token %}
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-2">
+                        <a href="{% url 'AddNonFixedDeduction' %}" type="button" class="btn btn-w-lg btn-primary-light" target="_blank">
+                            Add Non Fixed Deduction
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover mb-0 text-md-nowrap">
+                            <thead>
+                            <tr>
+                                <th scope="col"
+                                    class="sm-text text-capitalize align-middle text-center border-1 border">S/L
+                                </th>
+                                <th scope="col"
+                                    class="sm-text text-capitalize align-middle text-center border-1 border">
+                                    Employee Name
+                                </th>
+                                <th scope="col"
+                                    class="sm-text text-capitalize align-middle text-center border-1 border">
+                                    Deduction Type
+                                </th>
+                                <th scope="col"
+                                    class="sm-text text-capitalize align-middle text-center border-1 border">
+                                    Payment Method
+                                </th>
+                                <th scope="col"
+                                    class="sm-text text-capitalize align-middle text-center border-1 border">
+                                    Amount
+                                </th>
+                                <th scope="col"
+                                    class="sm-text text-capitalize align-middle text-center border-1 border">
+                                    Date
+                                </th>
+
+                                <th scope="col"
+                                    class="sm-text text-capitalize align-middle text-center border-1 border">Action
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            {% for ded_trans in deduction_trans_list %}
+
+                                <tr class="align-middle">
+                                    <th scope="row" class="xsm-text text-capitalize align-middle text-center">
+                                        {{ forloop.counter }}
+                                    </th>
+                                    <th scope="row" class="xsm-text text-capitalize align-middle text-center">
+                                        {{ ded_trans.title }}
+                                    </th>
+                                    <th scope="row" class="xsm-text text-capitalize align-middle text-center">
+                                        {{ ded_trans.ded_type_name }}
+                                    </th>
+                                    <th scope="row" class="xsm-text text-capitalize align-middle text-center">
+                                        {% if ded_trans.pm_name == "Cash" %}
+                                            {{ ded_trans.pm_name }}
+                                        {% elif ded_trans.pm_name == "bank" %}
+                                            {{ ded_trans.pm_name }}--{{ ded_trans.bank_name }}
+                                        {% else %}
+                                            {{ ded_trans.pm_name }}--{{ ded_trans.account_number }}
+                                        {% endif %}
+                                    </th>
+                                    <th scope="row" class="xsm-text text-capitalize align-middle text-center">
+                                        {{ ded_trans.trans_amount }}
+                                    </th>
+                                    <th scope="row" class="xsm-text text-capitalize align-middle text-center">
+                                        {{ ded_trans.trans_date }}
+                                    </th>
+                                    <td class="xsm-text text-capitalize align-middle text-center">
+                                        <div class="btn-list">
+                                            <a href=""
+                                               class="btn btn-sm btn-def tx-muted" target="_blank">
+                                                <i class="fe fe-edit"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

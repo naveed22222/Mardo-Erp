@@ -1,0 +1,232 @@
+{% extends "master.html" %}
+{% load static %}
+{% block title %}Payroll{% endblock %}
+{% block PageTitle %}Payroll{% endblock %}
+{% block PageHierechy %}
+    <li class="breadcrumb-item tx-15"><a href="{% url 'Dashboard' %}">Payroll</a></li>
+    <li class="breadcrumb-item active" aria-current="page"> Statement</li>
+{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card">
+                <div class="card-header flex-between">
+                    <div class="col-xl-2">
+                        <div class="card-title">Payroll</div>
+                    </div>
+                    <div class="col-xl-10">
+                        <form method='post' action='' accept-charset='utf-8'
+                              enctype="multipart/form-data" id="searchForm">
+                            {% csrf_token %}
+                            <div class="row">
+                              <div class="col-xl-3 text-center">
+                                    <select class="form-control" name="location" id="location">
+                                        <option value="%">Select Location</option>
+                                        {% for data in employee_location %}
+                                            <option value="{{ data.loc_store_code }}">{{ data.loc_store_name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                              <div class="col-xl-3 text-center">
+                                    <select class="form-control text-center" name="employee" id="employee">
+                                        <option value="%">Select Employee</option>
+                                        {% for data in all_employee %}
+                                            <option value="{{ data.employee_code_id }}">{{ data.title }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-xl-2 text-center">
+                                    <select class="form-control" name="year" id="year">
+                                        <option value="%">Select Year</option>
+                                        {% for data in year %}
+                                            <option value="{{ data.year }}">{{ data.year }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-xl-2 text-center">
+                                    <select class="form-control" name="month" id="month">
+                                        <option value="%">Select Month</option>
+                                        {% for data in month %}
+                                            <option value="{{ data.month_number }}">{{ data.month_name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-xl-2">
+                                    <button type="submit" class="btn btn-md btn-primary-light w-100">Filter</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover mb-0 text-md-nowrap">
+                            <thead>
+                            <tr>
+                                <th scope="col"
+                                    class="sm-text text-capitalize align-middle text-center border-1 border">
+                                    S/L
+                                </th>
+                                   <th scope="col"
+                                    class="sm-text text-capitalize align-middle text-center border-1 border">
+                               Created At
+                                </th>
+                                <th scope="col"
+                                    class="sm-text text-capitalize align-middle text-center border-1 border">
+                                    Employee Name
+                                </th>
+                                <th scope="col"
+                                    class="sm-text text-capitalize align-middle text-center border-1 border">
+                                    Allowance
+                                </th>
+                                <th scope="col"
+                                    class="sm-text text-capitalize align-middle text-center border-1 border">
+                                    Deduction
+                                </th>
+                                <th scope="col"
+                                    class="sm-text text-capitalize align-middle text-center border-1 border">
+                                    Opening Balance
+                                </th>
+                                <th scope="col"
+                                    class="sm-text text-capitalize align-middle text-center border-1 border">
+                                    Basic Pay
+                                </th>
+                                <th scope="col"
+                                    class="sm-text text-capitalize align-middle text-center border-1 border">Pay Amount
+                                </th>
+                                <th scope="col"
+                                    class="sm-text text-capitalize align-middle text-center border-1 border">
+                                    Status
+                                </th>
+                            </tr>
+                            </thead>
+                            <tr id="payroll" style="display: none;">
+                                <td class="text-center text-capitalize " colspan="9">NO RECORD FOUND</td>
+                            </tr>
+                            <script>
+                                var opening_bal = 0;
+                                var total_allowance = 0;
+                                var total_deduction = 0;
+                                var basic_pay = 0;
+                                var payable_amount = 0;
+                            </script>
+                            <tbody>
+                            {% for data in employee_payroll %}
+
+                                <tr class="align-middle">
+                                    <th scope="row" class="xsm-text text-capitalize align-middle text-center">
+                                        {{ forloop.counter }}
+                                    </th>
+                                    <td
+                                    class="sm-text text-capitalize align-middle text-center border-1 border">
+                                     {{ data.created_at }}
+                                </td>
+                                    <td class="xsm-text text-capitalize align-middle text-center">
+                                        {{ data.title }}
+                                    </td>
+                                    <td class="xsm-text text-capitalize align-middle text-center">
+                                        {{ data.allowances }}
+                                    </td>
+                                    <td class="xsm-text text-capitalize align-middle text-center">
+                                        {{ data.deduction }}
+                                    </td>
+                                    <td class="xsm-text text-capitalize align-middle text-center">
+                                        {{ data.opening_bal }}
+                                    </td>
+                                    <td class="xsm-text text-capitalize align-middle text-center">
+                                        {{ data.basic_pay }}
+                                    </td>
+                                    <td class="xsm-text text-capitalize align-middle text-center">
+                                        {{ data.net_pay }}
+                                    </td>
+                                    <td class="xsm-text text-capitalize align-middle text-center">
+                                        {% if data.status == 'Paid' %}
+                                            <span class="badge badge-success">{{ data.status }}</span>
+                                        {% else %}
+                                            <span class="badge badge-danger">{{ data.status }}</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                <script>
+                                    opening_bal +={{ data.opening_bal }};
+                                    total_allowance +={{ data.allowances }};
+                                    total_deduction +={{ data.deduction }};
+                                    basic_pay +={{ data.basic_pay }};
+                                    payable_amount +={{ data.net_pay }};
+                                </script>
+                            {% empty %}
+                                <script>
+                                    document.getElementById('payroll').style.display = 'revert';
+                                </script>
+                            {% endfor %}
+                            </tbody>
+                            <tfoot>
+                            <tr class="bg-primary">
+                                <td colspan="3" class="la-1x font-weight-bolder text-center bg-primary">Total</td>
+                                <td class="w-5 text-center">
+                                    <span id="all_allowance_total" class="la-1x font-weight-bolder">-</span>
+                                </td>
+                                <td class="w-5 text-center">
+                                    <span id="all_deduction_total" class="la-1x font-weight-bolder">-</span>
+                                </td>
+                              <td class="w-5 text-center">
+                                    <span id="all_opening_bal" class="la-1x font-weight-bolder">-</span>
+                                </td>
+                                <td class="w-5 text-center">
+                                    <span id="all_salary_total" class="la-1x font-weight-bolder">-</span>
+                                </td>
+                                <td colspan="1" class="w-5 text-center bg-secondary">
+                                    <span id="td_all_pay_total" class="la-1x font-weight-bolder">-</span>
+                                </td>
+                                <td class="w-5 la-1x text-center bg-primary"></td>
+                            </tr>
+                            </tfoot>
+                            <script>
+                                if (payable_amount !== 0) {
+                                    document.getElementById('td_all_pay_total').innerHTML = payable_amount.toLocaleString('en-IN');
+                                }
+                                if (basic_pay !== 0) {
+                                    document.getElementById('all_salary_total').innerHTML = basic_pay.toLocaleString('en-IN');
+                                }
+                                if (total_deduction !== 0) {
+                                    document.getElementById('all_deduction_total').innerHTML = total_deduction.toLocaleString('en-IN');
+                                }
+                                if (total_allowance !== 0) {
+                                    document.getElementById('all_allowance_total').innerHTML = total_allowance.toLocaleString('en-IN');
+                                }
+                                if (opening_bal !== 0) {
+                                    document.getElementById('all_opening_bal').innerHTML = opening_bal.toLocaleString('en-IN');
+                                }
+
+                            </script>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block js %}
+    <script>
+        var message_view = '{{ message }}';
+
+        let message = message_view.split("^");
+        let success_message = message[0];
+        let get_year = message[1];
+        let get_month = message[2];
+        let get_employee = message[3];
+        let get_location = message[4];
+
+        if (success_message === 'Success') {
+            $('#year').val(get_year);
+            $('#month').val(get_month);
+            $('#employee').val(get_employee);
+            $('#location').val(get_location);
+         }
+
+        $('#year').select2();
+        $('#month').select2();
+        $('#employee').select2();
+        $('#location').select2();
+    </script>
+{% endblock %}

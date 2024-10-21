@@ -1,0 +1,683 @@
+{% extends "master.html" %}
+{% load static %}
+{% block title %}Employee{% endblock %}
+{% block PageTitle %}Employee{% endblock %}
+{% block PageHierechy %}
+    <li class="breadcrumb-item tx-15"><a href="{% url 'Dashboard' %}">Employee</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Upload</li>
+{% endblock %}
+{% block css %}
+    .padding {
+    padding-right: 4rem !important;
+    padding-left: 4rem !important;
+    }
+{% endblock %}
+{% block content %}
+    <div id="info_message"></div>
+    <div class="row">
+        <form class="form form-horizontal" action="" method="post" accept-charset='utf-8'
+              enctype="multipart/form-data" autocomplete="off" id="UploadForm">
+            {% csrf_token %}
+            <div class="col-xl-12">
+                <div class="card">
+                    <div class="card-header flex-between">
+                        <div class="col-sm-4 col-md-4 col-lg-4 col-xl-8 card-title"> Employee Upload</div>
+                        <div class="col-sm-4 col-md-4 col-lg-4 col-xl-2">
+                            {% if employee_format|length > 0 %}
+                                <form method='post' accept-charset='utf-8'
+                                      enctype="multipart/form-data" class="w-100 px-2" id="DeleteForm">
+                                    {% csrf_token %}
+                                    <input type='hidden' id='action_value' name='action_value' value='delete'>
+                                    <button type="button" id="DeleteBtn"
+                                            class="btn btn-danger text-uppercase sm-text py-2 w-100">
+                                        Delete
+                                    </button>
+                                </form>
+                            {% endif %}
+                        </div>
+                        {% if employee_format|length == 0 %}
+                            <div class="col-sm-4 col-md-4 col-lg-4 col-xl-2 mx-1">
+                                <a href="{% static "das/assets/excel/EMPLOYEES_TEMP.xlsx" %}"
+                                   class="text-white text-decoration-none">
+                                    <button type="button"
+                                            class="btn btn-primary-light text-uppercase sm-text py-2 w-100 ">
+                                        Download Template
+                                    </button>
+                                </a>
+                            </div>
+                        {% endif %}
+                    </div>
+                    {% if employee_format|length == 0 %}
+                        <div class="card-body">
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                <div class="dropify-wrapper" style="height: 230px;">
+                                    <input type="file" class="dropify" data-height="200" name="excel_file"
+                                           accept=".xlsx,.xls" onchange="validateFileType();"
+                                           id="excel_file">
+                                    <button type="button" class="dropify-clear">Remove</button>
+                                    <div class="dropify-preview"><span class="dropify-render"></span>
+                                        <div class="dropify-infos">
+                                            <div class="dropify-infos-inner"><p class="dropify-filename"><span
+                                                    class="dropify-filename-inner"></span></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer flex-between">
+                            <div class="col-sm-6 col-md-10 col-lg-10 col-xl-10"></div>
+                            <div class="col-sm-6 col-md-2 col-lg-2 col-xl-2">
+                                <div class="d-flex flex-row mb-1">
+                                    <form method='post' action='' accept-charset='utf-8'
+                                          enctype="multipart/form-data" class="w-100 px-2">
+                                        {% csrf_token %}
+                                        <input type='hidden' id='action_value' name='action_value' value='upload'>
+                                        <button type="submit"
+                                                class="btn btn-success text-uppercase sm-text py-2 w-100"
+                                                id="UploadExcel">
+                                            Upload
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="card">
+                    <div class="card-header flex-between">
+                        <div class="col-5 card-title"> Employee Detail</div>
+                        <div class="col-7"></div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover min-table-height">
+                                <thead>
+                                <tr>
+                                    <th class="sm-text text-capitalize align-middle text-center border-1 border">S/L
+                                    </th>
+                                    <th class="sm-text text-capitalize align-middle text-center border-1 border padding">
+                                        Department
+                                    </th>
+                                    <th class="sm-text text-capitalize align-middle text-center border-1 border padding">
+                                        Position
+                                    </th>
+                                    <th class="sm-text text-capitalize align-middle text-center border-1 border padding">
+                                        Duty Type
+                                    </th>
+                                    <th class="sm-text text-capitalize align-middle text-center border-1 border padding">
+                                        Name
+                                    </th>
+                                    <th class="sm-text text-capitalize align-middle text-center border-1 border padding">
+                                        Mobile No.
+                                    </th>
+                                    <th class="sm-text text-capitalize align-middle text-center border-1 border padding">
+                                        CNIC
+                                    </th>
+                                    <th class="sm-text text-capitalize align-middle text-center border-1 border padding">
+                                        Birth Date
+                                    </th>
+                                    <th class="sm-text text-capitalize align-middle text-center border-1 border padding">
+                                        Gender
+                                    </th>
+                                    <th class="sm-text text-capitalize align-middle text-center border-1 border padding">
+                                        Hire Date
+                                    </th>
+                                    <th class="sm-text text-capitalize align-middle text-center border-1 border padding">
+                                        Location
+                                    </th>
+                                    <th class="sm-text text-capitalize align-middle text-center border-1 border padding">
+                                        Pay Frequency
+                                    </th>
+                                    <th class="sm-text text-capitalize align-middle text-center border-1 border padding">
+                                        Rate Type
+                                    </th>
+                                    <th class="sm-text text-capitalize align-middle text-center border-1 border padding">
+                                        Rate Amount
+                                    </th>
+                                    <th class="sm-text text-capitalize align-middle text-center border-1 border padding">
+                                        Basic Salary
+                                    </th>
+                                    <th class="sm-text text-capitalize align-middle text-center border-1 border padding">
+                                        Address
+                                    </th>
+                                    <th class="sm-text text-capitalize align-middle text-center border-1 border padding">
+                                        City
+                                    </th>
+                                    <th class="sm-text text-capitalize align-middle text-center border-1 border padding">
+                                        State
+                                    </th>
+                                    <th class="sm-text text-capitalize align-middle text-center border-1 border padding">
+                                        Remarks
+                                    </th>
+                                </tr>
+                                </thead>
+                                <script>
+                                    selItemCount = 1;
+                                    Employee_OBJ = [];
+                                </script>
+                                <tbody id="table_body">
+                                {% for data in employee_format %}
+                                    <tr>
+                                        <td class="sm-text text-capitalize align-middle text-center border-1 border">
+                                            {{ forloop.counter }}
+                                        </td>
+                                        <td class="sm-text text-capitalize align-middle text-center border-1 border">
+                                            <select id="cmd_department_{{ forloop.counter }}"
+                                                    name="cmd_department"
+                                                    class="form-control form-select select2-no-search select2-hidden-accessible"
+                                                    onchange="HRMModelJS.OnChangeEmployeeUploadValues({{ forloop.counter }})">
+                                                <option Value="NA">Select</option>
+                                                {% for data in department_list %}
+                                                    <option value="{{ data.department_code }}">{{ data.department_name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </td>
+                                        <td class="sm-text text-capitalize align-middle text-center border-1 border">
+                                            <select id="cmd_position_{{ forloop.counter }}"
+                                                    name="cmd_position"
+                                                    class="form-control form-select select2-no-search select2-hidden-accessible"
+                                                    onchange="HRMModelJS.OnChangeEmployeeUploadValues({{ forloop.counter }})">
+                                                <option Value="NA">Select</option>
+                                                {% for data in position_list %}
+                                                    <option value="{{ data.position_code }}">{{ data.position_name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </td>
+                                        <td class="sm-text text-capitalize align-middle text-center border-1 border">
+                                            <select id="duty_type_{{ forloop.counter }}" name="duty_type"
+                                                    class="form-control form-select select2-no-search select2-hidden-accessible"
+                                                    onchange="HRMModelJS.OnChangeEmployeeUploadValues({{ forloop.counter }})">
+                                                <option Value="Full Time">Full Time</option>
+                                                <option Value="Part Time">Part Time</option>
+                                            </select>
+                                        </td>
+                                        <td class="sm-text text-capitalize align-middle text-center border-1 border">
+                                            <input type="text" name="title" class="form-control text-center"
+                                                   oninput="HRMModelJS.OnChangeEmployeeUploadValues({{ forloop.counter }})"
+                                                   id="title_{{ forloop.counter }}"
+                                                   value="{{ data.title }}">
+                                        </td>
+                                        <td class="sm-text text-capitalize align-middle text-center border-1 border">
+                                            <input type="text" name="mobile"
+                                                   class="form-control text-center"
+                                                   oninput="HRMModelJS.OnChangeEmployeeUploadValues({{ forloop.counter }})"
+                                                   id="mobile_{{ forloop.counter }}"
+                                                   value="{{ data.mobile }}">
+                                        </td>
+                                        </td>
+                                        <td class="sm-text text-capitalize align-middle text-center border-1 border">
+                                            <input type="text" name="cnic" class="form-control text-center"
+                                                   oninput="HRMModelJS.OnChangeEmployeeUploadValues({{ forloop.counter }})"
+                                                   id="cnic_{{ forloop.counter }}"
+                                                   value="{{ data.cnic_no }}">
+                                        </td>
+                                        <td class="sm-text text-capitalize align-middle text-center border-1 border">
+                                            <input type="text" name="birth_date"
+                                                   class="form-control text-center"
+                                                   oninput="HRMModelJS.OnChangeEmployeeUploadValues({{ forloop.counter }})"
+                                                   id="birth_date_{{ forloop.counter }}"
+                                                   value="{{ data.birth_date|date:'Y-m-d' }}">
+                                        </td>
+                                        <td class="sm-text text-capitalize align-middle text-center border-1 border">
+                                            <select id="gender_{{ forloop.counter }}" name="gender"
+                                                    class="form-control form-select select2-no-search select2-hidden-accessible"
+                                                    onchange="HRMModelJS.OnChangeEmployeeUploadValues({{ forloop.counter }})">
+                                                <option Value="Male">Male</option>
+                                                <option Value="Female">Female</option>
+                                            </select>
+                                        </td>
+                                        <td class="sm-text text-capitalize align-middle text-center border-1 border">
+                                            <input type="text" name="hire_date"
+                                                   class="form-control text-center"
+                                                   oninput="HRMModelJS.OnChangeEmployeeUploadValues({{ forloop.counter }})"
+                                                   id="hire_date_{{ forloop.counter }}"
+                                                   value="{{ data.hire_date|date:'Y-m-d' }}">
+                                        </td>
+                                        <td class="sm-text text-capitalize align-middle text-center border-1 border">
+                                            <select id="location_{{ forloop.counter }}" name="location"
+                                                    class="form-control form-select select2-no-search select2-hidden-accessible"
+                                                    onchange="HRMModelJS.OnChangeEmployeeUploadValues({{ forloop.counter }})"
+                                                    multiple="multiple">
+                                                {% for data in location_store_list %}
+                                                    <option value="{{ data.loc_store_code }}">{{ data.loc_store_name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </td>
+                                        <td class="sm-text text-capitalize align-middle text-center border-1 border">
+                                            <select id="pay_frequency_{{ forloop.counter }}"
+                                                    name="pay_frequency"
+                                                    class="form-control form-select select2-no-search select2-hidden-accessible"
+                                                    onchange="HRMModelJS.OnChangeEmployeeUploadValues({{ forloop.counter }}); HRMModelJS.conditionPayRate({{ forloop.counter }});">
+                                                <option value="NA">Select</option>
+                                                <option value="monthly">Monthly</option>
+                                                <option value="weekly">Weekly</option>
+                                                <option value="daily">Daily</option>
+                                            </select>
+                                        </td>
+                                        <td class="sm-text text-capitalize align-middle text-center border-1 border">
+                                            <select id="rate_type_{{ forloop.counter }}" name="rate_type"
+                                                    class="form-control form-select select2-no-search select2-hidden-accessible"
+                                                    onchange="HRMModelJS.OnChangeEmployeeUploadValues({{ forloop.counter }}); HRMModelJS.conditionPayRate({{ forloop.counter }});">
+                                                <option value="NA">Select</option>
+                                                <option value="salary">Salary</option>
+                                                <option value="hourly">Hourly</option>
+                                                <option value="wages">Wages</option>
+                                            </select>
+                                        </td>
+                                        <td class="sm-text text-capitalize align-middle text-center border-1 border">
+                                            <input type="text" name="rate_amount"
+                                                   class="form-control text-center"
+                                                   oninput="HRMModelJS.OnChangeEmployeeUploadValues({{ forloop.counter }})"
+                                                   id="rate_amount_{{ forloop.counter }}"
+                                                   value="0">
+                                        </td>
+                                        <td class="sm-text text-capitalize align-middle text-center border-1 border">
+                                            <input type="text" name="basic_salary"
+                                                   class="form-control text-center"
+                                                   oninput="HRMModelJS.OnChangeEmployeeUploadValues({{ forloop.counter }})"
+                                                   id="basic_salary_{{ forloop.counter }}"
+                                                   value="0">
+                                        </td>
+                                        <td class="sm-text text-capitalize align-middle text-center border-1 border">
+                                            <input type="text" name="address"
+                                                   class="form-control text-center"
+                                                   oninput="HRMModelJS.OnChangeEmployeeUploadValues({{ forloop.counter }})"
+                                                   id="address_{{ forloop.counter }}"
+                                                   value="{{ data.address }}">
+                                        </td>
+                                        <td class="sm-text text-capitalize align-middle text-center border-1 border">
+                                            <input type="text" name="city" class="form-control text-center"
+                                                   oninput="HRMModelJS.OnChangeEmployeeUploadValues({{ forloop.counter }})"
+                                                   id="city_{{ forloop.counter }}"
+                                                   value="{{ data.city }}">
+                                        </td>
+                                        <td class="sm-text text-capitalize align-middle text-center border-1 border">
+                                            <input type="text" name="state" class="form-control text-center"
+                                                   oninput="HRMModelJS.OnChangeEmployeeUploadValues({{ forloop.counter }})"
+                                                   id="state_{{ forloop.counter }}"
+                                                   value="{{ data.state }}">
+                                        </td>
+                                        <td class="sm-text text-capitalize align-middle text-center border-1 border">
+                                            <input type="text" name="state" class="form-control text-center"
+                                                   value="Missing {{ data.remarks }}" disabled>
+                                        </td>
+                                    </tr>
+                                    <script>
+                                        Employee_OBJ.push({
+                                            sl: selItemCount,
+                                            department: 'NA',
+                                            position: 'NA',
+                                            duty_type: 'NA',
+                                            title: '{{ data.first_name }}',
+                                            mobile: '{{ data.mobile_no }}',
+                                            cnic: '{{ data.cnic }}',
+                                            birth_date: '{{ data.birth_date }}',
+                                            gender: 'NA',
+                                            hire_date: '{{ data.hire_date }}',
+                                            location: 'NA',
+                                            pay_frequency: 'NA',
+                                            rate_type: 'NA',
+                                            rate_amount: '0',
+                                            basic_salary: '0',
+                                            address: '{{ data.address }}',
+                                            city: '{{ data.city }}',
+                                            state: '{{ data.state }}',
+                                        });
+                                        selItemCount++;
+                                    </script>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card-footer flex-between">
+                        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                            <div class="d-flex flex-row">
+                                <form method='post' action='' accept-charset='utf-8'
+                                      enctype="multipart/form-data" class="w-100 px-2"
+                                      id="UploadEmployeeForm">
+                                    {% csrf_token %}
+
+                                    <input type="hidden" name="row_length" id="row_length" value="0">
+                                    <input type="hidden" name="str_department" id="str_department" value="NA">
+                                    <input type="hidden" name="str_position" id="str_position" value="NA">
+                                    <input type="hidden" name="str_duty_type" id="str_duty_type" value="NA">
+                                    <input type="hidden" name="str_title" id="str_title" value="NA">
+                                    <input type="hidden" name="str_mobile" id="str_mobile" value="NA">
+                                    <input type="hidden" name="str_cnic" id="str_cnic" value="NA">
+                                    <input type="hidden" name="str_birth_date" id="str_birth_date" value="NA">
+                                    <input type="hidden" name="str_gender" id="str_gender" value="NA">
+                                    <input type="hidden" name="str_hire_date" id="str_hire_date" value="NA">
+                                    <input type="hidden" name="str_location" id="str_location" value="NA">
+                                    <input type="hidden" name="str_pay_frequency" id="str_pay_frequency" value="NA">
+                                    <input type="hidden" name="str_rate_type" id="str_rate_type" value="NA">
+                                    <input type="hidden" name="str_rate_amount" id="str_rate_amount" value="NA">
+                                    <input type="hidden" name="str_basic_salary" id="str_basic_salary" value="NA">
+                                    <input type="hidden" name="str_address" id="str_address" value="NA">
+                                    <input type="hidden" name="str_city" id="str_city" value="NA">
+                                    <input type="hidden" name="str_state" id="str_state" value="NA">
+
+                                    <input type='hidden' id='action_value' name='action_value' value='save'>
+                                    <button type="submit" id="submitBtn"
+                                            class="btn btn-primary text-uppercase sm-text py-2 w-100">
+                                        Save Employees
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}
+{% block js %}
+    <script src="{% static "AppHRM.js" %}" type="text/javascript"></script>
+    <script>
+
+        var HRMModelJS = null;
+        var delete_emp_format = '{% url "DeleteEmployeeFormat" %}';
+        var message = '{{ message }}';
+
+        $(document).ready(function () {
+            HRMModelJS = new AppHRMModel();
+            HRMModelJS.appConstructor();
+
+            // SUBMIT BUTTON VALIDATION ERROR
+            $("#UploadExcel").click(function (e) {
+                if (document.getElementById("excel_file").value === "") {
+                    e.preventDefault();
+                    errorAvatarBox("info_message", "Please Upload Excel File");
+                }
+            });
+
+            //DELETE BUTTON CONFIRMATION BOX
+            $("#DeleteBtn").click(function () {
+                let Status = 0;
+                swal({
+                        title: "Employee Upload",
+                        text: 'DELETE',
+                        type: "success",
+                        showCancelButton: true,
+                        confirmButtonClass: "btn btn-danger",
+                        confirmButtonText: "Yes, Confirm!",
+                        closeOnConfirm: false
+                    },
+                    function (isConfirm) {
+                        if (isConfirm) {
+                            Status = 1;
+                            if (Status === 1) {
+                                $("#UploadForm").submit(); // Submit the form
+                            }
+                        } else {
+                            swal("Cancelled", "Please Re-check your Status :)", "error");
+                        }
+                    });
+            });
+
+            HRMModelJS.OnChangeEmployeeUploadValues = function (selected_index) {
+
+                let department = $("#cmd_department_" + selected_index).val();
+                let position = $("#cmd_position_" + selected_index).val();
+                let duty_type = $("#duty_type_" + selected_index).val();
+                let title = $("#title_" + selected_index).val();
+                let mobile = $("#mobile_" + selected_index).val();
+                let cnic = $("#cnic_" + selected_index).val();
+                let birth_date = $("#birth_date_" + selected_index).val();
+                let gender = $("#gender_" + selected_index).val();
+                let hire_date = $("#hire_date_" + selected_index).val();
+                let location = $("#location_" + selected_index).val();
+                let pay_frequency = $("#pay_frequency_" + selected_index).val();
+                let rate_type = $("#rate_type_" + selected_index).val();
+                let rate_amount = $("#rate_amount_" + selected_index).val();
+                let basic_salary = $("#basic_salary_" + selected_index).val();
+                let address = $("#address_" + selected_index).val();
+                let city = $("#city_" + selected_index).val();
+                let state = $("#state_" + selected_index).val();
+
+
+                for (var m = 0; m < Employee_OBJ.length; m++) {
+                    if (Employee_OBJ[m].sl === parseInt(selected_index)) {
+                        Employee_OBJ[m].department = department;
+                        Employee_OBJ[m].position = position;
+                        Employee_OBJ[m].duty_type = duty_type;
+                        Employee_OBJ[m].title = title;
+                        Employee_OBJ[m].mobile = mobile;
+                        Employee_OBJ[m].cnic = cnic;
+                        Employee_OBJ[m].birth_date = birth_date;
+                        Employee_OBJ[m].gender = gender;
+                        Employee_OBJ[m].hire_date = hire_date;
+                        Employee_OBJ[m].location = location;
+                        Employee_OBJ[m].pay_frequency = pay_frequency;
+                        Employee_OBJ[m].rate_type = rate_type;
+                        Employee_OBJ[m].rate_amount = rate_amount;
+                        Employee_OBJ[m].basic_salary = basic_salary;
+                        Employee_OBJ[m].address = address;
+                        Employee_OBJ[m].city = city;
+                        Employee_OBJ[m].state = state;
+
+                    }
+                }
+                HRMModelJS.SingleItem_BoxEmployeeUpload();
+            }
+
+            HRMModelJS.SingleItem_BoxEmployeeUpload = function () {
+
+                let department = "";
+                let position = "";
+                let duty_type = "";
+                let title = "";
+                let mobile = "";
+                let cnic = "";
+                let birth_date = "";
+                let gender = "";
+                let hire_date = "";
+                let location = "";
+                let pay_frequency = "";
+                let rate_type = "";
+                let rate_amount = "";
+                let basic_salary = "";
+                let address = "";
+                let city = "";
+                let state = "";
+
+                let count = 1;
+
+                if (Employee_OBJ.length === 1) {
+
+                    department = Employee_OBJ[0].department;
+                    position = Employee_OBJ[0].position;
+                    duty_type = Employee_OBJ[0].duty_type;
+                    title = Employee_OBJ[0].title;
+                    mobile = Employee_OBJ[0].mobile;
+                    cnic = Employee_OBJ[0].cnic;
+                    birth_date = Employee_OBJ[0].birth_date;
+                    gender = Employee_OBJ[0].gender;
+                    hire_date = Employee_OBJ[0].hire_date;
+                    location = Employee_OBJ[0].location;
+                    pay_frequency = Employee_OBJ[0].pay_frequency;
+                    rate_type = Employee_OBJ[0].rate_type;
+                    rate_amount = Employee_OBJ[0].rate_amount;
+                    basic_salary = Employee_OBJ[0].basic_salary;
+                    address = Employee_OBJ[0].address;
+                    city = Employee_OBJ[0].city;
+                    state = Employee_OBJ[0].state;
+                }
+                if (Employee_OBJ.length > 1) {
+
+                    department = "";
+                    position = "";
+                    duty_type = "";
+                    title = "";
+                    mobile = "";
+                    cnic = "";
+                    birth_date = "";
+                    gender = "";
+                    hire_date = "";
+                    location = "";
+                    pay_frequency = "";
+                    rate_type = "";
+                    rate_amount = "";
+                    basic_salary = "";
+                    address = "";
+                    city = "";
+                    state = "";
+
+                    for (var p = 0; p < Employee_OBJ.length; p++) {
+                        if (count === 1) {
+                            department = Employee_OBJ[p].department + "^";
+                            position = Employee_OBJ[p].position + "^";
+                            duty_type = Employee_OBJ[p].duty_type + "^";
+                            title = Employee_OBJ[p].title + "^";
+                            mobile = Employee_OBJ[p].mobile + "^";
+                            cnic = Employee_OBJ[p].cnic + "^";
+                            birth_date = Employee_OBJ[p].birth_date + "^";
+                            gender = Employee_OBJ[p].gender + "^";
+                            hire_date = Employee_OBJ[p].hire_date + "^";
+                            location = Employee_OBJ[p].location + "^";
+                            pay_frequency = Employee_OBJ[p].pay_frequency + "^";
+                            rate_type = Employee_OBJ[p].rate_type + "^";
+                            rate_amount = Employee_OBJ[p].rate_amount + "^";
+                            basic_salary = Employee_OBJ[p].basic_salary + "^";
+                            address = Employee_OBJ[p].address + "^";
+                            city = Employee_OBJ[p].city + "^";
+                            state = Employee_OBJ[p].state + "^";
+                        }
+                        if (count > 1 && count < Employee_OBJ.length) {
+                            department = department + "" + Employee_OBJ[p].department + "^";
+                            position = position + "" + Employee_OBJ[p].position + "^";
+                            duty_type = duty_type + "" + Employee_OBJ[p].duty_type + "^";
+                            title = title + "" + Employee_OBJ[p].title + "^";
+                            mobile = mobile + "" + Employee_OBJ[p].mobile + "^";
+                            cnic = cnic + "" + Employee_OBJ[p].cnic + "^";
+                            birth_date = birth_date + "" + Employee_OBJ[p].birth_date + "^";
+                            gender = gender + "" + Employee_OBJ[p].gender + "^";
+                            hire_date = hire_date + "" + Employee_OBJ[p].hire_date + "^";
+                            location = location + "" + Employee_OBJ[p].location + "^";
+                            pay_frequency = pay_frequency + "" + Employee_OBJ[p].pay_frequency + "^";
+                            rate_type = rate_type + "" + Employee_OBJ[p].rate_type + "^";
+                            rate_amount = rate_amount + "" + Employee_OBJ[p].rate_amount + "^";
+                            basic_salary = basic_salary + "" + Employee_OBJ[p].basic_salary + "^";
+                            address = address + "" + Employee_OBJ[p].address + "^";
+                            city = city + "" + Employee_OBJ[p].city + "^";
+                            state = state + "" + Employee_OBJ[p].state + "^";
+                        }
+                        if (count === Employee_OBJ.length) {
+                            department = department + "" + Employee_OBJ[p].department;
+                            position = position + "" + Employee_OBJ[p].position;
+                            duty_type = duty_type + "" + Employee_OBJ[p].duty_type;
+                            title = title + "" + Employee_OBJ[p].title;
+                            mobile = mobile + "" + Employee_OBJ[p].mobile;
+                            cnic = cnic + "" + Employee_OBJ[p].cnic;
+                            birth_date = birth_date + "" + Employee_OBJ[p].birth_date;
+                            gender = gender + "" + Employee_OBJ[p].gender;
+                            hire_date = hire_date + "" + Employee_OBJ[p].hire_date;
+                            location = location + "" + Employee_OBJ[p].location;
+                            pay_frequency = pay_frequency + "" + Employee_OBJ[p].pay_frequency;
+                            rate_type = rate_type + "" + Employee_OBJ[p].rate_type;
+                            rate_amount = rate_amount + "" + Employee_OBJ[p].rate_amount;
+                            basic_salary = basic_salary + "" + Employee_OBJ[p].basic_salary;
+                            address = address + "" + Employee_OBJ[p].address;
+                            city = city + "" + Employee_OBJ[p].city;
+                            state = state + "" + Employee_OBJ[p].state;
+
+                        }
+                        count++;
+                    } // LOOP END
+                } // MORE THAN ONE ROW
+
+                $("#row_length").val(Employee_OBJ.length);
+                $("#str_department").val(department);
+                $("#str_position").val(position);
+                $("#str_duty_type").val(duty_type);
+                $("#str_title").val(title);
+                $("#str_mobile").val(mobile);
+                $("#str_cnic").val(cnic);
+                $("#str_birth_date").val(birth_date);
+                $("#str_gender").val(gender);
+                $("#str_hire_date").val(hire_date);
+                $("#str_location").val(location);
+                $("#str_pay_frequency").val(pay_frequency);
+                $("#str_rate_type").val(rate_type);
+                $("#str_rate_amount").val(rate_amount);
+                $("#str_basic_salary").val(basic_salary);
+                $("#str_address").val(address);
+                $("#str_city").val(city);
+                $("#str_state").val(state);
+            }
+            // CONDITION ON SALARY
+            HRMModelJS.conditionPayRate = function (selected_index) {
+                let pay_frequency = $("#pay_frequency_" + selected_index).val();
+                let rate_type = $("#rate_type_" + selected_index).val();
+
+
+                if (pay_frequency === "monthly" && rate_type === "salary") {
+
+                    $("#rate_amount_" + selected_index).val("0");
+                    $("#rate_amount_" + selected_index).prop('readonly', true);
+                    $("#basic_salary_" + selected_index).prop('readonly', false);
+                }
+                if (pay_frequency === "monthly" && rate_type === "hourly") {
+
+                    $("#basic_salary_" + selected_index).val("0");
+                    $("#basic_salary_" + selected_index).prop('readonly', true);
+                    $("#rate_amount_" + selected_index).prop('readonly', false);
+                }
+                if (pay_frequency === "weekly" && rate_type === "salary") {
+
+                    $("#rate_amount_" + selected_index).val("0");
+                    $("#rate_amount_" + selected_index).prop('readonly', true);
+                    $("#basic_salary_" + selected_index).prop('readonly', false);
+                }
+                if (pay_frequency === "weekly" && rate_type === "hourly") {
+
+                    $("#basic_salary_" + selected_index).val("0");
+                    $("#basic_salary_" + selected_index).prop('readonly', true);
+                    $("#rate_amount_" + selected_index).prop('readonly', false);
+                }
+                if (pay_frequency === "daily" && rate_type === "hourly") {
+
+                    $("#basic_salary_" + selected_index).val("0");
+                    $("#basic_salary_" + selected_index).prop('readonly', true);
+                    $("#rate_amount_" + selected_index).prop('readonly', false);
+                }
+                if (pay_frequency === "daily" && rate_type === "salary") {
+                    $("#rate_amount_" + selected_index).val("0");
+                    $("#rate_amount_" + selected_index).prop('readonly', true);
+                    $("#basic_salary_" + selected_index).val("0");
+                    $("#basic_salary_" + selected_index).prop('readonly', true);
+                } else if (rate_type === "wages") {
+                    $("#rate_amount_" + selected_index).val("0");
+                    $("#rate_amount_" + selected_index).prop('readonly', true);
+                    $("#basic_salary_" + selected_index).val("0");
+                    $("#basic_salary_" + selected_index).prop('readonly', true);
+                }
+
+            }
+        });
+
+        // FUNTION THAT ACCEPT EXCEL FILE
+        function validateFileType() {
+            var selectedFile = document.getElementById('excel_file').files[0];
+            // ACCEPT .XLSX AND .XLS FORMAT
+            var allowedTypes = ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.ms-excel'];
+
+            if (!allowedTypes.includes(selectedFile.type)) {
+                errorAvatarBox("info_message", "Invalid file type. Please Upload Excel File.");
+                document.getElementById('excel_file').value = '';
+            }
+        }
+
+        //select2
+        $('.select2').select2({
+            placeholder: 'Select',
+            searchInputPlaceholder: 'Search'
+        });
+
+        $('.select2-no-search').select2({
+            minimumResultsForSearch: Infinity,
+            placeholder: 'Select'
+        });
+    </script>
+{% endblock %}

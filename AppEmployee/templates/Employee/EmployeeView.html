@@ -1,0 +1,1708 @@
+{% extends "master.html" %}
+{% load static %}
+
+{% block title %}Employee{% endblock %}
+{% block PageTitle %}Employee{% endblock %}
+{% block PageHierechy %}
+    <li class="breadcrumb-item tx-15"><a href="{% url 'Dashboard' %}">Employee</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Employee Detail</li>
+{% endblock %}
+
+{% block content %}
+
+    <!-- row -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card overflow-hidden">
+                <div class="card-body p-0">
+                    <input type='hidden' id='hidden_emp_code' name='hidden_emp_code' value='{{ get_employee_code }}'
+                           autocomplete='off'>
+                    <div class="d-lg-flex main-settings-row">
+                        <div class="border-end border-bottom bd-lg-b-0 d-flex flex-column mn-wd-20p">
+                            <ul class="nav nav-pills main-nav-column p-3">
+                                <li class="nav-item">
+                                    <a class="nav-link active" data-bs-toggle="tab" href="#profile">
+                                        <i class="fe fe-settings"></i>Profile Info</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-bs-toggle="tab" href="#paymentMethod">
+                                        <i class="fe fe-shield"></i>Payment Method</a>
+                                </li>
+                                <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#deduction"><i
+                                        class="fe fe-alert-triangle"></i> Deduction</a></li>
+                                <li class="nav-item"><a class="nav-link" data-bs-toggle="tab"
+                                                        href="#allowance"><i class="fe fe-grid"></i>
+                                    Allowance</a></li>
+                                <li class="nav-item"><a class="nav-link" data-bs-toggle="tab"
+                                                        href="#attendance"><i class="fe fe-grid"></i>
+                                    Attendance</a></li>
+                                <li class="nav-item"><a class="nav-link" data-bs-toggle="tab"
+                                                        href="#salary"><i class="fe fe-grid"></i>
+                                    Salary</a></li>
+                                <li class="nav-item"><a class="nav-link" data-bs-toggle="tab"
+                                                        href="#location"><i class="fe fe-grid"></i>
+                                    Location</a></li>
+                            </ul>
+                        </div>
+                        <div class="flex-1 m-2" style="overflow: auto">
+                            <div class="tab-content">
+
+                                <!-- PROFILE INFORMATION START -->
+                                <div class="tab-pane active" id="profile">
+                                    <div class="row m-2">
+                                        <div class="col-sm-12 col-lg-12 col-xl-6">
+                                            <div class="card overflow-hidden">
+                                                <div class="card-header pb-0">
+                                                    <div class="row justify-content-between">
+                                                        <div class="w-auto"><h3 class="card-title mb-1">My
+                                                            Profile</h3>
+                                                            <p class="tx-11">100% completed. <a href="profile.html"
+                                                                                                class="text-primary">Info</a>
+                                                            </p></div>
+                                                    </div>
+                                                </div>
+                                                <div class="card-body pb-0 px-0">
+                                                    <div class="px-3 pb-2 w-100">
+                                                        <div class="d-flex flex-column align-items-center justify-content-center">
+                                                            <div class="avatar-xl rounded-circle me-0 mb-1 p-1 bg-blue-light">
+                                                                <a href="profile.html">
+                                                                    {% if employee_info.emp_photo != "" %}
+                                                                        <img src="/media/{{ employee.image }}"
+                                                                             class="rounded-circle">
+                                                                    {% else %}
+                                                                        <img src="{% static "das/assets/img/no-image.png" %}"
+                                                                             class="rounded-circle">
+                                                                    {% endif %}
+                                                                </a>
+                                                            </div>
+                                                            <h6 class="tx-20 mb-0"><a href="profile.html">
+                                                                {{ employee_info.title }}</a></h6> <span
+                                                                class="tx-11 font-weight-semibold text-muted"><a
+                                                                href="profile.html">{{ employee_info.mobile }}</a></span>
+                                                        </div>
+
+                                                        <div class="row">
+                                                            <div class="col-md-12 mt-3 text-center mb-3">
+                                                                {% for data in single_employee_location %}
+                                                                    <span class="badge border-primary border text-primary tx-11 mx-1">    {{ data.loc_name }}-{{ data.loc_store_name }},{{ data.city_name }}</span>
+
+                                                                {% endfor %}
+                                                            </div>
+                                                            <div class="col-4 border-end mt-2 ">
+                                                                <div class="d-flex flex-column justify-content-center align-items-center">
+                                                                    <span class="tx-15 font-weight-semibold">{{ employee_List.department_code }}</span>
+                                                                    <div class="text-muted tx-11 text-center">
+                                                                        Department
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-4 border-end mt-2 ">
+                                                                <div class="d-flex flex-column justify-content-center align-items-center">
+                                                                    <span class="tx-15 font-weight-semibold">{{ employee_List.position_code }}</span>
+                                                                    <div class="text-muted tx-11 text-center">
+                                                                        Position
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-4 mt-2 ">
+                                                                <div class="d-flex flex-column justify-content-center align-items-center">
+                                                                    <span class="tx-15 font-weight-semibold">{{ employee_salary.basic_salary }}</span>
+                                                                    <div class="text-muted tx-11 text-center">
+                                                                        Salary
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+
+                                                            <div class="col-md-12 my-3">
+                                                                <div class="d-flex align-items-center justify-content-center">
+
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-12">
+{#                                                                <a href="profile.html"#}
+{#                                                                                   class="btn btn-sm btn-block btn-primary py-2">Edit#}
+{#                                                                Profile</a>#}
+
+                                                                <button type="button"  class="btn btn-sm btn-block btn-primary py-2"></button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 col-lg-12 col-xl-6">
+                                            <div class="card overflow-hidden">
+                                                <div class="card-header flex-between">
+                                                    <div class="card-title">Personal Information</div>
+                                                </div>
+                                                <div class="card-body p-0">
+                                                    <div class="list-group projects-list border-0">
+                                                        <a href="javascript:void(0);"
+                                                           class="list-group-item flex-column align-items-start border-top-0 border-start-0 border-end-0 border-bottom">
+                                                            <div class="d-flex w-100 justify-content-between align-items-center">
+                                                                <p class="tx-14 mb-0 font-weight-semibold text-dark">
+                                                                    Name
+                                                                </p>
+                                                                <p class="text-dark mb-0 font-weight-normal text-dark tx-15">
+                                                                    {{ employee_info.first_name }} {{ employee_info.last_name }}
+                                                                </p>
+                                                            </div>
+                                                        </a>
+                                                        <a href="javascript:void(0);"
+                                                           class="list-group-item flex-column align-items-start border-top-0 border-start-0 border-end-0 border-bottom">
+                                                            <div class="d-flex w-100 justify-content-between align-items-center">
+                                                                <p class="tx-14 mb-0 font-weight-semibold text-dark">
+                                                                    CNIC No.
+                                                                </p>
+                                                                <p class=" mb-0 font-weight-normal tx-15">
+                                                                    {{ employee_info.cnic_no }}
+                                                                </p>
+                                                            </div>
+                                                        </a>
+                                                        <a href="javascript:void(0);"
+                                                           class="list-group-item flex-column align-items-start border-top-0 border-start-0 border-end-0 border-bottom">
+                                                            <div class="d-flex w-100 justify-content-between align-items-center">
+                                                                <p class="tx-14 mb-0 font-weight-normal text-dark">
+                                                                    Birth Date</p>
+                                                                <p class=" mb-0 tx-15">
+                                                                    {{ employee_info.birth_date }}
+                                                                </p>
+                                                            </div>
+                                                        </a> <a href="javascript:void(0);"
+                                                                class="list-group-item flex-column align-items-start border-top-0 border-start-0 border-end-0 border-bottom">
+                                                        <div class="d-flex w-100 justify-content-between align-items-center">
+                                                            <p class="tx-14 mb-0 font-weight-semibold text-dark">
+                                                                Duty type
+                                                            </p>
+                                                            <p class="text-dark mb-0 text-dark tx-15">
+                                                                {{ employee_info.duty_type }}</p>
+                                                        </div>
+                                                    </a>
+                                                        <a href="javascript:void(0);"
+                                                           class="list-group-item flex-column align-items-start border-top-0 border-start-0 border-end-0 border-bottom">
+                                                            <div class="d-flex w-100 justify-content-between align-items-center">
+                                                                <p class="tx-14 mb-0 font-weight-semibold text-dark">
+                                                                    Gender</p>
+                                                                <p class="text-dark mb-0 text-dark tx-15">
+                                                                    {{ employee_info.gender }}</p>
+                                                            </div>
+                                                        </a>
+                                                        <a href="javascript:void(0);"
+                                                           class="list-group-item flex-column align-items-start border-top-0 border-start-0 border-end-0 border-bottom">
+                                                            <div class="d-flex w-100 justify-content-between align-items-center">
+                                                                <p class="tx-14 mb-0 font-weight-semibold text-dark">
+                                                                    Address
+                                                                </p>
+                                                                <p class="text-dark mb-0 text-dark tx-15">
+                                                                    {{ employee_info.address }}
+                                                                </p>
+                                                            </div>
+                                                        </a>
+                                                        <a href="javascript:void(0);"
+                                                           class="list-group-item flex-column align-items-start border-top-0 border-start-0 border-end-0 border-bottom">
+                                                            <div class="d-flex w-100 justify-content-between align-items-center">
+                                                                <p class="tx-14 mb-0 font-weight-semibold text-dark">
+                                                                    City</p>
+                                                                <p class="text-dark mb-0 tx-15">
+                                                                    {{ employee_info.city }}</p>
+                                                            </div>
+                                                        </a>
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div><!-- col-end -->
+
+                                    </div>
+                                    <div class="row m-2">
+
+                                        <div class="col-sm-12 col-lg-12 col-xl-4">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <div class="card-title">Emergency Contact</div>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="card-title">Primary</div>
+                                                        <div class="col-xl-4"><p class="mb-3 tx-muted tx-14">
+                                                            Name</p></div>
+                                                        <div class="col-xl-8"><p class="mb-3 tx-14">Elisa Jones</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-xl-4"><p class="mb-3 tx-muted tx-14">
+                                                            Relationship</p></div>
+                                                        <div class="col-xl-8"><p class="mb-3 tx-14">
+                                                            Father</p></div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-xl-4"><p class="mb-3 tx-muted tx-14">
+                                                            Phone</p></div>
+                                                        <div class="col-xl-8"><p class="mb-3 tx-14">
+                                                            +(773)-1614311</p></div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="card-title">Secondary</div>
+                                                        <div class="col-xl-4"><p class="mb-3 tx-muted tx-14">
+                                                            Name</p></div>
+                                                        <div class="col-xl-8"><p class="mb-3 tx-14"> Elisa Jones</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-xl-4"><p class="mb-0 tx-muted tx-14">
+                                                            Relationship</p></div>
+                                                        <div class="col-xl-8"><p class="mb-0 tx-14"> Brother </p>
+                                                        </div>
+                                                    </div>
+                                                    <br>
+                                                    <div class="row">
+                                                        <div class="col-xl-4"><p class="mb-3 tx-muted tx-14">
+                                                            Name</p></div>
+                                                        <div class="col-xl-8"><p class="mb-3 tx-14"> Elisa Jones</p>
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+
+
+                                            </div>
+                                        </div><!-- col-end -->
+                                        <div class="col-sm-12 col-lg-12 col-xl-4">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <div class="card-title">Education Information</div>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="order-track">
+                                                        <div class="accordion" id="basicAccordion">
+                                                            <div class="accordion-item border-0 bg-transparent">
+                                                                <div class="accordion-header" id="headingOne"><a
+                                                                        class="px-0 pt-0 collapsed" role="button"
+                                                                        data-bs-toggle="collapse"
+                                                                        data-bs-target="#basicOne"
+                                                                        aria-expanded="false"
+                                                                        aria-controls="basicOne">
+                                                                    <div class="d-flex">
+                                                                        <div class="me-2"><span
+                                                                                class="avatar-sm rounded-circle bg-primary-transparent tx-primary border border-primary"><i
+                                                                                class="fe fe-package tx-12"></i></span>
+                                                                        </div>
+                                                                        <div class="flex-1"><p
+                                                                                class="font-weight-semibold mb-0 tx-15">
+                                                                            International College of Arts and
+                                                                            Science (UG)
+                                                                        </div>
+                                                                    </div>
+                                                                </a></div>
+                                                                <div id="basicOne"
+                                                                     class="accordion-collapse border-top-0 collapse"
+                                                                     aria-labelledby="headingOne"
+                                                                     data-bs-parent="#basicAccordion" style="">
+                                                                    <div class="accordion-body pt-0 pd-s-40">
+                                                                        <div class="sub-track"><p class="mb-0">Bsc
+                                                                            Computer Science
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="accordion" id="basicAccordion1">
+                                                            <div class="accordion-item border-0 bg-transparent">
+                                                                <div class="accordion-header" id="headingTwo"><a
+                                                                        class="px-0 pt-0 collapsed" role="button"
+                                                                        data-bs-toggle="collapse"
+                                                                        data-bs-target="#basicTwo"
+                                                                        aria-expanded="false"
+                                                                        aria-controls="basicTwo">
+                                                                    <div class="d-flex">
+                                                                        <div class="me-2"><span
+                                                                                class="avatar-sm rounded-circle bg-primary-transparent tx-primary border border-primary"><i
+                                                                                class="fe fe-check-circle tx-12"></i></span>
+                                                                        </div>
+                                                                        <div class="flex-1"><p
+                                                                                class="font-weight-semibold mb-0 tx-15">
+                                                                            International College of Arts and
+                                                                            Science (PG)</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </a></div>
+                                                                <div id="basicTwo"
+                                                                     class="accordion-collapse border-top-0 collapse"
+                                                                     aria-labelledby="headingTwo"
+                                                                     data-bs-parent="#basicAccordion1" style="">
+                                                                    <div class="accordion-body pt-0 pd-s-40">
+                                                                        <div class="sub-track"><p class="mb-0">Msc
+                                                                            Computer Science
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="accordion" id="basicAccordion2">
+                                                            <div class="accordion-item border-0 bg-transparent">
+                                                                <div class="accordion-header" id="headingThree"><a
+                                                                        class="px-0 pt-0 collapsed" role="button"
+                                                                        data-bs-toggle="collapse"
+                                                                        data-bs-target="#basicThree"
+                                                                        aria-expanded="false"
+                                                                        aria-controls="basicThree">
+                                                                    <div class="d-flex">
+                                                                        <div class="me-2"><span
+                                                                                class="avatar-sm rounded-circle bg-primary-transparent tx-primary border border-primary"><i
+                                                                                class="fe fe-truck tx-12"></i></span>
+                                                                        </div>
+                                                                        <div class="flex-1"><p
+                                                                                class="font-weight-semibold mb-0 tx-15">
+
+                                                                        </div>
+                                                                    </div>
+                                                                </a></div>
+
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div><!-- col-end -->
+                                        <div class="col-sm-12 col-lg-12 col-xl-4">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <div class="card-title">Experiance</div>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="order-track">
+
+                                                        <div class="accordion" id="basicAccordion2">
+                                                            <div class="accordion-item border-0 bg-transparent">
+                                                                <div class="accordion-body" id="headingThree"><a
+                                                                        class="px-0 pt-0" role="button"
+                                                                        aria-controls="basicThree">
+
+                                                                </a></div>
+                                                                <div id="basicThree"
+                                                                     class="accordion-collapse show collapse border-top-0"
+                                                                     aria-labelledby="headingThree"
+                                                                     data-bs-parent="#basicAccordion2">
+                                                                    <div class="accordion-body pt-0 pd-s-40">
+                                                                        <div class="sub-track"><p class="mb-0">Web
+                                                                            Designer at Zen Corporation
+                                                                        </p><span
+                                                                                class="tx-muted">Mar 03, 2022, 15:36</span>
+                                                                        </div>
+                                                                        <div class="sub-track"><p class="mb-0">Web
+                                                                            Designer at Ron-tech</p><span
+                                                                                class="tx-muted">Mar 03, 2022, 15:36</span>
+                                                                        </div>
+                                                                        <div class="sub-track"><p class="mb-0">Web
+                                                                            Designer at Dalt Technology
+                                                                        </p><span
+                                                                                class="tx-muted">Mar 03, 2022, 15:36</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="accordion" id="basicAccordion3">
+                                                            <div class="accordion-item border-0 bg-transparent next-step">
+
+                                                                <div id="basicFour"
+                                                                     class="accordion-collapse collapse border-top-0"
+                                                                     aria-labelledby="headingFour"
+                                                                     data-bs-parent="#basicAccordion3">
+                                                                    <div class="accordion-body pt-0 pd-s-40">
+                                                                        <div class="sub-track"><p class="mb-0">Your
+                                                                            order is out for devlivery</p><span
+                                                                                class="tx-muted tx-11">Mar 03, 2022, 15:36 (expected)</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div><!-- col-end -->
+
+                                    </div>
+
+                                </div>
+                                <!-- PROFILE INFORMATION END -->
+
+                                <!-- PAYMENT METHOD START -->
+                                <div class="tab-pane" id="paymentMethod">
+                                    <div class="row">
+                                        <div class="col-xl-12">
+                                            <div class="card">
+                                                <div class="card-header flex-between">
+                                                    <div class="col-xl-4 col-md-2 col-lg-4 col-xs-4"></div>
+                                                    <div class="col-xl-8 col-md-10 col-lg-8 col-xs-8">
+                                                        <div class="row">
+                                                            <div class="col-xl-8">
+                                                                <form method='post' action='' accept-charset='utf-8'
+                                                                      enctype="multipart/form-data" id="searchForm">
+
+                                                                    {% csrf_token %}
+                                                                    <input type="search" id="search" name="search"
+                                                                           class="form-control radius-4"
+                                                                           placeholder="Search here...">
+                                                                </form>
+                                                            </div>
+                                                            <div class="col-xl-4">
+                                                                <button type="button"
+                                                                        class="btn btn-w-lg btn-primary-light"
+                                                                        onclick="HRMModelJS.ShowBox_AddEmployeePayment('NEW');">
+                                                                    Add Payment
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-bordered table-hover mb-0 text-md-nowrap">
+                                                            <thead>
+                                                            <tr>
+                                                                <th scope="col"
+                                                                    class="sm-text text-capitalize align-middle text-center border-1 border">
+                                                                    S/L
+                                                                </th>
+                                                                <th scope="col"
+                                                                    class="sm-text text-capitalize align-middle text-center border-1 border">
+                                                                    Payment Name
+                                                                </th>
+                                                                <th scope="col"
+                                                                    class="sm-text text-capitalize align-middle text-center border-1 border">
+                                                                    Bank Name
+                                                                </th>
+                                                                <th scope="col"
+                                                                    class="sm-text text-capitalize align-middle text-center border-1 border">
+                                                                    Account Number
+                                                                </th>
+                                                                <th scope="col"
+                                                                    class="sm-text text-capitalize align-middle text-center border-1 border">
+                                                                    Title
+                                                                </th>
+                                                                <th scope="col"
+                                                                    class="sm-text text-capitalize align-middle text-center border-1 border">
+                                                                    Status
+                                                                </th>
+                                                                <th scope="col"
+                                                                    class="sm-text text-capitalize align-middle text-center border-1 border">
+                                                                    Action
+                                                                </th>
+                                                            </thead>
+                                                            <tbody id="emp_pay_body">
+                                                            {% for pay in payment_info %}
+                                                                <tr>
+                                                                    <td class="xsm-text text-capitalize align-middle text-center">
+                                                                        {{ forloop.counter }}
+                                                                    </td>
+                                                                    <td class="xsm-text text-capitalize align-middle text-center">
+                                                                        {{ pay.pm_code.pm_name }}
+                                                                    </td>
+                                                                    <td class="xsm-texts align-middle text-center">
+                                                                        {% if pay.pm_code.pm_name != "bank" %}
+                                                                            -
+                                                                        {% else %}
+                                                                            {{ pay.bank_code }}
+                                                                        {% endif %}
+                                                                    </td>
+                                                                    <td class="xsm-text text-capitalize align-middle text-center">
+                                                                        {% if pay.pm_code.pm_name == "Cash" %}
+                                                                            -
+                                                                        {% else %}
+                                                                            {{ pay.account_number }}
+                                                                        {% endif %}
+                                                                    </td>
+                                                                    <td class="xsm-text text-capitalize align-middle text-center">
+                                                                        {#                                                                        {% if pay.pm_code.pm_name == "Cash" %}#}
+                                                                        {#                                                                            -#}
+                                                                        {#                                                                        {% else %}#}
+                                                                        {{ pay.account_title }}
+                                                                        {#                                                                        {% endif %}#}
+                                                                    </td>
+                                                                    <td class="xsm-text text-capitalize align-middle text-center">
+                                                                            <span class="badge badge-pill bg-{% if pay.status == "Active" %}primary-transparent tx-primary{% else %}orange-transparent tx-orange{% endif %} py-2 tx-11">
+                                                                                {{ pay.status }}
+                                                                            </span>
+                                                                    </td>
+                                                                    <td class="xsm-text text-capitalize align-middle text-center">
+                                                                        {% if pay.pm_code.pm_name == "Cash" %}
+                                                                            -
+                                                                        {% else %}
+                                                                            <button href="javascript:void(0)"
+                                                                                    class="btn btn-sm btn-def tx-muted"
+                                                                                    onclick="HRMModelJS.ShowBox_AddEmployeePayment('UPDATE,{{ pay.id }},{{ pay.pm_code_id }}^^{{ pay.pm_code }},{{ pay.bank_code_id }},{{ pay.account_title }},{{ pay.account_number }}');">
+                                                                                <i class="fe fe-edit"></i>
+                                                                            </button>
+                                                                            <button href="javascript:void(0)"
+                                                                                    class="btn btn-sm btn-def tx-muted"
+                                                                                    onclick="HRMModelJS.DeleteEmployeePayment('{{ pay.payment_code }}');">
+                                                                                <i class="fe fe-trash"></i>
+                                                                            </button>
+                                                                        {% endif %}
+                                                                    </td>
+                                                                </tr>
+                                                            {% endfor %}
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- PAYMENT METHOD END -->
+
+                                {#Salary Summary Information start#}
+                                <div class="tab-pane" id="notifications">
+                                    <div class="p-4 border-bottom"><h5 class="mb-0">Salary Summary</h5>
+                                    </div>
+                                </div>
+
+                                {#                                    Decuction start#}
+                                <div class="tab-pane" id="deduction">
+                                    <div class="row">
+                                        <div class="col-xl-12 col-md-12 col-lg-12 col-12 col-xs-12">
+                                            <div class="card-body">
+                                                <div class="text-wrap">
+                                                    <div class="panel tabs-style2">
+                                                        <div class="panel-head">
+                                                            <ul class="nav nav-tabs d-sm-flex d-block" role="tablist">
+                                                                <li class="nav-item mb-2 mb-sm-0" role="presentation"><a
+                                                                        class="nav-link active px-3"
+                                                                        data-bs-toggle="tab"
+                                                                        href="#fixed" aria-selected="false"
+                                                                        role="tab" tabindex="-1">Fixed Deduction</a>
+                                                                </li>
+                                                                <li class="nav-item ms-sm-2 ms-0" role="presentation"><a
+                                                                        class="nav-link" data-bs-toggle="tab"
+                                                                        href="#non-fixed" aria-selected="false"
+                                                                        role="tab" tabindex="-1">Non-Fixed Deduction</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                        <div class="tab-content">
+                                                            <div class="tab-pane active" id="fixed" role="tabpanel">
+                                                                <div class="card">
+                                                                    <div class="card-header flex-between">
+                                                                        <div class="col-xl-4 col-md-2 col-lg-4 col-xs-4">
+
+                                                                        </div>
+                                                                        <div class="col-xl-8 col-md-10 col-lg-8 col-xs-8">
+                                                                            <div class="row">
+                                                                                <div class="col-xl-9">
+                                                                                    <form method='post' action=''
+                                                                                          accept-charset='utf-8'
+                                                                                          enctype="multipart/form-data"
+                                                                                          id="searchForm">
+
+                                                                                        {% csrf_token %}
+                                                                                        <input type="search"
+                                                                                               id="search"
+                                                                                               name="search"
+                                                                                               class="form-control radius-4"
+                                                                                               placeholder="Search here..."
+                                                                                               oninput="setSearchValue(this.value);">
+                                                                                    </form>
+                                                                                </div>
+                                                                                <div class="col-xl-3">
+                                                                                    <button type="button"
+                                                                                            class="btn btn-w-lg btn-primary-light"
+                                                                                            onclick="HRMModelJS.ShowBox_AddSingleEmployeeFixedDeduction('NEW,{{ get_employee_code }}');">
+                                                                                        Add Fixed Deduction
+                                                                                    </button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="card-body">
+                                                                        <div class="table-responsive">
+                                                                            <table class="table table-bordered table-hover mb-0 text-md-nowrap">
+                                                                                <thead>
+                                                                                <tr>
+                                                                                    <th scope="col"
+                                                                                        class="sm-text text-capitalize align-middle text-center border-1 border">
+                                                                                        S/L
+                                                                                    </th>
+                                                                                    <th scope="col"
+                                                                                        class="sm-text text-capitalize align-middle text-center border-1 border">
+                                                                                        Deduction Name
+                                                                                    </th>
+                                                                                    <th scope="col"
+                                                                                        class="sm-text text-capitalize align-middle text-center border-1 border">
+                                                                                        Amount
+                                                                                    </th>
+                                                                                    <th scope="col"
+                                                                                        class="sm-text text-capitalize align-middle text-center border-1 border">
+                                                                                        Action
+                                                                                    </th>
+                                                                                </tr>
+                                                                                </thead>
+                                                                                <tbody id="fixed_deduction_body">
+
+                                                                                {% for data in employee_fix_deduction %}
+
+                                                                                    <tr class="align-middle">
+                                                                                        <th scope="row"
+                                                                                            class="xsm-text text-capitalize align-middle text-center">
+                                                                                            {{ forloop.counter }}
+                                                                                        </th>
+                                                                                        <td class="xsm-text text-capitalize align-middle text-center">
+                                                                                            {{ data.ded_type_code }}
+                                                                                        </td>
+                                                                                        <td class="xsm-text text-capitalize align-middle text-center">
+                                                                                            {{ data.deduction_amount }}
+                                                                                        </td>
+                                                                                        <td class="xsm-text text-capitalize align-middle text-center">
+                                                                                            <div class="btn-list">
+                                                                                                <button href="javascript:void(0)"
+                                                                                                        class="btn btn-sm btn-def tx-muted"
+                                                                                                        onclick="HRMModelJS.ShowBox_AddSingleEmployeeFixedDeduction('UPDATE,{{ get_employee_code }},{{ data.ded_fixed_code }},{{ data.ded_type_code_id }},{{ data.deduction_amount }}');">
+                                                                                                    <i class="fe fe-edit"></i>
+                                                                                                </button>
+                                                                                                <a href="javascript:void(0)"
+                                                                                                   class="btn btn-sm btn-def tx-muted">
+                                                                                                    <i class="fe fe-trash"></i>
+                                                                                                </a>
+                                                                                            </div>
+                                                                                        </td>
+                                                                                    </tr>
+
+                                                                                {% endfor %}
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+
+                                                            <div class="tab-pane" id="non-fixed" role="tabpanel">
+                                                                <div class="card">
+                                                                    <div class="card-header flex-between">
+                                                                        <div class="col-xl-4 col-md-2 col-lg-4 col-xs-4">
+
+                                                                        </div>
+                                                                        <div class="col-xl-8 col-md-10 col-lg-8 col-xs-8">
+                                                                            <div class="row">
+                                                                                <div class="col-xl-9">
+                                                                                    <form method='post' action=''
+                                                                                          accept-charset='utf-8'
+                                                                                          enctype="multipart/form-data"
+                                                                                          id="searchForm">
+
+                                                                                        {% csrf_token %}
+                                                                                        <input type="search"
+                                                                                               id="search"
+                                                                                               name="search"
+                                                                                               class="form-control radius-4"
+                                                                                               placeholder="Search here..."
+                                                                                               oninput="setSearchValue(this.value);">
+                                                                                    </form>
+                                                                                </div>
+                                                                                <div class="col-xl-3">
+                                                                                    <button type="button"
+                                                                                            class="btn btn-w-lg btn-primary-light"
+                                                                                            onclick="HRMModelJS.ShowBox_AddSingleEmployeeNonFixedDeduction('NEW^^{{ get_employee_code }}');">
+                                                                                        Add Non Fixed Deduction
+                                                                                    </button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="card-body">
+                                                                        <div class="table-responsive">
+                                                                            <table class="table table-bordered table-hover mb-0 text-md-nowrap">
+                                                                                <thead>
+                                                                                <tr>
+                                                                                    <th scope="col"
+                                                                                        class="sm-text text-capitalize align-middle text-center border-1 border">
+                                                                                        S/L
+                                                                                    </th>
+                                                                                    <th scope="col"
+                                                                                        class="sm-text text-capitalize align-middle text-center border-1 border">
+                                                                                        Deduction Name
+                                                                                    </th>
+                                                                                    <th scope="col"
+                                                                                        class="sm-text text-capitalize align-middle text-center border-1 border">
+                                                                                        Deduction Date
+                                                                                    </th>
+                                                                                    <th scope="col"
+                                                                                        class="sm-text text-capitalize align-middle text-center border-1 border">
+                                                                                        Payment Method
+                                                                                    </th>
+                                                                                    <th scope="col"
+                                                                                        class="sm-text text-capitalize align-middle text-center border-1 border">
+                                                                                        Amount
+                                                                                    </th>
+                                                                                    <th scope="col"
+                                                                                        class="sm-text text-capitalize align-middle text-center border-1 border">
+                                                                                        Action
+                                                                                    </th>
+                                                                                </tr>
+                                                                                </thead>
+                                                                                <tbody id="trans_deduction_body">
+
+                                                                                {% for data in employee_trans_deduction %}
+
+                                                                                    <tr class="align-middle">
+                                                                                        <th scope="row"
+                                                                                            class="xsm-text text-capitalize align-middle text-center">
+                                                                                            {{ forloop.counter }}
+                                                                                        </th>
+                                                                                        <td class="xsm-text text-capitalize align-middle text-center">
+                                                                                            {{ data.ded_type_name }}
+                                                                                        </td>
+                                                                                        <td class="xsm-text text-capitalize align-middle text-center">
+                                                                                            {{ data.trans_date }}
+                                                                                        </td>
+                                                                                        <td class="xsm-text text-capitalize align-middle text-center">
+                                                                                            {% if data.pm_name == 'Cash' %}
+                                                                                                {{ data.pm_name }}
+
+                                                                                            {% elif data.pm_name == 'bank' %}
+                                                                                                {{ data.pm_name }}-
+                                                                                                {{ data.bank_name }}
+                                                                                            {% else %}
+                                                                                                {{ data.pm_name }}-
+                                                                                                {{ data.account_number }}
+                                                                                            {% endif %}
+
+                                                                                        </td>
+                                                                                        <td class="xsm-text text-capitalize align-middle text-center">
+                                                                                            {{ data.trans_amount }}
+                                                                                        </td>
+                                                                                        <td class="xsm-text text-capitalize align-middle text-center">
+                                                                                            <div class="btn-list">
+                                                                                                <button href="javascript:void(0)"
+                                                                                                        class="btn btn-sm btn-def tx-muted"
+                                                                                                        onclick="HRMModelJS.ShowBox_AddSingleEmployeeNonFixedDeduction('UPDATE^^{{ get_employee_code }}^^{{ data.ded_trans_code }}^^{{ data.ded_type_code_id }}^^{{ data.payment_code_id }}^^{{ data.trans_date }}^^{{ data.trans_amount }}');">
+                                                                                                    <i class="fe fe-edit"></i>
+                                                                                                </button>
+                                                                                                <a href="javascript:void(0)"
+                                                                                                   class="btn btn-sm btn-def tx-muted">
+                                                                                                    <i class="fe fe-trash"></i>
+                                                                                                </a>
+                                                                                            </div>
+                                                                                        </td>
+                                                                                    </tr>
+
+                                                                                {% endfor %}
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                                {#                                    Allowance start#}
+                                <div class="tab-pane" id="allowance">
+                                    <div class="row">
+                                        <div class="col-xl-12 col-md-12 col-lg-12 col-12 col-xs-12">
+                                            <div class="card-body">
+                                                <div class="text-wrap">
+                                                    <div class="panel tabs-style2">
+                                                        <div class="panel-head">
+                                                            <ul class="nav nav-tabs d-sm-flex d-block" role="tablist">
+                                                                <li class="nav-item mb-2 mb-sm-0" role="presentation"><a
+                                                                        class="nav-link active px-3"
+                                                                        data-bs-toggle="tab"
+                                                                        href="#fixed_all" aria-selected="false"
+                                                                        role="tab" tabindex="-1">Fixed Allowance</a>
+                                                                </li>
+
+                                                                <li class="nav-item ms-sm-2 ms-0" role="presentation"><a
+                                                                        class="nav-link" data-bs-toggle="tab"
+                                                                        href="#non-fixed_all" aria-selected="false"
+                                                                        role="tab" tabindex="-1">Non-Fixed Allowance</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                        <div class="tab-content">
+                                                            <div class="tab-pane active" id="fixed_all" role="tabpanel">
+                                                                <div class="card">
+                                                                    <div class="card-header flex-between">
+                                                                        <div class="col-xl-4 col-md-2 col-lg-4 col-xs-4">
+
+                                                                        </div>
+                                                                        <div class="col-xl-8 col-md-10 col-lg-8 col-xs-8">
+                                                                            <div class="row">
+                                                                                <div class="col-xl-9">
+                                                                                    <form method='post' action=''
+                                                                                          accept-charset='utf-8'
+                                                                                          enctype="multipart/form-data"
+                                                                                          id="searchForm">
+
+                                                                                        {% csrf_token %}
+                                                                                        <input type="search"
+                                                                                               id="search"
+                                                                                               name="search"
+                                                                                               class="form-control radius-4"
+                                                                                               placeholder="Search here..."
+                                                                                               oninput="setSearchValue(this.value);">
+                                                                                    </form>
+                                                                                </div>
+                                                                                <div class="col-xl-3">
+                                                                                    <button type="button"
+                                                                                            class="btn btn-w-lg btn-primary-light"
+                                                                                            onclick="HRMModelJS.ShowBox_AddSingleEmployeeFixedAllowance('NEW,{{ get_employee_code }}');">
+                                                                                        Add Fixed Allowance
+                                                                                    </button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="card-body">
+                                                                        <div class="table-responsive">
+                                                                            <table class="table table-bordered table-hover mb-0 text-md-nowrap">
+                                                                                <thead>
+                                                                                <tr>
+                                                                                    <th scope="col"
+                                                                                        class="sm-text text-capitalize align-middle text-center border-1 border">
+                                                                                        S/L
+                                                                                    </th>
+                                                                                    <th scope="col"
+                                                                                        class="sm-text text-capitalize align-middle text-center border-1 border">
+                                                                                        Allowance Name
+                                                                                    </th>
+                                                                                    <th scope="col"
+                                                                                        class="sm-text text-capitalize align-middle text-center border-1 border">
+                                                                                        Amount
+                                                                                    </th>
+                                                                                    <th scope="col"
+                                                                                        class="sm-text text-capitalize align-middle text-center border-1 border">
+                                                                                        Action
+                                                                                    </th>
+                                                                                </tr>
+                                                                                </thead>
+                                                                                <tbody id="fixed_allowance_body">
+
+                                                                                {% for data in employee_fix_allowance %}
+
+                                                                                    <tr class="align-middle">
+                                                                                        <th scope="row"
+                                                                                            class="xsm-text text-capitalize align-middle text-center">
+                                                                                            {{ forloop.counter }}
+                                                                                        </th>
+                                                                                        <td class="xsm-text text-capitalize align-middle text-center">
+                                                                                            {{ data.all_type_code }}
+                                                                                        </td>
+                                                                                        <td class="xsm-text text-capitalize align-middle text-center">
+                                                                                            {{ data.allowance_amount }}
+                                                                                        </td>
+                                                                                        <td class="xsm-text text-capitalize align-middle text-center">
+                                                                                            <div class="btn-list">
+                                                                                                <button href="javascript:void(0)"
+                                                                                                        class="btn btn-sm btn-def tx-muted"
+                                                                                                        onclick="HRMModelJS.ShowBox_AddSingleEmployeeFixedAllowance('UPDATE,{{ get_employee_code }},{{ data.all_fixed_code }},{{ data.all_type_code_id }},{{ data.allowance_amount }}');">
+                                                                                                    <i class="fe fe-edit"></i>
+                                                                                                </button>
+                                                                                                <a href="javascript:void(0)"
+                                                                                                   class="btn btn-sm btn-def tx-muted">
+                                                                                                    <i class="fe fe-trash"></i>
+                                                                                                </a>
+                                                                                            </div>
+                                                                                        </td>
+                                                                                    </tr>
+
+                                                                                {% endfor %}
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+
+                                                            <div class="tab-pane" id="non-fixed_all" role="tabpanel">
+                                                                <div class="card">
+                                                                    <div class="card-header flex-between">
+                                                                        <div class="col-xl-4 col-md-2 col-lg-4 col-xs-4">
+
+                                                                        </div>
+                                                                        <div class="col-xl-8 col-md-10 col-lg-8 col-xs-8">
+                                                                            <div class="row">
+                                                                                <div class="col-xl-9">
+                                                                                    <form method='post' action=''
+                                                                                          accept-charset='utf-8'
+                                                                                          enctype="multipart/form-data"
+                                                                                          id="searchForm">
+
+                                                                                        {% csrf_token %}
+                                                                                        <input type="search"
+                                                                                               id="search"
+                                                                                               name="search"
+                                                                                               class="form-control radius-4"
+                                                                                               placeholder="Search here..."
+                                                                                               oninput="setSearchValue(this.value);">
+                                                                                    </form>
+                                                                                </div>
+                                                                                <div class="col-xl-3">
+                                                                                    <button type="button"
+                                                                                            class="btn btn-w-lg btn-primary-light"
+                                                                                            onclick="HRMModelJS.ShowBox_AddSingleEmployeeNonFixedAllowance('NEW^^{{ get_employee_code }}');">
+                                                                                        Add Non Fixed Allowance
+                                                                                    </button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="card-body">
+                                                                        <div class="table-responsive">
+                                                                            <table class="table table-bordered table-hover mb-0 text-md-nowrap">
+                                                                                <thead>
+                                                                                <tr>
+                                                                                    <th scope="col"
+                                                                                        class="sm-text text-capitalize align-middle text-center border-1 border">
+                                                                                        S/L
+                                                                                    </th>
+                                                                                    <th scope="col"
+                                                                                        class="sm-text text-capitalize align-middle text-center border-1 border">
+                                                                                        Allowance Name
+                                                                                    </th>
+                                                                                    <th scope="col"
+                                                                                        class="sm-text text-capitalize align-middle text-center border-1 border">
+                                                                                        Allowance Date
+                                                                                    </th>
+                                                                                    <th scope="col"
+                                                                                        class="sm-text text-capitalize align-middle text-center border-1 border">
+                                                                                        Payment Method
+                                                                                    </th>
+                                                                                    <th scope="col"
+                                                                                        class="sm-text text-capitalize align-middle text-center border-1 border">
+                                                                                        Amount
+                                                                                    </th>
+                                                                                    <th scope="col"
+                                                                                        class="sm-text text-capitalize align-middle text-center border-1 border">
+                                                                                        Action
+                                                                                    </th>
+                                                                                </tr>
+                                                                                </thead>
+                                                                                <tbody id="trans_allowance_body">
+
+                                                                                {% for data in employee_trans_allowance %}
+
+                                                                                    <tr class="align-middle">
+                                                                                        <th scope="row"
+                                                                                            class="xsm-text text-capitalize align-middle text-center">
+                                                                                            {{ forloop.counter }}
+                                                                                        </th>
+                                                                                        <td class="xsm-text text-capitalize align-middle text-center">
+                                                                                            {{ data.all_type_name }}
+                                                                                        </td>
+                                                                                        <td class="xsm-text text-capitalize align-middle text-center">
+                                                                                            {{ data.trans_date }}
+                                                                                        </td>
+                                                                                        <td class="xsm-text text-capitalize align-middle text-center">
+                                                                                            {% if data.pm_name == 'Cash' %}
+                                                                                                {{ data.pm_name }}
+
+                                                                                            {% elif data.pm_name == 'bank' %}
+                                                                                                {{ data.pm_name }}--
+                                                                                                {{ data.bank_name }}
+                                                                                            {% else %}
+                                                                                                {{ data.pm_name }}--
+                                                                                                {{ data.account_number }}
+                                                                                            {% endif %}
+                                                                                        </td>
+                                                                                        <td class="xsm-text text-capitalize align-middle text-center">
+                                                                                            {{ data.trans_amount }}
+                                                                                        </td>
+                                                                                        <td class="xsm-text text-capitalize align-middle text-center">
+                                                                                            <div class="btn-list">
+                                                                                                <button href="javascript:void(0)"
+                                                                                                        class="btn btn-sm btn-def tx-muted"
+                                                                                                        onclick="HRMModelJS.ShowBox_AddSingleEmployeeNonFixedAllowance('UPDATE^^{{ get_employee_code }}^^{{ data.all_trans_code }}^^{{ data.all_type_code_id }}^^{{ data.payment_code_id }}^^{{ data.trans_date }}^^{{ data.trans_amount }}');">
+                                                                                                    <i class="fe fe-edit"></i>
+                                                                                                </button>
+                                                                                                <a href="javascript:void(0)"
+                                                                                                   class="btn btn-sm btn-def tx-muted">
+                                                                                                    <i class="fe fe-trash"></i>
+                                                                                                </a>
+                                                                                            </div>
+                                                                                        </td>
+                                                                                    </tr>
+
+                                                                                {% endfor %}
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                {#                                    Attendance start#}
+                                <div class="tab-pane" id="attendance">
+                                    <div class="p-4 border-bottom"><h5 class="mb-0">Attendance</h5>
+                                    </div>
+                                    <div class="row m-2">
+                                        <div class="col-md-4">
+                                            <form class="form form-horizontal" action="" method="post"
+                                                  accept-charset='utf-8' enctype="multipart/form-data"
+                                                  id="attendanceform">
+                                                {% csrf_token %}
+                                                <div class="card punch-status">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title h5">Timesheet <small
+                                                                class="text-muted h4">11 Mar 2019</small></h5>
+                                                        <div class="card">
+                                                            <div class="m-3 row">
+                                                                <div class="col-10">
+                                                                    <h6>Punch In at</h6>
+                                                                    <div id="punch_in_time" style="display: block;">
+                                                                        <p>Wed, 11th Mar 2019 10.00 AM</p>
+                                                                    </div>
+                                                                    <div id="input_punch_in" style="display: none;">
+                                                                        <label for="recipient-name"
+                                                                               class="col-form-label">
+                                                                            Start Time:<small
+                                                                                class="text-warning">*</small>
+                                                                        </label>
+                                                                        <div class="form-group">
+                                                                            <div class="input-group">
+                                                                                <div class="input-group-text"><i
+                                                                                        class="typcn typcn-stopwatch tx-24 lh--9 op-6"></i>
+                                                                                </div>
+                                                                                <input type="text"
+                                                                                       class="form-control flatpickr-input active"
+                                                                                       id="check_in" name="check_in"
+                                                                                       placeholder="Choose time"
+                                                                                       readonly="readonly" value="">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-2">
+                                                                    <button type="button"
+                                                                            class="btn btn-sm btn-def tx-muted"
+                                                                            onclick="HRMModelJS.UpdatePunchInTime();">
+                                                                        <i class="fe fe-edit"></i></button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="punch-info mb-4">
+                                                            <div class="punch-hours rounded-circle">
+                                                                <span class="card text-center h3 "><br>3.45 hrs<br><br></span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card">
+                                                            <div class="m-3 row">
+                                                                <div class="col-10">
+                                                                    <h6>Punch Out at</h6>
+                                                                    <div id="punch_out_time"
+                                                                         style="display: block;">
+                                                                        <p>Wed, 11th Mar 2019 10.00 AM</p>
+                                                                    </div>
+                                                                    <div id="input_punch_out"
+                                                                         style="display: none;">
+                                                                        <label for="recipient-name"
+                                                                               class="col-form-label">Start Time:
+                                                                            <small
+                                                                                    class="text-warning">*</small></label>
+                                                                        <div class="form-group">
+                                                                            <div class="input-group">
+                                                                                <div class="input-group-text"><i
+                                                                                        class="typcn typcn-stopwatch tx-24 lh--9 op-6"></i>
+                                                                                </div>
+                                                                                <input type="text"
+                                                                                       class="form-control flatpickr-input active"
+                                                                                       id="check_out"
+                                                                                       name="check_out"
+                                                                                       placeholder="Choose time"
+                                                                                       readonly="readonly" value="">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-2">
+                                                                    <button type="button"
+                                                                            class="btn btn-sm btn-def tx-muted"
+                                                                            onclick="HRMModelJS.UpdatePunchOutTime();">
+                                                                        <i class="fe fe-edit"></i></button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        {#                                                            <div class="statistics">#}
+                                                        {#                                                                <div class="row">#}
+                                                        {#                                                                    <div class="col-md-6 col-6 ">#}
+                                                        {#                                                                        <div class="stats-box card text-center"><br>#}
+                                                        {#                                                                            <p>Break</p>#}
+                                                        {#                                                                            <h4>1.21 hrs</h4>#}
+                                                        {#                                                                        </div>#}
+                                                        {#                                                                    </div>#}
+                                                        {#                                                                    <div class="col-md-6 col-6">#}
+                                                        {#                                                                        <div class="stats-box card text-center"><br>#}
+                                                        {#                                                                            <p>Overtime</p>#}
+                                                        {#                                                                            <h4>3 hrs</h4>#}
+                                                        {#                                                                        </div>#}
+                                                        {#                                                                    </div>#}
+                                                        {#                                                                </div>#}
+                                                        {#                                                            </div>#}
+                                                        <div class="card-footer mb-0 text-xl-left">
+                                                            <button class="btn btn-primary px-5" type="submit"
+                                                                    id="submitBtn">
+                                                                Save Attendance Time
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="card att-statistics">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">Statistics</h5>
+                                                    <div class="stats-list">
+                                                        <div class="stats-info card p-2">
+                                                            <p>Today <strong>3.45 <small>/ 8
+                                                                hrs</small></strong>
+                                                            </p>
+                                                            <div class="progress" style="height:5px">
+                                                                <div class="progress-bar bg-primary"
+                                                                     role="progressbar" style="width: 31%"
+                                                                     aria-valuenow="10" aria-valuemin="0"
+                                                                     aria-valuemax="100"></div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="stats-info card p-2">
+                                                            <p>This Week <strong>28 <small>/ 40
+                                                                hrs</small></strong>
+                                                            </p>
+                                                            <div class="progress" style="height:5px">
+                                                                <div class="progress-bar bg-warning"
+                                                                     role="progressbar" style="width: 31%"
+                                                                     aria-valuenow="31" aria-valuemin="0"
+                                                                     aria-valuemax="100"></div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="stats-info card p-2">
+                                                            <p>This Month <strong>90 <small>/ 160
+                                                                hrs</small></strong></p>
+                                                            <div class="progress" style="height:5px">
+                                                                <div class="progress-bar bg-success"
+                                                                     role="progressbar" style="width: 62%"
+                                                                     aria-valuenow="62" aria-valuemin="0"
+                                                                     aria-valuemax="100"></div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="stats-info card p-2">
+                                                            <p>Remaining <strong>90 <small>/ 160
+                                                                hrs</small></strong></p>
+                                                            <div class="progress" style="height:5px">
+                                                                <div class="progress-bar bg-danger"
+                                                                     role="progressbar" style="width: 62%"
+                                                                     aria-valuenow="62" aria-valuemin="0"
+                                                                     aria-valuemax="100"></div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="stats-info card p-2">
+                                                            <p>Overtime <strong>4</strong></p>
+                                                            <div class="progress" style="height:5px">
+                                                                <div class="progress-bar bg-info"
+                                                                     role="progressbar"
+                                                                     style="width: 22%" aria-valuenow="22"
+                                                                     aria-valuemin="0"
+                                                                     aria-valuemax="100"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="card recent-activity">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">Today Activity</h5>
+                                                    <div class="order-track">
+
+                                                        <div class="accordion" id="basicAccordion2">
+                                                            <div class="accordion-item border-0 bg-transparent">
+                                                                <div class="accordion-body" id="headingThree"><a
+                                                                        class="px-0 pt-0" role="button"
+                                                                        aria-controls="basicThree">
+
+                                                                </a></div>
+                                                                <div id="basicThree"
+                                                                     class="accordion-collapse show collapse border-top-0"
+                                                                     aria-labelledby="headingThree"
+                                                                     data-bs-parent="#basicAccordion2">
+                                                                    <div class="accordion-body pt-0 pd-s-40">
+                                                                        <div class="sub-track"><p class="mb-0">
+                                                                            Punch
+                                                                            in at
+                                                                        </p><span
+                                                                                class="tx-muted">Mar 03, 2022, 15:36</span>
+                                                                        </div>
+                                                                        <div class="sub-track"><p class="mb-0">
+                                                                            Punch
+                                                                            out at</p><span
+                                                                                class="tx-muted">Mar 03, 2022, 15:36</span>
+                                                                        </div>
+                                                                        <div class="sub-track"><p class="mb-0">
+                                                                            Punch
+                                                                            in at
+                                                                        </p><span
+                                                                                class="tx-muted">Mar 03, 2022, 15:36</span>
+                                                                        </div>
+                                                                        <div class="sub-track"><p class="mb-0">
+                                                                            Punch
+                                                                            out at
+                                                                        </p><span
+                                                                                class="tx-muted">Mar 03, 2022, 15:36</span>
+                                                                        </div>
+                                                                        <div class="sub-track"><p class="mb-0">
+                                                                            Punch
+                                                                            in at
+                                                                        </p><span
+                                                                                class="tx-muted">Mar 03, 2022, 15:36</span>
+                                                                        </div>
+                                                                        <div class="sub-track"><p class="mb-0">
+                                                                            Punch
+                                                                            out at
+                                                                        </p><span
+                                                                                class="tx-muted">Mar 03, 2022, 15:36</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="accordion" id="basicAccordion3">
+                                                            <div class="accordion-item border-0 bg-transparent next-step">
+
+                                                                <div id="basicFour"
+                                                                     class="accordion-collapse collapse border-top-0"
+                                                                     aria-labelledby="headingFour"
+                                                                     data-bs-parent="#basicAccordion3">
+                                                                    <div class="accordion-body pt-0 pd-s-40">
+                                                                        <div class="sub-track"><p class="mb-0">
+                                                                            Your order is out for devlivery</p>
+                                                                            <span class="tx-muted tx-11">
+                                                                                    Mar 03, 2022, 15:36 (expected)
+                                                                                </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row m-2">
+                                        <div class="col-3">
+                                            <input type="date" class="form-control"
+                                                   id="dp1" placeholder="Date range picker">
+                                        </div>
+                                        <div class="col-3">
+                                            <select class="form-select">
+                                                <option selected>Select Month</option>
+                                                <option value="1">Janurary</option>
+                                                <option value="2">Feburary</option>
+                                                <option value="3">March</option>
+                                                <option value="4">April</option>
+                                                <option value="5">May</option>
+                                                <option value="6">June</option>
+                                                <option value="7">July</option>
+                                                <option value="8">August</option>
+                                                <option value="9">September</option>
+                                                <option value="10">October</option>
+                                                <option value="11">November</option>
+                                                <option value="12">December</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-3">
+                                            <select class="form-select">
+                                                <option selected>Select Year</option>
+                                                <option value="1">2015</option>
+                                                <option value="2">2016</option>
+                                                <option value="3">2017</option>
+                                                <option value="4">2018</option>
+                                                <option value="5">2019</option>
+                                                <option value="6">2020</option>
+                                                <option value="7">2021</option>
+                                                <option value="8">2022</option>
+                                                <option value="9">2023</option>
+
+                                            </select>
+                                        </div>
+                                        <div class="col-3 d-grid gap-2 ">
+                                            <button class="btn btn-primary ">Search</button>
+                                        </div>
+
+                                    </div>
+                                    <br>
+                                    <div class="row m-2">
+                                        <table class="table">
+                                            <thead>
+                                            <tr>
+                                                <th scope="col"
+                                                    class="xsm-text text-capitalize align-middle text-center">#
+                                                </th>
+                                                <th scope="col"
+                                                    class="xsm-text text-capitalize align-middle text-center">Date
+                                                </th>
+                                                <th scope="col"
+                                                    class="xsm-text text-capitalize align-middle text-center">Punch
+                                                    In
+                                                </th>
+                                                <th scope="col"
+                                                    class="xsm-text text-capitalize align-middle text-center">Punch
+                                                    Out
+                                                </th>
+                                                <th scope="col"
+                                                    class="xsm-text text-capitalize align-middle text-center">
+                                                    Production
+                                                </th>
+                                                <th scope="col"
+                                                    class="xsm-text text-capitalize align-middle text-center">Break
+                                                </th>
+                                                <th scope="col"
+                                                    class="xsm-text text-capitalize align-middle text-center">
+                                                    Overtime
+                                                </th>
+                                                {#                                                    <th scope="col">Action</th>#}
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for atten in attendance_info %}
+                                                <tr>
+                                                    <th scope="row"
+                                                        class="xsm-text text-capitalize align-middle text-center">
+                                                        {{ forloop.counter }}
+                                                    </th>
+                                                    <td class="xsm-text text-capitalize align-middle text-center">
+                                                        Date
+                                                    </td>
+                                                    <td class="xsm-text text-capitalize align-middle text-center">
+                                                        {{ atten.check_in }}
+                                                    </td>
+                                                    <td class="xsm-text text-capitalize align-middle text-center">
+                                                        {{ atten.check_out }}
+                                                    </td>
+                                                    <td class="xsm-text text-capitalize align-middle text-center">
+                                                        Production
+                                                    </td>
+                                                    <td class="xsm-text text-capitalize align-middle text-center">
+                                                        Break
+                                                    </td>
+                                                    <td class="xsm-text text-capitalize align-middle text-center">
+                                                        Overtime
+                                                    </td>
+                                                    {#                                                        <td class="xsm-text text-capitalize align-middle text-center">#}
+                                                    {#                                                            <div class="btn-list">#}
+                                                    {#                                                                <a class="btn btn-sm btn-def tx-muted">#}
+                                                    {#                                                                    <i class="fe fe-edit"></i>#}
+                                                    {#                                                                </a>#}
+                                                    {#                                                                <a class="btn btn-sm btn-def tx-muted">#}
+                                                    {#                                                                    <i class="fe fe-trash"></i>#}
+                                                    {#                                                                </a>#}
+                                                    {#                                                            </div>#}
+                                                    {#                                                        </td>#}
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+                                {#                                    Salary start#}
+                                <div class="tab-pane" id="salary">
+                                    <div class="row">
+                                        <div class="col-xl-12 col-md-12 col-lg-12 col-12 col-xs-12">
+                                            <div class="card">
+                                                <div class="card-header flex-between">
+                                                    <div class="col-xl-4 col-md-2 col-lg-4 col-xs-4">
+
+                                                    </div>
+                                                    <div class="col-xl-8 col-md-10 col-lg-8 col-xs-8">
+                                                        <div class="row">
+
+                                                            <div class="col-xl-10">
+                                                            </div>
+                                                            <div class="col-xl-2">
+
+                                                                <button type="button"
+                                                                        class="btn btn-primary-light"
+                                                                        onclick="HRMModelJS.ShowBox_ForSalaryHistory('{{ get_employee_code }}');">
+                                                                  Salary History
+                                                                </button>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-bordered table-hover mb-0 text-md-nowrap">
+                                                            <thead>
+                                                            <tr>
+
+
+                                                                <th scope="col"
+                                                                    class="sm-text text-capitalize align-middle text-center border-1 border">
+                                                                    Pay Frequency
+                                                                </th>
+                                                                <th scope="col"
+                                                                    class="sm-text text-capitalize align-middle text-center border-1 border">
+                                                                    Rate Type
+                                                                </th>
+                                                                <th scope="col"
+                                                                    class="sm-text text-capitalize align-middle text-center border-1 border">
+                                                                    Rate Amount
+                                                                </th>
+                                                                <th scope="col"
+                                                                    class="sm-text text-capitalize align-middle text-center border-1 border">
+                                                                    Salary
+                                                                </th>
+
+                                                                <th scope="col"
+                                                                    class="sm-text text-capitalize align-middle text-center border-1 border">
+                                                                    Action
+                                                                </th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody id="emp_salary_body">
+
+                                                            {% for data in salary_info %}
+
+                                                                <tr class="align-middle">
+
+
+                                                                    <td class="sm-text text-capitalize align-middle text-center border-1 border">
+                                                                        {{ data.pay_frequency }}
+                                                                    </td>
+                                                                    <td class="sm-text text-capitalize align-middle text-center border-1 border">
+                                                                        {{ data.rate_type }}
+                                                                    </td>
+                                                                    <td class="sm-text text-capitalize align-middle text-center border-1 border">
+                                                                        {{ data.rate_amount }}
+                                                                    </td>
+                                                                    <td class="sm-text text-capitalize align-middle text-center border-1 border">
+                                                                        {{ data.basic_salary }}
+                                                                    </td>
+                                                                    <td class="sm-text text-capitalize align-middle text-center border-1 border">
+                                                                        <button href="javascript:void(0)"
+                                                                                class="btn btn-sm btn-def tx-muted"
+                                                                                onclick="HRMModelJS.ShowBox_UpdateSingleEmployeeSalary('{{ get_employee_code }}^^{{ data.salary_code }}^^{{ data.pay_frequency }}^^{{ data.rate_type }}^^{{ data.rate_amount }}^^{{ data.basic_salary }}^^Single');">
+                                                                            <i class="fe fe-edit"></i>
+                                                                        </button>
+                                                                    </td>
+                                                                </tr>
+                                                            {% endfor %}
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                {#                                    Location start#}
+                                <div class="tab-pane" id="location">
+                                    <div class="row">
+                                        <div class="col-xl-12 col-md-12 col-lg-12 col-12 col-xs-12">
+                                            <div class="card">
+                                                <div class="card-header flex-between">
+                                                    <div class="col-xl-6">
+                                                        <div class="card-title">Employee Location</div>
+                                                    </div>
+                                                    <div class="col-xl-6">
+                                                        <div class="row">
+                                                            <div class="col-xl-8">
+                                                                <input type="search" id="search" name="search"
+                                                                       class="form-control radius-4"
+                                                                       placeholder="Search here..."
+                                                                       oninput="setSearchValue(this.value);">
+                                                            </div>
+                                                            <div class="col-xl-4">
+                                                                <button type="button"
+                                                                        class="btn btn-w-lg btn-primary-light"
+                                                                        onclick="HRMModelJS.ShowBox_AddEmployeeLocation('NEW,{{ get_employee_code }}');">
+                                                                    Add New
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-bordered table-hover mb-0 text-md-nowrap">
+                                                            <thead>
+                                                            <tr>
+                                                                <th scope="col"
+                                                                    class="sm-text text-capitalize align-middle text-center border-1 border">
+                                                                    S/L
+                                                                </th>
+
+                                                                <th scope="col"
+                                                                    class="sm-text text-capitalize align-middle text-center border-1 border">
+                                                                    Employee
+                                                                </th>
+                                                                <th scope="col"
+                                                                    class="sm-text text-capitalize align-middle text-center border-1 border">
+                                                                    Store Location
+                                                                </th>
+
+                                                                <th scope="col"
+                                                                    class="sm-text text-capitalize align-middle text-center border-1 border">
+                                                                    Status
+                                                                </th>
+                                                                <th scope="col"
+                                                                    class="sm-text text-capitalize align-middle text-center border-1 border">
+                                                                    Action
+                                                                </th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody id="emp_location_body">
+
+                                                            {% for employee in employee_location %}
+
+                                                                <tr class="align-middle">
+                                                                    <th scope="row"
+                                                                        class="xsm-text text-capitalize align-middle text-center">
+                                                                        {{ forloop.counter }}
+                                                                    </th>
+                                                                    <th scope="row"
+                                                                        class="xsm-text text-capitalize align-middle text-center">
+                                                                        {{ employee.name }}
+                                                                    </th>
+
+                                                                    <th scope="row"
+                                                                        class="xsm-text text-capitalize align-middle text-center">
+                                                                        {{ employee.loc_store_name }}
+                                                                    </th>
+                                                                    <th scope="row"
+                                                                        class="xsm-text text-capitalize align-middle text-center">
+                                                                        <span class="badge badge-pill bg-{% if employee.status == "Active" %}primary-transparent tx-primary{% elif data.status == "Inactive" %}secondary-transparent tx-secondary{% else %}orange-transparent tx-orange{% endif %} py-2 tx-11">{{ employee.status }}</span>
+
+                                                                    </th>
+                                                                    <th class="xsm-text text-capitalize align-middle text-center">
+                                                                        <div class="btn-list">
+                                                                            <button class="btn btn-sm btn-def tx-muted"
+                                                                                    onclick="HRMModelJS.ShowBox_AddEmployeeLocation('UPDATE,{{ get_employee_code }},{{ employee.id }},{{ employee.loc_store_code_id }},{{ employee.status }}');">
+                                                                                <i class="fe fe-edit"></i>
+                                                                            </button>
+                                                                        </div>
+                                                                    </th>
+                                                                </tr>
+                                                            {% endfor %}
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/ row -->
+
+{% endblock %}
+
+
+{% block js %}
+    <script src="{% static "AppHRM.js" %}" type="text/javascript"></script>
+    <script>
+
+        var HRMModelJS = null;
+        // ADD EMPLOYEE PAYMENT METHOD
+        var add_emp_payment = '{% url "AddEmployeePaymentView" %}';
+        {#let add_emp_payment_without_refresh = '{% url "AddEmpPayMethodWithoutRefresh" %}';#}
+        // GET CMD EMPLOYE LOCATION ON CONDITION
+        var cmd_employee_location = '{% url "FillCmdEmployeeLocation" %}';
+        // FILL SINGLE EMPLOYEE LOCATION
+        var add_emp_location = '{% url "AddEmployeeLocation" %}';
+        //  FILL FIXED DEDUCTION DROPDOWN
+        var cmd_deduction_type_name = '{% url "FillCmdDeductionTypeName" %}';
+        // FILL FIXED ALLOWANCE DROPDOWN
+        var cmd_fixed_allowance_type_name = '{% url "FillCmdFixedAllowanceTypeName" %}';
+        // FILL DEDUCTION TYPE NON FIXED DROPDOWN FILL
+        var cmd_non_deduction_type_name = '{% url "FillCmdNonDeductionTypeName" %}';
+        // FILL EMPLOYEE PAYMENT METHOD LIST
+        var cmd_employee_payment_method_list = '{% url "FillCmdEmployeePaymentMethod" %}';
+        // ADD SINGLE EMPLOYEE FIXED DEDUCTION
+        var add_single_employee_fixed_deduction = '{% url "SingleEmployeeFixedDeduction" %}';
+        // ADD SINGLE EMPLOYEE FIXED ALLOWANCE
+        var add_single_employee_fixed_allowance = '{% url "SingleEmployeeFixedAllowance" %}';
+        // ADD SINGLE EMPLOYEE NON FIXED DEDUCTION
+        var add_single_employee_non_fixed_deduction = '{% url "SingleEmployeeNonFixedDeduction" %}';
+        // ADD SINGLE EMPLOYEE NON FIXED ALLOWANCE
+        var add_single_employee_non_fixed_allowance = '{% url "SingleEmployeeNonFixedAllowance" %}';
+        // FILL ALLOWANCE TYPE NON FIXED DROPDOWN FILL
+        var cmd_non_allowance_type_name = '{% url "FillCmdNonAllowanceTypeName" %}';
+        // ADD SINGLE EMPLOYEE SALARY
+        var update_single_employee_salary = '{% url "UpdateSingleEmployeeSalary" %}';
+        // SHOW SALARY HISTORY DETAIL
+        var salary_history_detail = '{% url "ShowSalaryHistoryDetail" %}';
+
+
+        var message_view = '{{ message }}';
+        $(document).ready(function () {
+            HRMModelJS = new AppHRMModel();
+            HRMModelJS.appConstructor();
+        });
+        $('cmd_pay_freguency').select2()
+
+        flatpickr("#check_in", {
+            enableTime: true,
+            noCalendar: true,
+            dateFormat: "H:i",
+        });
+
+        flatpickr("#check_out", {
+            enableTime: true,
+            noCalendar: true,
+            dateFormat: "H:i",
+        });
+
+        function UpdatePunchInTime() {
+
+            $("#punch_in_time").css("display", "none");
+            $("#input_punch_in").css("display", "block");
+
+        }
+
+        function UpdatePunchOutTime() {
+
+            $("#punch_out_time").css("display", "none");
+            $("#input_punch_out").css("display", "block");
+
+        }
+    </script>
+{% endblock %}

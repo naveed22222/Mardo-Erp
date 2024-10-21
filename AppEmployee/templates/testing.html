@@ -1,0 +1,428 @@
+{% extends "master.html" %}
+{% load static %}
+
+{% block title %}Add Employee{% endblock %}
+
+{% block PageTitle %}
+    <div style="text-align: center;">Add Employee</div>
+{% endblock %}
+
+{% block PageHierechy %}
+    <li class="breadcrumb-item tx-15"><a href="{% url 'Dashboard' %}">Employee</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Add Employee</li>
+{% endblock %}
+
+{% block content %}
+    <div class="row row-sm">
+        <form class="form form-horizontal" action="" method="post" accept-charset='utf-8'
+              enctype="multipart/form-data" id="employeeform">
+
+            {% csrf_token %}
+            <div id="info_message"></div>
+
+            <div class="row row-sm">
+
+                <div class="col-xl-3">
+                    <div class="card mb-1">
+                        <div class="card-header mb-0">
+                            <div class="card-title">Position Hierarchy</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-xl-12">
+                                    <div class="form-group mb-2">
+                                        <label class="form-label">
+                                            <span class="text-primary float-md-left">Department</span>
+                                            <span class="text-secondary float-md-left">*</span>
+                                            <span class="text-danger d-none float-md-left ps-lg-1"
+                                                  id="msg_material_cate">Please Fill it.</span>
+                                        </label>
+                                        <select id="cmd_department" name="cmd_department"
+                                                class="form-control form-select select2-no-search select2-hidden-accessible">
+                                            <option label="Choose one"></option>
+                                            {% for department in department_list %}
+                                                <option value="{{ department.department_code }}">
+                                                    {{ department.department_name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-xl-12">
+                                    <div class="form-group mb-2">
+                                        <label class="form-label">
+                                            <span class="text-primary float-md-left">Position</span>
+                                            <span class="text-secondary float-md-left">*</span>
+                                            <span class="text-danger d-none float-md-left ps-lg-1"
+                                                  id="msg_material_sub_cate">Please Fill it.</span>
+                                        </label>
+                                        <select id="cmd_position" name="cmd_position"
+                                                class="form-control form-select select2-no-search select2-hidden-accessible">
+                                            <option label="Choose one"></option>
+                                            {% for position in position_list %}
+                                                <option value="{{ position.position_code }}">
+                                                    {{ position.position_name }}
+                                                </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-xl-12">
+                                    <div class="form-group mb-2">
+                                        <label class="form-label">
+                                            <span class="text-primary float-md-left">Duty Type</span>
+                                            <span class="text-danger d-none float-md-left ps-lg-1"
+                                                  id="msg_material_cate">Please Fill it.</span>
+                                        </label>
+                                        {{ form.duty_type }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-9">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Basic Information</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-xl-4">
+                                    <div class="form-group mb-2">
+                                        <label class="form-label">
+                                            <span class="text-primary float-md-left">First Name</span>
+                                            <span class="text-secondary float-md-left"></span>
+                                            <span class="text-danger d-none float-md-left ps-lg-1"
+                                                  id="msg_material_code">enter_first_name</span>
+                                        </label>
+                                        {{ form.first_name }}
+                                    </div>
+                                </div>
+                                <div class="col-xl-4">
+                                    <div class="form-group mb-2">
+                                        <label class="form-label">
+                                            <span class="text-primary float-md-left">Last Name</span>
+                                            <span class="text-secondary float-md-left"></span>
+                                            <span class="text-danger d-none float-md-left ps-lg-1"
+                                                  id="msg_material_code">enter_last_name</span>
+                                        </label>
+                                        {{ form.last_name }}
+                                    </div>
+                                </div>
+                                <div class="col-xl-4">
+                                    <div class="form-group mb-2">
+                                        <label class="form-label">
+                                            <span class="text-primary float-md-left">Mobile NO.</span>
+                                            <span class="text-secondary float-md-left"></span>
+                                            <span class="text-danger d-none float-md-left ps-lg-1"
+                                                  id="msg_material_code">enter_mobile_number</span>
+                                        </label>
+                                        {{ form.mobile }}
+                                    </div>
+                                </div>
+                                <div class="col-xl-4">
+                                    <div class="form-group mb-2">
+                                        <label class="form-label">
+                                            <span class="text-primary float-md-left">Employee CNIC No.</span>
+                                            <span class="text-secondary float-md-left"></span>
+                                            <span class="text-danger d-none float-md-left ps-lg-1"
+                                                  id="msg_material_code">enter_cnic_no</span>
+                                        </label>
+                                        {{ form.cnic_no }}
+                                    </div>
+                                </div>
+                                <div class="col-xl-4">
+                                    <div class="form-group mb-2">
+                                        <label class="form-label">
+                                            <span class="text-primary float-md-left">Date 0f Birth</span>
+                                        </label>
+                                        <input class="form-control flatpickr-input active" name="birth_date"
+                                               id="birth_date" type="text" readonly="readonly"
+                                               placeholder="Enter a Valid Date">
+                                    </div>
+                                </div>
+                                <div class="col-xl-4">
+                                    <div class="form-group mb-2">
+                                        <label class="form-label">
+                                            <span class="text-primary float-md-left">Gender</span>
+                                        </label>
+                                        {{ form.gender }}
+                                    </div>
+                                </div>
+                                <div class="col-xl-4">
+                                    <div class="form-group mb-2">
+                                        <label class="form-label">
+                                            <span class="text-primary float-md-left">Hire Date</span>
+                                        </label>
+                                        <input class="form-control flatpickr-input active" name="hire_date"
+                                               id="hire_date" type="text" readonly="readonly"
+                                               placeholder="Enter a Valid Date">
+                                    </div>
+                                </div>
+                                <div class="col-xl-4">
+                                    <div class="form-group mb-2">
+                                        <label class="form-label">
+                                            <span class="text-primary float-md-left">Payment Method</span>
+                                        </label>
+                                        <select id="cmd_payment" name="cmd_payment"
+                                                class="form-control form-select select2-no-search select2-hidden-accessible">
+                                            <option label="Choose one" data-select2-id="6"></option>
+                                            {% for payment in payment_list %}
+                                                <option value="{{ payment.pm_code }}">
+                                                    {{ payment.pm_name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-12">
+                    <div class="row">
+                        <div class="col-xl-3">
+                            <div class="card mb-1">
+                                <div class="card-header">
+                                    <div class="card-title">Salary Information</div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-xl-12">
+                                            <div class="form-group mb-0">
+                                                <label class="form-label">
+                                                    <span class="text-primary float-md-left">Pay Frequency</span>
+                                                    <span class="text-secondary float-md-left"></span>
+                                                    <span class="text-danger d-none float-md-left ps-lg-1" id="msg_uot">
+                                                        Please Fill it.
+                                                    </span>
+                                                </label>
+                                                <select id="cmd_pay_freguency" name="cmd_pay_freguency"
+                                                        class="form-control form-select select2-no-search select2-hidden-accessible">
+                                                    <option label="Choose one"></option>
+                                                    <option value="NA">Select Pay Frequency</option>
+                                                    <option value="monthly">Monthly</option>
+                                                    <option value="weekly">Weekly</option>
+                                                    <option value="daily">Daily</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-12">
+                                            <div class="form-group mb-0">
+                                                <label class="form-label">
+                                                    <span class="text-primary float-md-left">Rate Type</span>
+                                                    <span class="text-secondary float-md-left"></span>
+                                                    <span class="text-danger d-none float-md-left ps-lg-1"
+                                                          id="msg_uom">Please Fill it.</span>
+                                                </label>
+                                                <select id="cmd_rate_type" name="cmd_rate_type"
+                                                        class="form-control form-select select2-no-search select2-hidden-accessible">
+                                                    <option label="Choose one"></option>
+                                                    <option value="NA">Select Pay Frequency</option>
+                                                    <option value="salary" id="Salary">Salary</option>
+                                                    {#                                                    <option value="daily" id="daily">Daily</option>#}
+                                                    <option value="hourly">Hourly</option>
+                                                    <option value="wages">Wages</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-12">
+                                            <div class="form-group mb-0">
+                                                <label class="form-label">
+                                                    <span class="text-primary float-md-left">Rate Amount</span>
+                                                    <span class="text-secondary float-md-left"></span>
+                                                    <span class="text-danger d-none float-md-left ps-lg-1" id="msg_uom">
+                                                        Please Fill it.
+                                                    </span>
+                                                </label>
+                                                <input type="text" name="rate_amount" class="form-control"
+                                                       placeholder="Enter Rate Amount" maxlength="100" id="rate_amount">
+                                            </div>
+                                        </div>
+                                        {% if rate_amount == "daily" %}
+
+                                        {% endif %}
+                                        <div class="col-xl-12">
+                                            <div class="form-group mb-0">
+                                                <label class="form-label">
+                                                    <span class="text-primary float-md-left">Basic Salary</span>
+                                                    <span class="text-secondary float-md-left"></span>
+                                                    <span class="text-danger d-none float-md-left ps-lg-1" id="msg_uom">Please Fill it.</span>
+                                                </label>
+                                                <input type="text" name="basic_salary" class="form-control"
+                                                       placeholder="Enter Basic Salary" maxlength="100"
+                                                       id="basic_salary">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-9">
+                            <div class="card mb-1">
+                                <div class="card-header">
+                                    <div class="card-title">Biographic Information</div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-xl-12">
+                                            <div class="row">
+                                                <div class="card">
+                                                    <div class="card-header border-bottom pb-0">
+                                                        <div class="panel tabs-style7 scaleX">
+                                                            <div class="panel-head">
+                                                                <ul class="nav nav-tabs">
+                                                                    <li class="nav-item flex-1">
+                                                                        <a class="nav-link pb-4 tx-14 active"
+                                                                           data-bs-toggle="tab" href="#scaleXtab1">
+                                                                            Manual Address
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="nav-item flex-1">
+                                                                        <a class="nav-link pb-4 tx-14"
+                                                                           data-bs-toggle="tab" href="#scaleXtab2">
+                                                                            Mapping
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="panel-body p-0 border-0">
+                                                            <div class="tab-content">
+                                                                <div class="tab-pane active" id="scaleXtab1">
+                                                                    <div class="col-xl-12">
+                                                                        <div class="form-group mb-0">
+                                                                            <label class="form-label">
+                                                                                <span class="text-primary float-md-left">Address</span>
+                                                                            </label>
+                                                                            {{ form.address }}
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col-xl-6">
+                                                                            <div class="form-group mb-2">
+                                                                                <label class="form-label">
+                                                                                    <span class="text-primary float-md-left">City Name </span>
+                                                                                    <span class="text-secondary float-md-left"></span>
+                                                                                    <span class="text-danger d-none float-md-left ps-lg-1"
+                                                                                          id="msg_material_code">enter_city_name</span>
+                                                                                </label>
+                                                                                {{ form.city }}
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-xl-6">
+                                                                            <div class="form-group mb-2">
+                                                                                <label class="form-label">
+                                                                                    <span class="text-primary float-md-left">State</span>
+                                                                                    <span class="text-secondary float-md-left"></span>
+                                                                                    <span class="text-danger d-none float-md-left ps-lg-1"
+                                                                                          id="msg_material_code">state</span>
+                                                                                </label>
+                                                                                {{ form.state }}
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="tab-pane" id="scaleXtab2">
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer mb-0 text-xl-left">
+                    <button class="btn btn-primary px-5" type="submit" id="submitBtn">
+                        Save Information
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+{% endblock %}
+
+{% block js %}
+
+    <script>
+
+        var get_pay_frequency = "";
+        var get_rate_type = "";
+
+        $(document).ready(function () {
+
+            $("#cmd_pay_freguency").change(function (e) {
+                get_pay_frequency = e.target.value;
+                {#alert(get_pay_frequency);#}
+                conditionPayRate();
+            });
+            $("#cmd_rate_type").change(function (e) {
+                get_rate_type = e.target.value;
+                {#alert(get_rate_type);#}
+                conditionPayRate();
+            });
+
+        });
+
+        function conditionPayRate() {
+            $("#rate_amount").prop('readonly', false);
+            $("#basic_salary").prop('readonly', false);
+
+            if (get_pay_frequency === "monthly" && get_rate_type === "salary") {
+                $("#rate_amount").val("0");
+                $("#rate_amount").prop('readonly', true);
+            }
+            if (get_pay_frequency === "monthly" && get_rate_type === "hourly") {
+                $("#basic_salary").val("0");
+                $("#basic_salary").prop('readonly', true);
+            }
+            if (get_pay_frequency === "weekly" && get_rate_type === "salary") {
+                $("#rate_amount").val("0");
+                $("#rate_amount").prop('readonly', true);
+            }
+            if (get_pay_frequency === "weekly" && get_rate_type === "hourly") {
+                $("#basic_salary").val("0");
+                $("#basic_salary").prop('readonly', true);
+            }
+            if (get_pay_frequency === "daily" && get_rate_type === "hourly") {
+                $("#basic_salary").val("0");
+                $("#basic_salary").prop('readonly', true);
+            }
+            if (get_pay_frequency === "daily" && get_rate_type === "salary") {
+                $("#rate_amount").val("0");
+                $("#rate_amount").prop('readonly', true);
+                $("#basic_salary").val("0");
+                $("#basic_salary").prop('readonly', true);
+            } else if (get_rate_type === "wages") {
+                $("#rate_amount").val("0");
+                $("#rate_amount").prop('readonly', true);
+                $("#basic_salary").val("0");
+                $("#basic_salary").prop('readonly', true);
+            }
+        }
+
+        //select2
+        $('.select2').select2({
+            placeholder: 'Choose one',
+            searchInputPlaceholder: 'Search'
+        });
+        $('.select2-no-search').select2({
+            minimumResultsForSearch: Infinity,
+            placeholder: 'Choose one'
+        });
+        // Date Picker
+        flatpickr("#birth_date", {});
+        flatpickr("#hire_date", {});
+    </script>
+
+{% endblock %}
+

@@ -1,0 +1,118 @@
+{% extends "master.html" %}
+{% load static %}
+{% load urlify %}
+
+{% block title %}Business Bank{% endblock %}
+{% block PageTitle %}Business Bank{% endblock %}
+{% block PageHierechy %}
+    <li class="breadcrumb-item tx-15"><a href="{% url 'Dashboard' %}">Admin</a></li>
+    <li class="breadcrumb-item tx-15"><a href="{% url 'Dashboard' %}">Business Bank</a></li>
+{% endblock %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card">
+                <div class="card-header flex-between">
+                    <div class="col-xl-6">
+                        <div class="card-title">Business Bank List</div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="row">
+                            <div class="col-xl-8">
+                                <form method='post' action='' accept-charset='utf-8'
+                                      enctype="multipart/form-data" id="searchForm">
+
+                                    {% csrf_token %}
+                                    <input type="search" id="search" name="search" class="form-control radius-4"
+                                           placeholder="Search here..." oninput="setSearchValue(this.value);">
+                                </form>
+                            </div>
+                            <div class="col-xl-4">
+                                <a href="{% url 'AddBusinessBank' %}" class="btn btn-w-lg btn-primary-light w-100">Add
+                                    New
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover mb-0 text-md-nowrap">
+                            <thead>
+                            <tr>
+                                <th scope="col"
+                                    class="sm-text text-capitalize align-middle text-center border-1 border">S/L
+                                </th>
+                                <th scope="col"
+                                    class="sm-text text-capitalize align-middle text-center border-1 border">
+                                    COA Code
+                                </th>
+                                <th scope="col"
+                                    class="sm-text text-capitalize align-middle text-center border-1 border">
+                                    Account Title
+                                </th>
+                                <th scope="col"
+                                    class="sm-text text-capitalize align-middle text-center border-1 border">
+                                    Account NO.
+                                </th>
+                                <th scope="col"
+                                    class="sm-text text-capitalize align-middle text-center border-1 border">
+                                    Activation Date
+                                </th>
+                                <th scope="col"
+                                    class="sm-text text-capitalize align-middle text-center border-1 border">
+                                    Block Date
+                                </th>
+                                <th scope="col"
+                                    class="sm-text text-capitalize align-middle text-center border-1 border">
+                                    Action
+                                </th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            {% for data in business_bank %}
+
+                                <tr class="align-middle">
+                                    <th scope="row" class="xsm-text text-capitalize align-middle text-center">
+                                        {{ forloop.counter }}
+                                    </th>
+                                    <td class="xsm-text text-capitalize align-middle text-center">
+                                        {{ data.child_code_id }}
+                                    </td>
+                                    <td class="xsm-text text-capitalize align-middle text-center">
+                                        {{ data.account_title }}
+                                    </td>
+                                    <td class="xsm-text text-capitalize align-middle text-center">
+                                        {{ data.account_no }}
+                                    </td>
+                                    <td class="xsm-text text-capitalize align-middle text-center">
+                                        {{ data.activation_date|date:'Y-m-d' }}
+                                    </td>
+                                    <td class="xsm-text text-capitalize align-middle text-center">
+                                        {{ data.block_date|date:'Y-m-d' }}
+                                    </td>
+                                    <td class="xsm-text text-capitalize align-middle text-center">
+                                        <div class="btn-list">
+                                            <a href="{% url 'UpdateBusinessBank' data.busi_acc_code %}"
+                                               class="btn btn-sm btn-def tx-muted">
+                                                <i class="fe fe-edit"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+
+                                </tr>
+
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

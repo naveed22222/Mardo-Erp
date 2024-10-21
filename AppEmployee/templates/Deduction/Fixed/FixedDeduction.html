@@ -1,0 +1,120 @@
+{% extends "master.html" %}
+{% load static %}
+
+{% block title %}HRM{% endblock %}
+{% block PageTitle %}Fixed Deduction{% endblock %}
+{% block PageHierechy %}
+    <li class="breadcrumb-item tx-15"><a href="{% url 'Dashboard' %}">Deductions</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Fixed Deductions</li>
+{% endblock %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card">
+                <div class="card-header flex-between">
+                    <div class="col-xl-6">
+                        <div class="card-title">Fixed Deduction Details</div>
+                    </div>
+                    <div class="col-xl-4">
+                        <div class="row">
+                            <div class="col-xl-8">
+                                <form method='post' action='' accept-charset='utf-8'
+                                      enctype="multipart/form-data" id="searchForm">
+                                    {% csrf_token %}
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-2">
+                        <a href="{% url 'AddFixedDeduction' %}" type="button" class="btn btn-w-lg btn-primary-light">
+                            Add Fixed Deduction
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover mb-0 text-md-nowrap">
+                            <thead>
+                            <tr>
+                                <th scope="col"
+                                    class="sm-text text-capitalize align-middle text-center border-1 border">S/L
+                                </th>
+                                <th scope="col" class="sm-text text-capitalize align-middle text-center border-1 border">
+                                    Employee Name
+                                </th>
+                                <th scope="col" class="sm-text text-capitalize align-middle text-center border-1 border">
+                                    Deduction Type
+                                </th>
+                                <th scope="col" class="sm-text text-capitalize align-middle text-center border-1 border">
+                                    Deduction Amount
+                                </th>
+                                <th scope="col" class="sm-text text-capitalize align-middle text-center border-1 border">
+                                    Reasons
+                                </th>
+                                <th scope="col"
+                                    class="sm-text text-capitalize align-middle text-center border-1 border">Action
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            {% for deduct in deduction_list %}
+
+                                <tr class="align-middle">
+                                    <th scope="row" class="xsm-text text-capitalize align-middle text-center">
+                                        {{ forloop.counter }}
+                                    </th>
+                                    <th scope="row" class="xsm-text text-capitalize align-middle text-center">
+                                        {{ deduct.title }}
+                                    </th>
+                                    <th scope="row" class="xsm-text text-capitalize align-middle text-center">
+                                        {{ deduct.ded_type_name }}
+                                    </th>
+                                    <th scope="row" class="xsm-text text-capitalize align-middle text-center">
+                                        {{ deduct.deduction_amount }}
+                                    </th>
+                                    <th scope="row" class="xsm-text text-capitalize align-middle text-center">
+                                        {{ deduct.description }}
+                                    </th>
+                                    <td class="xsm-text text-capitalize align-middle text-center">
+                                        <div class="btn-list">
+                                            <a href=""
+                                               class="btn btn-sm btn-def tx-muted">
+                                                <i class="fe fe-edit"></i>
+                                            </a>
+                                            <button class="btn btn-sm btn-def tx-muted"
+                                                    onclick="HRMModelJS.DeleteDeductionFixedView();">
+                                                <i class="fe fe-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block js %}
+    <script src="{% static "AppHRM.js" %}" type="text/javascript"></script>
+    <script>
+        var HRMModelJS = null;
+        var delete_deduction_fixed = '{% url "DeleteDeductionFixed" %}';
+
+        $(document).ready(function () {
+
+            HRMModelJS = new AppHRMModel();
+            HRMModelJS.appConstructor();
+
+        });
+
+    </script>
+{% endblock %}

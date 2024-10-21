@@ -1,0 +1,128 @@
+{% extends "master.html" %}
+{% load static %}
+
+{% block title %}ERP-MARDO{% endblock %}
+{% block PageTitle %}Natural Account{% endblock %}
+{% block PageHierechy %}
+    <li class="breadcrumb-item tx-15"><a href="{% url 'CompanyDetail' %}">Segment</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Natural Account</li>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card">
+
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover mb-0 text-md-nowrap" id="Import_excel">
+                            <thead>
+                            <tr>
+                                <th scope="col"
+                                    class="sm-text text-capitalize align-middle text-left border-1 border">
+                                    Parent Code
+                                </th>
+
+                                <th scope="col"
+                                    class="sm-text text-capitalize align-middle text-left border-1 border">
+                                    Sub parent Code
+                                </th>
+
+                                <th scope="col"
+                                    class="sm-text text-capitalize align-middle text-left border-1 border">
+                                    Child Code
+                                </th>
+                                <th scope="col"
+                                    class="sm-text text-capitalize align-middle text-left border-1 border">
+                                    Description
+                                </th>
+                                <th scope="col"
+                                    class="sm-text text-capitalize align-middle text-left border-1 border">
+                                    Category
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            {% for parent in parent_list %}
+
+                                <tr class="align-middle">
+                                    <td class="xsm-text text-capitalize align-middle text-left">
+                                        {{ parent.parent_code }}
+                                    </td>
+
+
+                                    <td class="xsm-text text-capitalize align-middle text-left">
+                                        -
+                                    </td>
+                                    <td class="xsm-text text-capitalize align-middle text-left">
+                                        -
+                                    </td>
+                                    <td class="xsm-text text-capitalize align-middle text-left">
+                                        {{ parent.parent_name }}
+                                    </td>
+                                    <td class="xsm-text text-capitalize align-middle text-left">
+                                        {{ parent.category_code.category_name }}
+                                    </td>
+                                </tr>
+                                {% for sub in sub_parent_list %}
+                                    {% if parent.parent_code == sub.parent_code_id %}
+                                        <tr class="align-middle">
+                                            <td class="xsm-text text-capitalize align-middle  text-left">
+                                                {{ sub.parent_code.parent_code }}
+                                            </td>
+
+                                            <td class="xsm-text text-capitalize align-middle  text-left">
+                                                {{ sub.sub_parent_code }}
+                                            </td>
+                                            <td class="xsm-text text-capitalize align-middle text-left">
+                                                -
+                                            </td>
+
+                                            <td class="xsm-text text-capitalize align-middle  text-left">
+                                                {{ sub.sub_parent_name }}
+                                            </td>
+                                            <td class="xsm-text text-capitalize align-middle  text-left">
+                                                {{ parent.category_code.category_name }}
+                                            </td>
+                                        </tr>
+                                        {% for child in Child_list %}
+                                            {% if sub.sub_parent_code == child.sub_parent_code_id %}
+                                                <tr class="align-middle">
+                                                    <td class="xsm-text text-capitalize align-middle  text-left">
+                                                        {{ child.sub_parent_code.parent_code_id }}
+                                                    </td>
+
+                                                    <td class="xsm-text text-capitalize align-middle  text-left">
+                                                        {{ child.sub_parent_code.sub_parent_code }}
+                                                    </td>
+
+                                                    <td class="xsm-text text-capitalize align-middle  text-left">
+                                                        {{ child.child_code }}
+                                                    </td>
+                                                    <td class="xsm-text text-capitalize align-middle  text-left">
+                                                        {{ child.child_name }}
+                                                    </td>
+                                                    <td class="xsm-text text-capitalize align-middle  text-left">
+                                                        {{ parent.category_code.category_name }}
+                                                    </td>
+
+                                                </tr>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                {% endfor %}
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+
+
+{% endblock %}

@@ -1,0 +1,390 @@
+{% load static %}
+
+<div class="sticky">
+    <aside class="app-sidebar ps ps--active-y">
+        <div class="main-sidebar-header active">
+            <a class="header-logo active" href="index.html">
+                <img src="{% static "das/assets/img/brand/logo-white.png" %}"
+                     class="main-logo  desktop-dark" alt="logo">
+                <img src="{% static "das/assets/img/brand/logo-white-1.png" %}"
+                     class="main-logo  desktop-dark-1" alt="logo">
+                <img src="{% static "das/assets/img/brand/favicon-white.png" %}"
+                     class="main-logo  mobile-dark" alt="logo">
+                <img src="{% static "das/assets/img/brand/favicon-white-1.png" %}"
+                     class="main-logo  mobile-dark-1" alt="logo">
+            </a>
+        </div>
+        {% with url_name=request.resolver_match.url_name %}
+            <div class="main-sidemenu is-expanded">
+                <div class="slide-left disabled active d-none" id="slide-left">
+                    <svg fill="#7b8191" width="24" height="24" viewBox="0 0 24 24">
+                        <path d="M13.293 6.293 7.586 12l5.707 5.707 1.414-1.414L10.414 12l4.293-4.293z"></path>
+                    </svg>
+                </div>
+                <ul class="side-menu open" style="margin-right: 0px;">
+
+                    {#                    <li class="slide {% if url_name == "Dashboard" %}is-expanded{% endif %}">#}
+                    {#                        <a class="side-menu__item {% if url_name == "Dashboard" %}active is-expanded{% endif %}"#}
+                    {#                           data-bs-toggle="slide"#}
+                    {#                           href="{% url 'Dashboard' %}">#}
+                    {#                            <svg class="ionicon side-menu__icon" viewBox="0 0 512 512">#}
+                    {#                                <title>Home</title>#}
+                    {#                                <path d="M80 212v236a16 16 0 0016 16h96V328a24 24 0 0124-24h80a24 24 0 0124 24v136h96a16 16 0 0016-16V212"#}
+                    {#                                      fill="none" stroke="currentColor" stroke-linecap="round"#}
+                    {#                                      stroke-linejoin="round" stroke-width="32">#}
+                    {#                                </path>#}
+                    {#                                <path d="M480 256L266.89 52c-5-5.28-16.69-5.34-21.78 0L32 256M400 179V64h-48v69"#}
+                    {#                                      fill="none" stroke="currentColor" stroke-linecap="round"#}
+                    {#                                      stroke-linejoin="round" stroke-width="32">#}
+                    {#                                </path>#}
+                    {#                            </svg>#}
+                    {#                            <span class="side-menu__label">Dashboard</span><i class="angle fe fe-chevron-right"></i></a>#}
+                    {#                        <ul class="slide-menu {% if url_name == "Dashboard" %}open{% endif %}">#}
+                    {#                            <li class="side-menu__label1">#}
+                    {#                                <a href="{% url 'Dashboard' %}">Dashboard</a>#}
+                    {#                            </li>#}
+                    {#                        </ul>#}
+                    {#                    </li>#}
+
+                    <li class="slide {% if url_name == "Dashboard" %}is-expanded{% endif %}">
+                        <a class="side-menu__item has-link {% if url_name == "Dashboard" %}active is-expanded{% endif %}"
+                           data-bs-toggle="slide" href="{% url 'Dashboard' %}">
+                            <svg class="ionicon side-menu__icon" viewBox="0 0 512 512">
+                                <title>Home</title>
+                                <path d="M80 212v236a16 16 0 0016 16h96V328a24 24 0 0124-24h80a24 24 0 0124 24v136h96a16 16 0 0016-16V212"
+                                      fill="none" stroke="currentColor" stroke-linecap="round"
+                                      stroke-linejoin="round" stroke-width="32">
+                                </path>
+                                <path d="M480 256L266.89 52c-5-5.28-16.69-5.34-21.78 0L32 256M400 179V64h-48v69"
+                                      fill="none" stroke="currentColor" stroke-linecap="round"
+                                      stroke-linejoin="round" stroke-width="32">
+                                </path>
+                            </svg>
+                            <span class="side-menu__label">Dashboard</span>
+                        </a>
+                    </li>
+
+                    <!-- EMPLOYEE URL START -->
+                    <li class="slide {% if url_name == "EmployeeDepartment" or url_name == "EmployeePosition" or url_name == "AddEmployee" or url_name == "EmployeeDetail" or url_name == "EmployeeInformation" or url_name == "DeductionCategory" or url_name == "FixedDeductionDetails" or url_name == "AddFixedDeduction" or url_name == "EditFixedDeduction" or url_name == "NonFixedDeductionDetails" or url_name == "AddNonFixedDeduction" or url_name == "EditNonFixedDeduction" or url_name == "AllowanceCategory" or url_name == "FixedAllowanceDetails" or url_name == "AddFixedAllowance" or url_name == "EditFixedAllowance" or url_name == "NonFixedAllowanceDetails" or url_name == "AddNonFixedAllowance" or url_name == "EditNonFixedAllowance" or url_name == "NationalHoliday" or url_name == "WeeklyWorking" or url_name == "LeaveType" %}is-expanded{% endif %}">
+                        <a class="side-menu__item {% if url_name == "EmployeeDepartment" or url_name == "EmployeePosition" or url_name == "AddEmployee" or url_name == "EmployeeDetail" or url_name == "EmployeeInformation" or url_name == "DeductionCategory" or url_name == "FixedDeductionDetails" or url_name == "AddFixedDeduction" or url_name == "EditFixedDeduction" or url_name == "NonFixedDeductionDetails" or url_name == "AddNonFixedDeduction" or url_name == "EditNonFixedDeduction" or url_name == "AllowanceCategory" or url_name == "FixedAllowanceDetails" or url_name == "AddFixedAllowance" or url_name == "EditFixedAllowance" or url_name == "NonFixedAllowanceDetails" or url_name == "AddNonFixedAllowance" or url_name == "EditNonFixedAllowance" or url_name == "NationalHoliday" or url_name == "WeeklyWorking" or url_name == "LeaveType" %}active is-expanded{% endif %}"
+                           data-bs-toggle="slide" href="{% url 'EmployeeDepartment' %}">
+                            <svg class="ionicon side-menu__icon" viewBox="0 0 512 512">
+                                <title>Human Resource</title>
+                                <path d="M80 212v236a16 16 0 0016 16h96V328a24 24 0 0124-24h80a24 24 0 0124 24v136h96a16 16 0 0016-16V212"
+                                      fill="none" stroke="currentColor" stroke-linecap="round"
+                                      stroke-linejoin="round" stroke-width="32"></path>
+                                <path d="M480 256L266.89 52c-5-5.28-16.69-5.34-21.78 0L32 256M400 179V64h-48v69"
+                                      fill="none" stroke="currentColor" stroke-linecap="round"
+                                      stroke-linejoin="round" stroke-width="32"></path>
+                            </svg>
+                            <span class="side-menu__label">Human Resource</span>
+                            <i class="angle fe fe-chevron-right"></i>
+                        </a>
+                        <ul class="slide-menu
+
+
+
+
+
+
+
+                                {% if url_name == "EmployeeDepartment" or url_name == "EmployeePosition" or url_name == "AddEmployee" or url_name == "EmployeeDetail" or url_name == "AddPayroll" or url_name == "EmployeeInformation" or url_name == "DeductionCategory" or url_name == "FixedDeductionDetails" or url_name == "AddFixedDeduction" or url_name == "EditFixedDeduction" or url_name == "NonFixedDeductionDetails" or url_name == "AddNonFixedDeduction" or url_name == "EditNonFixedDeduction" or url_name == "AllowanceCategory" or url_name == "FixedAllowanceDetails" or url_name == "AddFixedAllowance" or url_name == "EditFixedAllowance" or url_name == "NonFixedAllowanceDetails" or url_name == "AddNonFixedAllowance" or url_name == "EditNonFixedAllowance" or url_name == "NationalHoliday" or url_name == "WeeklyWorking" or url_name == "LeaveType" or url_name == "UpdateMultipleEmployeeSalary" %}{% endif %}">
+                            <li class="side-menu__label1">
+                                <a href="{% url 'EmployeeDetail' %}">Human Resource</a>
+                            </li>
+
+                            <!-- EMPLOYEE URL START -->
+                            <li class="sub-slide {% if url_name == "EmployeeDepartment" or url_name == "EmployeePosition" or url_name == "AddEmployee" or url_name == "EmployeeDetail" or url_name == "EmployeeInformation" or url_name == "EmployeeLocation" or url_name == "AddPayroll" or url_name == "UpdateMultipleEmployeeSalary" %}active is-expanded{% endif %}">
+                                <a class="slide-item side-menu__item-sub {% if url_name == "EmployeeDepartment" or url_name == "EmployeePosition" or url_name == "AddEmployee" or url_name == "EmployeeDetail" or url_name == "EmployeeInformation" or url_name == "EmployeeLocation" or url_name == "AddPayroll" or url_name == "UpdateMultipleEmployeeSalary" %}active{% endif %}"
+                                   data-bs-toggle="sub-slide"
+                                   href="{% url 'EmployeeDetail' %}">
+                                    <span class="sub-side-menu__label">Employee</span>
+                                    <i class="sub-angle fe fe-chevron-down"></i>
+                                </a>
+                                <ul class="sub-slide-menu">
+                                    <li class="{% if url_name == "EmployeeDepartment" %}is-expanded{% endif %}">
+                                        <a class="sub-side-menu__item {% if url_name == "EmployeeDepartment" %}active{% endif %}"
+                                           href="{% url 'EmployeeDepartment' %}">Department</a>
+                                    </li>
+                                    <li class="{% if url_name == "EmployeePosition" %}is-expanded{% endif %}">
+                                        <a class="sub-side-menu__item {% if url_name == "EmployeePosition" %}active{% endif %}"
+                                           href="{% url 'EmployeePosition' %}">Position</a>
+                                    </li>
+                                    <li class="{% if url_name == "AddEmployee" %}is-expanded{% endif %}">
+                                        <a class="sub-side-menu__item {% if url_name == "AddEmployee" %}active{% endif %}"
+                                           href="{% url 'AddEmployee' %}">Add Employee</a>
+                                    </li>
+                                    <li class="{% if url_name == "EmployeeDetail" or url_name == "EmployeeInformation" %}is-expanded{% endif %}">
+                                        <a class="sub-side-menu__item {% if url_name == "EmployeeDetail" or url_name == "EmployeeInformation" %}active{% endif %}"
+                                           href="{% url 'EmployeeDetail' %}">Employee List</a>
+                                    </li>
+
+                                    <li class="{% if url_name == "Empl" or url_name == "EmployeeLocation" %}is-expanded{% endif %}">
+                                        <a class="sub-side-menu__item {% if url_name == "EmployeeLocation" or url_name == "EmployeeLocation" %}active{% endif %}"
+                                           href="{% url 'EmployeeLocation' %}">Location</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <!-- EMPLOYEE URL END -->
+
+
+                            <!-- DEDUCTION URL START -->
+                            <li class="sub-slide {% if url_name == "DeductionCategory" or url_name == "FixedDeductionDetails" or url_name == "AddFixedDeduction" or url_name == "NonFixedDeductionDetails" or url_name == "AddNonFixedDeduction" or url_name == "EditNonFixedDeduction" or url_name == "EditFixedDeduction" %}active is-expanded{% endif %}">
+                                <a class="slide-item side-menu__item-sub {% if url_name == "DeductionCategory" or url_name == "FixedDeductionDetails" or url_name == "AddFixedDeduction" or url_name == "NonFixedDeductionDetails" or url_name == "AddNonFixedDeduction" or url_name == "EditNonFixedDeduction" or url_name == "EditFixedDeduction" %}active{% endif %}"
+                                   data-bs-toggle="sub-slide"
+                                   href="{% url 'DeductionCategory' %}">
+                                    <span class="sub-side-menu__label">Deduction</span>
+                                    <i class="sub-angle fe fe-chevron-down"></i>
+                                </a>
+                                <ul class="sub-slide-menu">
+                                    <li class="{% if url_name == "DeductionCategory" %}is-expanded{% endif %}">
+                                        <a class="sub-side-menu__item {% if url_name == "DeductionCategory" %}active{% endif %}"
+                                           href="{% url 'DeductionCategory' %}">Category</a>
+                                    </li>
+                                    <li class="{% if url_name == "FixedDeductionDetails" or url_name == "AddFixedDeduction" or url_name == "EditFixedDeduction" %}is-expanded{% endif %}">
+                                        <a class="sub-side-menu__item {% if url_name == "FixedDeductionDetails" or url_name == "AddFixedDeduction" or url_name == "EditFixedDeduction" %}active{% endif %}"
+                                           href="{% url 'FixedDeductionDetails' %}">Fixed</a>
+                                    </li>
+                                    <li class="{% if url_name == "NonFixedDeductionDetails" or url_name == "AddNonFixedDeduction" or url_name == "EditNonFixedDeduction" %}is-expanded{% endif %}">
+                                        <a class="sub-side-menu__item {% if url_name == "NonFixedDeductionDetails" or url_name == "AddNonFixedDeduction" or url_name == "EditNonFixedDeduction" %}active{% endif %}"
+                                           href="{% url 'NonFixedDeductionDetails' %}">Non-Fixed</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <!-- DEDUCTION URL END -->
+
+                            <!-- ALLOWANCE URL START -->
+                            <li class="sub-slide {% if url_name == "AllowanceCategory" or url_name == "FixedAllowanceDetails" or url_name == "AddFixedAllowance" or url_name == "EditFixedAllowance" or url_name == "NonFixedAllowanceDetails" or url_name == "AddNonFixedAllowance" or url_name == "EditNonFixedAllowance" %}active is-expanded{% endif %}">
+                                <a class="slide-item side-menu__item-sub {% if url_name == "AllowanceCategory" or url_name == "FixedAllowanceDetails" or url_name == "AddFixedAllowance" or url_name == "EditFixedAllowance" or url_name == "NonFixedAllowanceDetails" or url_name == "AddNonFixedAllowance" or url_name == "EditNonFixedAllowance" %}active{% endif %}"
+                                   data-bs-toggle="sub-slide"
+                                   href="{% url 'AllowanceCategory' %}">
+                                    <span class="sub-side-menu__label">Allowance</span>
+                                    <i class="sub-angle fe fe-chevron-down"></i>
+                                </a>
+                                <ul class="sub-slide-menu">
+                                    <li class="{% if url_name == "AllowanceCategory" %}is-expanded{% endif %}">
+                                        <a class="sub-side-menu__item {% if url_name == "AllowanceCategory" %}active{% endif %}"
+                                           href="{% url 'AllowanceCategory' %}">Category</a>
+                                    </li>
+                                    <li class="{% if url_name == "FixedAllowanceDetails" or url_name == "AddFixedAllowance" or url_name == "EditFixedAllowance" %}is-expanded{% endif %}">
+                                        <a class="sub-side-menu__item {% if url_name == "FixedAllowanceDetails" or url_name == "AddFixedAllowance" or url_name == "EditFixedAllowance" %}active{% endif %}"
+                                           href="{% url 'FixedAllowanceDetails' %}">Fixed</a>
+                                    </li>
+                                    <li class="{% if url_name == "NonFixedAllowanceDetails" or url_name == "AddNonFixedAllowance" or url_name == "EditNonFixedAllowance" %}is-expanded{% endif %}">
+                                        <a class="sub-side-menu__item {% if url_name == "NonFixedAllowanceDetails" or url_name == "AddNonFixedAllowance" or url_name == "EditNonFixedAllowance" %}active{% endif %}"
+                                           href="{% url 'NonFixedAllowanceDetails' %}">Non-Fixed</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <!-- ALLOWANCE URL END -->
+
+                            <!-- ATTENDANCE URL START -->
+{#                            <li class="sub-slide {% if url_name == "AddBrand" or url_name == "BrandDetail" %}active is-expanded{% endif %}">#}
+{#                                <a class="slide-item side-menu__item-sub {% if url_name == "AddBrand" or url_name == "BrandDetail" %}active{% endif %}"#}
+{#                                   data-bs-toggle="sub-slide"#}
+{#                                   href="{% url 'AddBrand' %}">#}
+{#                                    <span class="sub-side-menu__label">Attendance</span>#}
+{#                                    <i class="sub-angle fe fe-chevron-down"></i>#}
+{#                                </a>#}
+{#                                <ul class="sub-slide-menu">#}
+{#                                    <li class="{% if url_name == "BrandDetail" %}is-expanded{% endif %}">#}
+{#                                        <a class="sub-side-menu__item {% if url_name == "BrandDetail" %}active{% endif %}"#}
+{#                                           href="{% url 'BrandDetail' %}"> Mark Attendance</a>#}
+{#                                    </li>#}
+{#                                </ul>#}
+{#                            </li>#}
+                            <!-- ATTENDANCE URL END -->
+
+
+                            <!-- PAYROLL URL START -->
+                            <li class="sub-slide {% if url_name == "AddPayroll" or  url_name == "UpdateMultipleEmployeeSalary" %}active is-expanded{% endif %}">
+                                <a class="slide-item side-menu__item-sub {% if url_name == "AddPayroll" or  url_name == "UpdateMultipleEmployeeSalary" %}active{% endif %}"
+                                   data-bs-toggle="sub-slide"
+                                   href="{% url 'AddPayroll' %}">
+                                    <span class="sub-side-menu__label">Payroll</span>
+                                    <i class="sub-angle fe fe-chevron-down"></i>
+                                </a>
+                                <ul class="sub-slide-menu">
+                                    <li class="{% if url_name == "AddPayroll" %}is-expanded{% endif %}">
+                                        <a class="sub-side-menu__item {% if url_name == "AddPayroll" %}active{% endif %}"
+                                           href="{% url 'AddPayroll' %}">Payroll System</a>
+                                    </li>
+                                    <li class="{% if url_name == "UpdateMultipleEmployeeSalary" %}is-expanded{% endif %}">
+                                        <a class="sub-side-menu__item {% if url_name == "UpdateMultipleEmployeeSalary" %}active{% endif %}"
+                                           href="{% url 'UpdateMultipleEmployeeSalary' %}">Employee Salary</a>
+                                    </li>
+
+                                </ul>
+                            </li>
+                            <!-- PAYROLL URL END -->
+
+                            <!-- LEAVE URL START -->
+                            <li class="sub-slide {% if url_name == "NationalHoliday" or url_name == "LeaveType" or url_name == "WeeklyWorking" %}active is-expanded{% endif %}">
+                                <a class="slide-item side-menu__item-sub {% if url_name == "NationalHoliday" or url_name == "LeaveType" or url_name == "WeeklyWorking" %}active{% endif %}"
+                                   data-bs-toggle="sub-slide"
+                                   href="{% url 'NationalHoliday' %}">
+                                    <span class="sub-side-menu__label">Leave</span>
+                                    <i class="sub-angle fe fe-chevron-down"></i>
+                                </a>
+                                <ul class="sub-slide-menu">
+                                    <li class="{% if url_name == "NationalHoliday" %}is-expanded{% endif %}">
+                                        <a class="sub-side-menu__item {% if url_name == "NationalHoliday" %}active{% endif %}"
+                                           href="{% url 'NationalHoliday' %}">National Holiday</a>
+                                    </li>
+                                    <li class="{% if url_name == "WeeklyWorking" %}is-expanded{% endif %}">
+                                        <a class="sub-side-menu__item {% if url_name == "WeeklyWorking" %}active{% endif %}"
+                                           href="{% url 'WeeklyWorking' %}">Weekly Working</a>
+                                    </li>
+                                    <li class="{% if url_name == "LeaveType" %}is-expanded{% endif %}">
+                                        <a class="sub-side-menu__item {% if url_name == "LeaveType" %}active{% endif %}"
+                                           href="{% url 'LeaveType' %}">Leave Type</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <!-- LEAVE URL END -->
+
+                            {#                            <li><a class="slide-item" href="{% url "EcommerceView" %}">Ecommerce</a></li>#}
+                        </ul>
+                    </li>
+                    <!-- EMPLOYEE URL END -->
+
+
+
+{#                    <!-- ADMIN SETTING URL START -->#}
+{#                    <li class="slide {% if url_name == "CompanyDetail" or url_name == "AddCompany" or url_name == "UpdateCompany" or url_name == "LineBusiness" or url_name == "BusinessSector" or url_name == "CostCenter" or url_name == "NaturalAccount" or url_name == "LocationData" or url_name == "LocationCity"  or url_name == "BusinessBank" or url_name == "LocationStore" or url_name == "AddLocationStore" or url_name == "UpdateLocationStore" or url_name == "PaymentMethod" or url_name == "BankList" or url_name == "attendance" %}is-expanded{% endif %}">#}
+{#                        <a class="side-menu__item {% if url_name == "CompanyDetail" or url_name == "AddCompany" or url_name == "UpdateCompany" or url_name == "LineBusiness" or url_name == "BusinessSector" or url_name == "CostCenter" or url_name == "NaturalAccount" or url_name == "LocationData" or url_name == "LocationCity" or url_name == "BusinessBank" or url_name == "LocationStore" or url_name == "AddLocationStore" or url_name == "UpdateLocationStore" or url_name == "PaymentMethod" or url_name == "BankList" or url_name == "attendance" %}active is-expanded{% endif %}"#}
+{#                           data-bs-toggle="slide" href="{% url 'CompanyDetail' %}">#}
+{#                            <svg class="ionicon side-menu__icon" viewBox="0 0 512 512">#}
+{#                                <title>Admin Setting</title>#}
+{#                                <path d="M448 341.37V170.61A32 32 0 00432.11 143l-152-88.46a47.94 47.94 0 00-48.24 0L79.89 143A32 32 0 0064 170.61v170.76A32 32 0 0079.89 369l152 88.46a48 48 0 0048.24 0l152-88.46A32 32 0 00448 341.37z"#}
+{#                                      fill="none" stroke="currentColor" stroke-linecap="round"#}
+{#                                      stroke-linejoin="round" stroke-width="32"></path>#}
+{#                                <path fill="none" stroke="currentColor" stroke-linecap="round"#}
+{#                                      stroke-linejoin="round" stroke-width="32"#}
+{#                                      d="M69 153.99l187 110 187-110M256 463.99v-200"></path>#}
+{#                            </svg>#}
+{#                            <span class="side-menu__label">Admin Setting</span><i class="angle fe fe-chevron-right"></i>#}
+{#                        </a>#}
+{##}
+{#                        <ul class="slide-menu">#}
+{#                            <li class="side-menu__label1">#}
+{#                                <a href="{% url 'CompanyDetail' %}">Admin Setting</a>#}
+{#                            </li>#}
+{##}
+{#                            <li class="sub-slide {% if url_name == "CompanyDetail" or url_name == "AddCompany" or url_name == "UpdateCompany" or url_name == "LineBusiness" or url_name == "BusinessSector" or url_name == "CostCenter" or url_name == "NaturalAccount" or url_name == "LocationData" or url_name == "LocationCity" or url_name == "LocationStore" or url_name == "AddLocationStore" or url_name == "UpdateLocationStore" %}active is-expanded{% endif %}">#}
+{#                                <a class="slide-item side-menu__item-sub {% if url_name == "CompanyDetail" or url_name == "AddCompany" or url_name == "UpdateCompany" or url_name == "LineBusiness" or url_name == "BusinessSector" or url_name == "CostCenter" or url_name == "NaturalAccount" or url_name == "LocationData" or url_name == "LocationCity" or url_name == "LocationStore" or url_name == "AddLocationStore" or url_name == "UpdateLocationStore" %}active{% endif %}"#}
+{#                                   data-bs-toggle="sub-slide"#}
+{#                                   href="{% url 'CompanyDetail' %}">#}
+{#                                    <span class="sub-side-menu__label">Segments</span>#}
+{#                                    <i class="sub-angle fe fe-chevron-down"></i>#}
+{#                                </a>#}
+{#                                <ul class="sub-slide-menu">#}
+{#                                    <li class="">#}
+{#                                        <a class="sub-side-menu__item {% if url_name == "CompanyDetail" or url_name == "AddCompany" or url_name == "UpdateCompany" %}active{% endif %}"#}
+{#                                           href="{% url 'CompanyDetail' %}">Company</a>#}
+{#                                    </li>#}
+{#                                    <li class="">#}
+{#                                        <a class="sub-side-menu__item {% if url_name == "LineBusiness" %}active{% endif %}"#}
+{#                                           href="{% url 'LineBusiness' %}">Line of Business</a>#}
+{#                                    </li>#}
+{#                                    <li class="">#}
+{#                                        <a class="sub-side-menu__item {% if url_name == "BusinessSector" %}active{% endif %}"#}
+{#                                           href="{% url 'BusinessSector' %}">Business Sector</a>#}
+{#                                    </li>#}
+{#                                    <li class="">#}
+{#                                        <a class="sub-side-menu__item {% if url_name == "CostCenter" %}active{% endif %}"#}
+{#                                           href="{% url 'CostCenter' %}">Cost Center</a>#}
+{#                                    </li>#}
+{#                                    <li class="">#}
+{#                                        <a class="sub-side-menu__item {% if url_name == "NaturalAccount" %}active{% endif %}"#}
+{#                                           href="{% url 'NaturalAccount' %}">Natural Account</a>#}
+{#                                    </li>#}
+{#                                    <li class="">#}
+{#                                        <a class="sub-side-menu__item {% if url_name == "LocationData" %}active{% endif %}"#}
+{#                                           href="{% url 'LocationData' %}">Location Type</a>#}
+{#                                    </li>#}
+{#                                    <li class="">#}
+{#                                        <a class="sub-side-menu__item {% if url_name == "LocationCity" %}active{% endif %}"#}
+{#                                           href="{% url 'LocationCity' %}">Location City</a>#}
+{#                                    </li>#}
+{#                                    <li class="">#}
+{#                                        <a class="sub-side-menu__item {% if url_name == "LocationStore" or url_name == "AddLocationStore" or url_name == "UpdateLocationStore" %}active{% endif %}"#}
+{#                                           href="{% url 'LocationStore' %}">Location Store</a>#}
+{#                                    </li>#}
+{##}
+{##}
+{#                                </ul>#}
+{#                            </li>#}
+{##}
+{##}
+{#                            <li class="sub-slide {% if url_name == "CompanyDetail" %}active is-expanded{% endif %}">#}
+{#                                <a class="slide-item side-menu__item-sub {% if url_name == "CompanyDetail" %}active{% endif %}"#}
+{#                                   data-bs-toggle="sub-slide"#}
+{#                                   href="{% url 'CompanyDetail' %}">#}
+{#                                    <span class="sub-side-menu__label">Geo Hierarchy</span>#}
+{#                                    <i class="sub-angle fe fe-chevron-down"></i>#}
+{#                                </a>#}
+{#                                <ul class="sub-slide-menu">#}
+{#                                    <li class="">#}
+{#                                        <a class="sub-side-menu__item {% if url_name == "CompanyDetail" or url_name == "AddCompany" or url_name == "UpdateCompany" %}active{% endif %}"#}
+{#                                           href="{% url 'CountryData' %}">Country</a>#}
+{#                                    </li>#}
+{##}
+{#                                    <li class="">#}
+{#                                        <a class="sub-side-menu__item {% if url_name == "CompanyDetail" or url_name == "AddCompany" or url_name == "UpdateCompany" %}active{% endif %}"#}
+{#                                           href="{% url 'StateData' %}">State</a>#}
+{#                                    </li>#}
+{#                                    <li class="">#}
+{#                                        <a class="sub-side-menu__item {% if url_name == "CompanyDetail" or url_name == "AddCompany" or url_name == "UpdateCompany" %}active{% endif %}"#}
+{#                                           href="{% url 'CityData' %}">City</a>#}
+{#                                    </li>#}
+{#                                    <li class="">#}
+{#                                        <a class="sub-side-menu__item {% if url_name == "CompanyDetail" or url_name == "AddCompany" or url_name == "UpdateCompany" %}active{% endif %}"#}
+{#                                           href="{% url 'AreaTown' %}">AreaTown</a>#}
+{#                                    </li>#}
+{##}
+{#                                </ul>#}
+{#                            </li>#}
+{##}
+{##}
+{#                            <li class="{% if url_name == "PaymentMethod" %}is-expanded{% endif %}">#}
+{#                                <a class="slide-item {% if url_name == "PaymentMethod" %}active{% endif %}"#}
+{#                                   href="{% url 'PaymentMethod' %}">Payment Method</a>#}
+{#                            </li>#}
+{#                            <li class="{% if url_name == "BankList" %}is-expanded{% endif %}">#}
+{#                                <a class="slide-item {% if url_name == "BankList" %}active{% endif %}"#}
+{#                                   href="{% url 'BankList' %}">Bank List</a>#}
+{#                            </li>#}
+{##}
+{#                            <li class="{% if url_name == "BusinessBank" %}is-expanded{% endif %}">#}
+{#                                <a class="slide-item {% if url_name == "BusinessBank" %}active{% endif %}"#}
+{#                                   href="{% url 'BusinessBank' %}">Business Bank</a>#}
+{#                            </li>#}
+{#                            <li class="{% if url_name == "attendance" %}is-expanded{% endif %}">#}
+{#                                <a class="slide-item {% if url_name == "attendance" %}active{% endif %}"#}
+{#                                   href="{% url 'attendance' %}">Attendance</a>#}
+{#                            </li>#}
+{#                        </ul>#}
+{#                    </li>#}
+{#                    <!-- ADMIN SETTING URL END -->#}
+
+
+
+                    <li class="side-item side-item-category">WEB APPS</li>
+
+                </ul>
+                <div class="slide-right" id="slide-right">
+                    <svg fill="#7b8191" width="24" height="24" viewBox="0 0 24 24">
+                        <path d="M10.707 17.707 16.414 12l-5.707-5.707-1.414 1.414L13.586 12l-4.293 4.293z"></path>
+                    </svg>
+                </div>
+            </div>
+        {% endwith %}
+        <div class="ps__rail-x" style="left: 0px; bottom: 0px;">
+            <div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div>
+        </div>
+        <div class="ps__rail-y" style="top: 0px; height: 384px; right: 0px;">
+            <div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 125px;"></div>
+        </div>
+    </aside>
+</div>

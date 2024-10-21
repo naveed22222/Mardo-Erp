@@ -1,0 +1,369 @@
+[
+  {
+    "_comment": "BANK DATA JSON START",
+    "model": "AppAdmin.BankData",
+    "pk": 1,
+    "fields": {
+      "bank_name": "AL BARAKA BANK (PAKISTAN) LTD",
+      "bank_code": "ABPL",
+      "status": "Active",
+      "created_at": "2023-10-02",
+      "updated_at": "2023-10-02"
+    }
+  },
+  {
+    "model": "AppAdmin.BankData",
+    "pk": 2,
+    "fields": {
+      "bank_name": "ALLIED BANK LTD",
+      "bank_code": "ABL",
+      "status": "Active",
+      "created_at": "2023-10-02",
+      "updated_at": "2023-10-02"
+    }
+  },
+  {
+    "model": "AppAdmin.BankData",
+    "pk": 3,
+    "fields": {
+      "bank_name": "ASKARI BANK LTD",
+      "bank_code": "AKBL",
+      "status": "Active",
+      "created_at": "2023-10-02",
+      "updated_at": "2023-10-02"
+    }
+  },
+  {
+    "model": "AppAdmin.BankData",
+    "pk": 4,
+    "fields": {
+      "bank_name": "BANK ALFALAH LTD",
+      "bank_code": "BAFL",
+      "status": "Active",
+      "created_at": "2023-10-02",
+      "updated_at": "2023-10-02"
+    }
+  },
+  {
+    "model": "AppAdmin.BankData",
+    "pk": 5,
+    "fields": {
+      "bank_name": "BANK AL-HABIB LTD",
+      "bank_code": "BAHL",
+      "status": "Active",
+      "created_at": "2023-10-02",
+      "updated_at": "2023-10-02"
+    }
+  },
+  {
+    "model": "AppAdmin.BankData",
+    "pk": 6,
+    "fields": {
+      "bank_name": "BANKISLAMI PAKISTAN LTD",
+      "bank_code": "BIPL",
+      "status": "Active",
+      "created_at": "2023-10-02",
+      "updated_at": "2023-10-02"
+    }
+  },
+  {
+    "model": "AppAdmin.BankData",
+    "pk": 7,
+    "fields": {
+      "bank_name": "BANK OF PUNJAB",
+      "bank_code": "BOP",
+      "status": "Active",
+      "created_at": "2023-10-02",
+      "updated_at": "2023-10-02"
+    }
+  },
+  {
+    "model": "AppAdmin.BankData",
+    "pk": 8,
+    "fields": {
+      "bank_name": "BANK OF KHYBER",
+      "bank_code": "BOK",
+      "status": "Active",
+      "created_at": "2023-10-02",
+      "updated_at": "2023-10-02"
+    }
+  },
+  {
+    "model": "AppAdmin.BankData",
+    "pk": 9,
+    "fields": {
+      "bank_name": "DEUTSCHE BANK A.G ",
+      "bank_code": "DBAG",
+      "status": "Active",
+      "created_at": "2023-10-02",
+      "updated_at": "2023-10-02"
+    }
+  },
+  {
+    "model": "AppAdmin.BankData",
+    "pk": 10,
+    "fields": {
+      "bank_name": "DUBAI ISLAMIC BANK PAKISTAN LTD",
+      "bank_code": "DIB",
+      "status": "Active",
+      "created_at": "2023-10-02",
+      "updated_at": "2023-10-02"
+    }
+  },
+  {
+    "model": "AppAdmin.BankData",
+    "pk": 11,
+    "fields": {
+      "bank_name": "FAYSAL BANK LTD",
+      "bank_code": "FBL",
+      "status": "Active",
+      "created_at": "2023-10-02",
+      "updated_at": "2023-10-02"
+    }
+  },
+  {
+    "model": "AppAdmin.BankData",
+    "pk": 12,
+    "fields": {
+      "bank_name": "FIRST WOMAN BANK LTD",
+      "bank_code": "FWBL",
+      "status": "Active",
+      "created_at": "2023-10-02",
+      "updated_at": "2023-10-02"
+    }
+  },
+  {
+    "model": "AppAdmin.BankData",
+    "pk": 13,
+    "fields": {
+      "bank_name": "HABIB BANK LTD",
+      "bank_code": "HBL",
+      "status": "Active",
+      "created_at": "2023-10-02",
+      "updated_at": "2023-10-02"
+    }
+  },
+  {
+    "model": "AppAdmin.BankData",
+    "pk": 14,
+    "fields": {
+      "bank_name": "HABIB METROPOLITAN BANK LTD",
+      "bank_code": "HABIBMETRO",
+      "status": "Active",
+      "created_at": "2023-10-02",
+      "updated_at": "2023-10-02"
+    }
+  },
+  {
+    "model": "AppAdmin.BankData",
+    "pk": 15,
+    "fields": {
+      "bank_name": "INDUSTRIAL AND COMMERCIAL BANK OF CHINA",
+      "bank_code": "ICBC",
+      "status": "Active",
+      "created_at": "2023-10-02",
+      "updated_at": "2023-10-02"
+    }
+  },
+  {
+    "model": "AppAdmin.BankData",
+    "pk": 16,
+    "fields": {
+      "bank_name": "INDUSTRIAL DEVELOPMENT BANK OF PAKISTAN",
+      "bank_code": "IDBP",
+      "status": "Active",
+      "created_at": "2023-10-02",
+      "updated_at": "2023-10-02"
+    }
+  },
+  {
+    "model": "AppAdmin.BankData",
+    "pk": 17,
+    "fields": {
+      "bank_name": "JS BANK LTD",
+      "bank_code": "JSIBL",
+      "status": "Active",
+      "created_at": "2023-10-02",
+      "updated_at": "2023-10-02"
+    }
+  },
+  {
+    "model": "AppAdmin.BankData",
+    "pk": 18,
+    "fields": {
+      "bank_name": "MCB BANK LTD",
+      "bank_code": "MCB",
+      "status": "Active",
+      "created_at": "2023-10-02",
+      "updated_at": "2023-10-02"
+    }
+  },
+  {
+    "model": "AppAdmin.BankData",
+    "pk": 19,
+    "fields": {
+      "bank_name": "MCB ISLAMIC BANK LTD",
+      "bank_code": "MCBI",
+      "status": "Active",
+      "created_at": "2023-10-02",
+      "updated_at": "2023-10-02"
+    }
+  },
+  {
+    "model": "AppAdmin.BankData",
+    "pk": 20,
+    "fields": {
+      "bank_name": "MEEZAN Bank LTD",
+      "bank_code": "MEBL",
+      "status": "Active",
+      "created_at": "2023-10-02",
+      "updated_at": "2023-10-02"
+    }
+  },
+  {
+    "model": "AppAdmin.BankData",
+    "pk": 21,
+    "fields": {
+      "bank_name": "NATIONAL BANK OF PAKISTAN",
+      "bank_code": "NBP",
+      "status": "Active",
+      "created_at": "2023-10-02",
+      "updated_at": "2023-10-02"
+    }
+  },
+  {
+    "model": "AppAdmin.BankData",
+    "pk": 22,
+    "fields": {
+      "bank_name": "SUMMIT BANK OF PAKISTAN",
+      "bank_code": "SMBL",
+      "status": "Active",
+      "created_at": "2023-10-02",
+      "updated_at": "2023-10-02"
+    }
+  },
+  {
+    "model": "AppAdmin.BankData",
+    "pk": 23,
+    "fields": {
+      "bank_name": "STANDARD CHARTERED BANK (PAKISTAN) LTD",
+      "bank_code": "SC PAKISTAN",
+      "status": "Active",
+      "created_at": "2023-10-02",
+      "updated_at": "2023-10-02"
+    }
+  },
+  {
+    "model": "AppAdmin.BankData",
+    "pk": 24,
+    "fields": {
+      "bank_name": "SINDH BANK",
+      "bank_code": "SND",
+      "status": "Active",
+      "created_at": "2023-10-02",
+      "updated_at": "2023-10-02"
+    }
+  },
+  {
+    "model": "AppAdmin.BankData",
+    "pk": 25,
+    "fields": {
+      "bank_name": "UNITED BANK LTD",
+      "bank_code": "UBL",
+      "status": "Active",
+      "created_at": "2023-10-02",
+      "updated_at": "2023-10-02"
+    }
+  },
+  {
+    "model": "AppAdmin.BankData",
+    "pk": 26,
+    "fields": {
+      "bank_name": "ZARAI TARAQIATI BANK LTD",
+      "bank_code": "ZTBL",
+      "status": "Active",
+      "created_at": "2023-10-02",
+      "updated_at": "2023-10-02"
+    },
+    "_comment": "BANK DATA JSON END"
+  },
+  {
+    "_comment": "PAYMENT METHOD JSON START",
+    "model": "AppAdmin.PaymentMethod",
+    "pk": 1,
+    "fields": {
+      "pm_code": "PM-1",
+      "pm_name": "CASH",
+      "status": "Active",
+      "created_at": "2023-10-02",
+      "updated_at": "2023-10-02"
+    }
+  },
+  {
+    "model": "AppAdmin.PaymentMethod",
+    "pk": 2,
+    "fields": {
+      "pm_code": "PM-2",
+      "pm_name": "BANK",
+      "status": "Active",
+      "created_at": "2023-10-02",
+      "updated_at": "2023-10-02"
+    }
+  },
+  {
+    "model": "AppAdmin.PaymentMethod",
+    "pk": 3,
+    "fields": {
+      "pm_code": "PM-3",
+      "pm_name": "EASYPAISA",
+      "status": "Active",
+      "created_at": "2023-10-02",
+      "updated_at": "2023-10-02"
+    }
+  },
+  {
+    "model": "AppAdmin.PaymentMethod",
+    "pk": 4,
+    "fields": {
+      "pm_code": "PM-4",
+      "pm_name": "JAZZCASH",
+      "status": "Active",
+      "created_at": "2023-10-02",
+      "updated_at": "2023-10-02"
+    }
+  },
+  {
+    "model": "AppAdmin.PaymentMethod",
+    "pk": 5,
+    "fields": {
+      "pm_code": "PM-5",
+      "pm_name": "UPAISA",
+      "status": "Active",
+      "created_at": "2023-10-02",
+      "updated_at": "2023-10-02"
+    }
+  },
+  {
+    "model": "AppAdmin.PaymentMethod",
+    "pk": 6,
+    "fields": {
+      "pm_code": "PM-6",
+      "pm_name": "PAYONEER",
+      "status": "Active",
+      "created_at": "2023-10-02",
+      "updated_at": "2023-10-02"
+    }
+  },
+  {
+    "model": "AppAdmin.PaymentMethod",
+    "pk": 7,
+    "fields": {
+      "pm_code": "PM-7",
+      "pm_name": "KEENU WALLET",
+      "status": "Active",
+      "created_at": "2023-10-02",
+      "updated_at": "2023-10-02"
+    },
+    "_comment": "PAYMENT METHOD JSON END"
+  }
+]

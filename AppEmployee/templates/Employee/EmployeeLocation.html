@@ -1,0 +1,86 @@
+{% extends "master.html" %}
+{% load static %}
+
+{% block title %}Employee {% endblock %}
+{% block PageTitle %}Employee{% endblock %}
+{% block PageHierechy %}
+    <li class="breadcrumb-item tx-15"><a href="{% url 'Dashboard' %}">Employee</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Employee Location</li>
+{% endblock %}
+
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card">
+                <div class="card-header flex-between">
+                    <div class="col-xl-6">
+                        <div class="card-title">Employee Location</div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <form method='post' action='' accept-charset='utf-8'
+                                      enctype="multipart/form-data" id="searchForm">
+
+                                    {% csrf_token %}
+                                    <input type="search" id="search" name="search" class="form-control radius-4"
+                                           placeholder="Search here...">
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover mb-0 text-md-nowrap">
+                            <thead>
+                            <tr>
+                                <th scope="col"
+                                    class="sm-text text-capitalize align-middle text-center border-1 border">S/L
+                                </th>
+
+                                <th scope="col" class="sm-text text-capitalize align-middle text-center border-1 border">
+                                    Employee
+                                </th>
+                                <th scope="col"
+                                    class="sm-text text-capitalize align-middle text-center border-1 border">
+                                  Store Location
+                                </th>
+
+                                <th scope="col" class="sm-text text-capitalize align-middle text-center border-1 border">
+                                    Status
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            {% for employee in employee_location %}
+
+                                <tr class="align-middle">
+                                    <th scope="row" class="xsm-text text-capitalize align-middle text-center">
+                                        {{ forloop.counter }}
+                                    </th>
+                                    <th scope="row" class="xsm-text text-capitalize align-middle text-center">
+                                        {{ employee.name }}
+                                    </th>
+
+                                    <th scope="row" class="xsm-text text-capitalize align-middle text-center">
+                                        {{ employee.loc_store_name }}
+                                    </th>
+                                    <th scope="row" class="xsm-text text-capitalize align-middle text-center">
+                                          <span class="badge badge-pill bg-{% if employee.status == "Active" %}primary-transparent tx-primary{% elif data.status == "Inactive" %}secondary-transparent tx-secondary{% else %}orange-transparent tx-orange{% endif %} py-2 tx-11">{{ employee.status }}</span>
+                                    </th>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

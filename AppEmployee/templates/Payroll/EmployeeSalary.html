@@ -1,0 +1,157 @@
+{% extends "master.html" %}
+{% load static %}
+{% block title %}Employee {% endblock %}
+{% block PageTitle %}Employee{% endblock %}
+{% block PageHierechy %}
+    <li class="breadcrumb-item tx-15"><a href="{% url 'Dashboard' %}">Employee</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Salary</li>
+{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card">
+                <div class="card-header flex-between">
+                    <div class="col-xl-4">
+                        <div class="card-title">Employee Salary</div>
+                    </div>
+                    <div class="col-xl-8">
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <form method='post' action='' accept-charset='utf-8'
+                                      enctype="multipart/form-data" id="searchForm">
+                                    {% csrf_token %}
+                                    <div class="row">
+                                        <div class="col-xl-3 text-center">
+                                            <select class="form-control" name="location" id="location">
+                                                <option value="%">Select Location</option>
+                                                {% for data in employee_location %}
+                                                    <option value="{{ data.loc_store_code }}">{{ data.loc_store_name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="col-xl-3 text-center">
+                                            <select class="form-control text-center" name="employee" id="employee">
+                                                <option value="%">Select Employee</option>
+                                                {% for data in all_employee %}
+                                                    <option value="{{ data.employee_code_id }}">{{ data.title }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="col-xl-3 text-center">
+                                            <select class="form-control text-center" name="position" id="position">
+                                                <option value="%">Select position</option>
+                                                {% for data in all_positions %}
+                                                    <option value="{{ data.position_code }}">{{ data.position_name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <button type="submit" class="btn btn-md btn-primary-light w-100">Filter
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover mb-0 text-md-nowrap" id="Datatable">
+                            <thead>
+                            <tr>
+                                <th scope="col"
+                                    class="sm-text text-capitalize align-middle text-center border-1 border">S/L
+                                </th>
+
+                                <th scope="col"
+                                    class="sm-text text-capitalize align-middle text-center border-1 border">
+                                    Employee Name
+                                </th>
+                                <th scope="col"
+                                    class="sm-text text-capitalize align-middle text-center border-1 border">
+                                    Pay Frequency
+                                </th>
+                                <th scope="col"
+                                    class="sm-text text-capitalize align-middle text-center border-1 border">
+                                    Rate Type
+                                </th>
+                                <th scope="col"
+                                    class="sm-text text-capitalize align-middle text-center border-1 border">
+                                    Rate Amount
+                                </th>
+                                <th scope="col"
+                                    class="sm-text text-capitalize align-middle text-center border-1 border">
+                                    Salary
+                                </th>
+
+                                <th scope="col"
+                                    class="sm-text text-capitalize align-middle text-center border-1 border">
+                                    Action
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for employee in employee_salary %}
+                                <tr class="align-middle">
+                                    <th scope="row" class="xsm-text text-capitalize align-middle text-center">
+                                        {{ forloop.counter }}
+                                    </th>
+                                    <th scope="row" class="xsm-text text-capitalize align-middle text-center">
+                                        {{ employee.title }}
+                                    </th>
+
+                                    <th scope="row" class="xsm-text text-capitalize align-middle text-center">
+                                        {{ employee.pay_frequency }}
+                                    </th>
+                                    <th scope="row" class="xsm-text text-capitalize align-middle text-center">
+                                        {{ employee.rate_type }}
+                                    </th>
+                                    <th scope="row" class="xsm-text text-capitalize align-middle text-center">
+                                        {{ employee.rate_amount }}
+                                    </th>
+                                    <th scope="row" class="xsm-text text-capitalize align-middle text-center">
+                                        {{ employee.basic_salary }}
+                                    </th>
+                                    <th scope="row" class="xsm-text text-capitalize align-middle text-center">
+                                        <button href="javascript:void(0)"
+                                                class="btn btn-sm btn-def tx-muted"
+                                                onclick="HRMModelJS.ShowBox_UpdateSingleEmployeeSalary('{{ employee.employee_code_id }}^^{{ employee.salary_code }}^^{{ employee.pay_frequency }}^^{{ employee.rate_type }}^^{{ employee.rate_amount }}^^{{ employee.basic_salary }}^^Multiple');">
+                                            <i class="fe fe-edit"></i>
+                                        </button>
+                                    </th>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block js %}
+    <script src="{% static "AppHRM.js" %}" type="text/javascript"></script>
+    <script>
+        var HRMModelJS = null;
+        var message = '{{ message }}';
+        var update_single_employee_salary = '{% url "UpdateSingleEmployeeSalary" %}';
+        var table = new DataTable('#Datatable');
+
+        $(document).ready(function () {
+            HRMModelJS = new AppHRMModel();
+            HRMModelJS.appConstructor();
+        });
+
+        split_message = message.split('^');
+        if (split_message[0] === 'Success') {
+            $('#location').val(split_message[1]);
+            $('#employee').val(split_message[2]);
+            $('#position').val(split_message[3]);
+        }
+
+        $('#employee').select2();
+        $('#location').select2();
+        $('#position').select2();
+    </script>
+{% endblock %}

@@ -1,0 +1,115 @@
+{% extends "master.html" %}
+{% load static %}
+
+{% block title %}HRM{% endblock %}
+{% block PageTitle %}Deduction Category{% endblock %}
+{% block PageHierechy %}
+    <li class="breadcrumb-item tx-15"><a href="{% url 'Dashboard' %}">Deduction</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Deduction Category</li>
+{% endblock %}
+
+{% block content %}
+
+
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card">
+                <div class="card-header flex-between">
+                    <div class="col-xl-6">
+                        <div class="card-title">Deduction Category List</div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="row">
+                            <div class="col-xl-8">
+                                <input type="search" id="search" name="search" class="form-control radius-4"
+                                       placeholder="Search here...">
+                            </div>
+                            <div class="col-xl-4">
+                                <button type="button" class="btn btn-w-lg btn-primary-light"
+                                        onclick="HRMModelJS.ShowBox_AddDeductionCategory('NEW');">
+                                    Add Category
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover mb-0 text-md-nowrap">
+                            <thead>
+                            <tr>
+                                <th scope="col"
+                                    class="sm-text text-capitalize align-middle text-center border-1 border">Id
+                                </th>
+                                <th scope="col" class="sm-text text-capitalize align-middle text-left border-1 border">
+                                    Category name
+                                </th>
+                                <th scope="col" class="sm-text text-capitalize align-middle text-left border-1 border">
+                                    Type
+                                </th>
+                                <th scope="col" class="sm-text text-capitalize align-middle text-left border-1 border">
+                                    Status
+                                </th>
+                                <th scope="col"
+                                    class="sm-text text-capitalize align-middle text-center border-1 border">Action
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            {% for cat in category_list %}
+
+                                <tr class="align-middle">
+                                    <th scope="row" class="xsm-text text-capitalize align-middle text-center">
+                                        {{ forloop.counter }}
+                                    </th>
+                                    <td class="xsm-text text-capitalize align-middle text-left">
+                                        {{ cat.ded_type_name }}
+                                    </td>
+                                    <td class="xsm-text text-capitalize align-middle text-left">
+                                        {{ cat.type }}
+                                    </td>
+                                    <td class="xsm-text text-capitalize align-middle text-left">
+                                        {{ cat.status }}
+                                    </td>
+                                    <td class="xsm-text text-capitalize align-middle text-center">
+                                        <div class="btn-list">
+                                            <button href="javascript:void(0)" class="btn btn-sm btn-def tx-muted"
+                                                onclick="HRMModelJS.ShowBox_AddDeductionCategory('UPDATE,{{ cat.id }},{{ cat.ded_type_name }},{{ cat.type }}');">
+                                                <i class="fe fe-edit"></i>
+                                            </button>
+                                            <button href="javascript:void(0)" class="btn btn-sm btn-def tx-muted"
+                                             onclick="HRMModelJS.DeleteDeductionCategoryView('{{cat.id }}');">
+
+                                                <i class="fe fe-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block js %}
+    <script src="{% static "AppHRM.js" %}" type="text/javascript"></script>
+    <script>
+        var HRMModelJS = null;
+       var add_ded_category = '{% url "AddDeductionCategory" %}';
+       var delete_deduction_category = '{% url "DeleteDeductionCategory" %}';
+
+        $(document).ready(function () {
+            HRMModelJS = new AppHRMModel();
+            HRMModelJS.appConstructor();
+
+        });
+
+    </script>
+{% endblock %}

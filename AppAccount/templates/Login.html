@@ -1,0 +1,200 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="description"
+          content="Mardo. is a production management system build to simplify production or manufacturing process. Mardo. is lightweight, secure and fast and based on Django.">
+    <meta name="keywords"
+          content="Mardo. Production management system,Manufacturing system, Inventory system, Stock management, Workshop management, Row material management">
+    <meta name="Author" content="Digitalarzsolution.com">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <!-- Title --> <title>MARDO-ERP</title> <!-- Favicon -->
+    <link rel="icon" href="{% static "das/assets/img/brand/favicon-white.png" %}" type="image/x-icon">
+    <!-- Icons css -->
+    <link href="{% static "das/assets/css/icons.css" %}" rel="stylesheet"> <!--  Bootstrap css-->
+    <link id="style" href="{% static "das/assets/plugins/bootstrap/css/bootstrap.min.css" %}" rel="stylesheet">
+    <!-- Style css -->
+    <link href="{% static "das/assets/css/style.css" %}" rel="stylesheet">
+    <script type="text/javascript">
+
+    </script>
+    <meta http-equiv="imagetoolbar" content="no">
+    <style type="text/css"><!--
+    input, textarea {
+        -webkit-touch-callout: default;
+        -webkit-user-select: auto;
+        -khtml-user-select: auto;
+        -moz-user-select: text;
+        -ms-user-select: text;
+        user-select: text
+    }
+
+    * {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: -moz-none;
+        -ms-user-select: none;
+        user-select: none
+    }
+
+    --></style>
+    <style type="text/css" media="print"><!--
+    body {
+        display: none
+    }
+
+    --></style>
+    <!--[if gte IE 5]>
+    <frame></frame><![endif]-->
+</head>
+
+<body class="ltr error-page1 bg-primary" cz-shortcut-listen="true">
+
+<div class="progress-top-bar"></div> <!-- Loader -->
+<div id="global-loader" style="display: none;">
+    <img src="{% static "das/assets/img/loader.svg" %}" class="loader-img" alt="Loader">
+</div> <!-- /Loader -->
+<div class="bg-svg">
+    <div class="page">
+        <div class="z-index-10">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-5 col-lg-6 col-md-8 col-sm-8 col-xs-10 mx-auto my-auto py-4 justify-content-center">
+                        <div class="card-sigin"> <!-- Demo content-->
+                            <div class="main-card-signin d-md-flex">
+                                <div class="wd-100p">
+
+                                    <div class="d-flex">
+                                        <a href="{% url "LogoutView" %}">
+                                            <img src="{% static "das/assets/img/brand/favicon-white.png" %}"
+                                                 class="sign-favicon ht-40 logo-dark" alt="logo">
+                                            <img src="{% static "das/assets/img/brand/favicon-white-1.png" %}"
+                                                 class="sign-favicon ht-40 logo-light-theme" alt="logo">
+                                        </a>
+                                    </div>
+
+                                    <div class="mt-3">
+                                        <h2 class="tx-medium tx-primary">Welcome back!</h2>
+                                        <h6 class="font-weight-semibold mb-4 text-white-50">Please sign in to
+                                            continue.</h6>
+                                        <div class="panel tabs-style7 scaleX mt-2">
+                                            <div class="panel-head">
+                                                <ul class="nav nav-tabs d-block d-sm-flex">
+                                                    <li class="nav-item">
+                                                        <a class="nav-link tx-14 font-weight-semibold text-sm-center text-start active"
+                                                           data-bs-toggle="tab" href="#signinTab1">Email</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link tx-14 font-weight-semibold text-sm-center text-start"
+                                                           data-bs-toggle="tab" href="#signinTab2">Mobile Number</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="panel-body p-0">
+                                                <div class="tab-content mt-3">
+                                                    <div class="tab-pane active" id="signinTab1">
+                                                        <form accept-charset="UTF-8" role="form" action=""
+                                                              method="post">
+                                                            {% csrf_token %}
+                                                            <div class="form-group">
+                                                                <input type="text" id="username" name="username"
+                                                                       placeholder="Enter Username"
+                                                                       class="form-control"
+                                                                       required autofocus/>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <input class="form-control" id="password"
+                                                                       type="password" placeholder="Password"
+                                                                       name="password" required
+                                                                       autocomplete="current-password"/>
+                                                            </div>
+                                                            <div class="d-flex align-items-center justify-content-between">
+                                                                <p class="mb-0">
+                                                                    <a href="javascript:void(0);" class="tx-primary">
+                                                                        Forgot password?</a>
+                                                                </p>
+                                                                <button class="btn btn-primary">Log In</button>
+                                                            </div>
+                                                        </form>
+                                                        <div class="divider my-4 or tx-muted"></div>
+                                                        <a href="javascript:void(0);"
+                                                           class="btn btn-block btn-outline-primary tx-center flex-center">
+                                                            <i class="bx bxl-google tx-22 me-2"></i>Signin With
+                                                            Google</a>
+                                                        <div class="d-flex">
+                                                            <a href="javascript:void(0);"
+                                                               class="btn btn-block btn-outline-primary tx-center mt-1 flex-1 flex-center">
+                                                                <i class="bx bxl-facebook tx-22 me-2"></i>Facebook</a>
+                                                            <a href="javascript:void(0);"
+                                                               class="btn btn-block btn-outline-primary tx-center mt-1 ms-1 flex-1 flex-center">
+                                                                <i class="bx bxl-twitter tx-22 me-2"></i>Twitter</a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="tab-pane" id="signinTab2">
+                                                        <div id="mobile-num" class="input-group mb-2">
+                                                            <a href="javascript:void(0);"
+                                                               class="input-group-text bg-white text-muted">
+                                                                <span>+91</span>
+                                                            </a>
+                                                            <input class="form-control" type="number"
+                                                                   placeholder="Mobile Number">
+                                                        </div>
+                                                        <div id="login-otp" class="justify-content-around mb-4">
+                                                            <input class="form-control  text-center me-2" id="txt1"
+                                                                   maxlength="1"
+                                                                   onkeyup="move(event, '', 'txt1', 'txt2')">
+                                                            <input class="form-control  text-center me-2" id="txt2"
+                                                                   maxlength="1"
+                                                                   onkeyup="move(event, 'txt1', 'txt2', 'txt3')">
+                                                            <input class="form-control  text-center me-2" id="txt3"
+                                                                   maxlength="1"
+                                                                   onkeyup="move(event, 'txt2', 'txt3', 'txt4')">
+                                                            <input class="form-control  text-center" id="txt4"
+                                                                   maxlength="1"
+                                                                   onkeyup="move(event, 'txt3', 'txt4', '')">
+                                                        </div>
+                                                        <span class="tx-muted">Note : Login with registered mobile number to generate OTP.</span>
+                                                        <div class="container-login100-form-btn mt-3">
+                                                            <a href="javascript:void(0);"
+                                                               class="btn login100-form-btn btn-primary"
+                                                               id="generate-otp"> Proceed </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tx-center mt-3">
+                                            <p class="mb-0 tx-muted">Don't have an account?
+                                                <a href="signup.html" class="tx-primary font-weight-semibold tx-15">Create
+                                                    an Account</a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> <!-- JQuery min js -->
+<noscript><p>To display this page you need a browser that supports JavaScript.</p></noscript>
+<script src="{% static "das/assets/plugins/jquery/jquery.min.js" %}"></script>
+<!-- Bootstrap js -->
+<noscript><p>To display this page you need a browser that supports JavaScript.</p></noscript>
+<script src="{% static "das/assets/plugins/bootstrap/js/bootstrap.bundle.min.js" %}"></script>
+<!-- generate-otp js -->
+<noscript><p>To display this page you need a browser that supports JavaScript.</p></noscript>
+<script src="{% static "das/assets/js/generate-otp.js" %}"></script>
+<!--Internal  Perfect-scrollbar js -->
+<noscript><p>To display this page you need a browser that supports JavaScript.</p></noscript>
+<script src="{% static "das/assets/plugins/perfect-scrollbar/perfect-scrollbar.min.js" %}"></script>
+<!-- custom js -->
+<noscript><p>To display this page you need a browser that supports JavaScript.</p></noscript>
+<script src="{% static "das/assets/js/custom.js" %}"></script>
+</body>
+</html>

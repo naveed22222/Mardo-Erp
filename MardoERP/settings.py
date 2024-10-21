@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'AppAdmin.apps.AppadminConfig',
     'AppAccount.apps.AppaccountConfig',
     'AppEmployee.apps.AppemployeeConfig',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -123,12 +124,26 @@ USE_I18N = True
 
 USE_TZ = True
 
-STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(PRODUCT_DIR, 'static/')
+# STATIC_URL = 'static/'
+# STATIC_ROOT = os.path.join(PRODUCT_DIR, 'static/')
 
 # STATICFILES_DIRS = [
 #     os.path.join(PRODUCT_DIR, "static"), '/home/ubuntu/project/Mardo-Erp /static/',
 # ]
+
+
+# this defines the url for static files
+# eg: base-url.com/static/your-js-file.js
+STATIC_URL = '/static/'
+
+# this is directory name where collectstatic files command will put your app level static files
+STATIC_ROOT = 'staticfiles'
+
+# this is directory paths where you have to put your project level static files
+# you can put multiple folders here
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+)
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

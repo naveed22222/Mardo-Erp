@@ -24,7 +24,7 @@ PRODUCT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'django-insecure-t3s=me_l--w$+$^pbems^s^)l2yodgcu8p-0dw#6nqyp49+e5#'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -124,26 +124,15 @@ USE_I18N = True
 
 USE_TZ = True
 
-# STATIC_URL = 'static/'
-# STATIC_ROOT = os.path.join(PRODUCT_DIR, 'static/')
+STATIC_URL = 'static/'
+STATIC_ROOT = PRODUCT_DIR / "staticfiles"
 
-# STATICFILES_DIRS = [
-#     os.path.join(PRODUCT_DIR, "static"), '/home/ubuntu/project/Mardo-Erp /static/',
-# ]
+STATICFILES_DIRS = [
+    os.path.join(PRODUCT_DIR, "static"),
+]
 
 
-# this defines the url for static files
-# eg: base-url.com/static/your-js-file.js
-STATIC_URL = '/static/'
 
-# this is directory name where collectstatic files command will put your app level static files
-STATIC_ROOT = 'staticfiles'
-
-# this is directory paths where you have to put your project level static files
-# you can put multiple folders here
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "static"),
-)
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

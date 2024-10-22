@@ -125,7 +125,7 @@ USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = 'static/'
-STATIC_ROOT = PRODUCT_DIR / "staticfiles"
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 STATICFILES_DIRS = [
     os.path.join(PRODUCT_DIR, "static"),
